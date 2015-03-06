@@ -1,5 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cimicop</string>
-    <string name="hello_world">Hello world!</string>
+
+    <string name="app_name">CIMICOP</string>
     <string name="action_settings">Settings</string>
+
+    <string name="info">INFO</string>
+    <string name="info_selected">----- INFO -----</string>
+    <string name="warning">WARNING</string>
+    <string name="warning_selected">----- WARNING -----</string>
+    <string name="danger">DANGER</string>
+    <string name="danger_selected">----- DANGER -----</string>
+    <string name="life_threatening">LIFE THREATENING</string>
+
+    <string name="alert_note">Alert Note</string>
+    <string name="alert_gdh">GDH</string>
+    <string name="alert_position">Position</string>
+
+    <string name="prompt">Choose a country</string>
+    <string-array name="alert_types_list">
+        <item>Explosion</item>
+        <item>Kidnapping</item>
+        <item>Mine discovery</item>
+        <item>Fire</item>
+        <item>Gun Shots</item>
+        <item>Other ...</item>
+    </string-array>
 </resources>

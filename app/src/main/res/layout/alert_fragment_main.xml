@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical" >
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textOn="@string/info_selected"
+        android:textOff="@string/info"
+        android:id="@+id/toggleButton3"
+        android:background="@android:color/holo_blue_dark" />
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textOn="@string/warning_selected"
+        android:textOff="@string/warning"
+        android:id="@+id/toggleButton"
+        android:background="@android:color/holo_orange_light" />
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textOn="@string/danger_selected"
+        android:textOff="@string/danger"
+        android:id="@+id/toggleButton2"
+        android:background="@android:color/holo_red_dark"/>
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/ic_action_clock"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/alert_gdh"
+            android:id="@+id/textView"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView"
+            android:autoText="false"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal" >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/ic_action_location_2"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/alert_position"
+            android:id="@+id/textView2"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView"
+            android:autoText="false"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/alert_type_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/primary"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:hint="@string/alert_note" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_attachment_2"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_camera"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="No data attached"
+            android:id="@+id/attached_data"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView"
+            android:autoText="false" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SEND"
+        android:id="@+id/send_report_button"
+        android:layout_gravity="right"
+        android:background="@android:color/holo_red_dark"
+        android:textColor="@android:color/background_light" />
+
+    </LinearLayout>
+
