@@ -41,18 +41,34 @@
             }
         </style>
 
-        <link rel="stylesheet" type="text/css" href="js/leaflet/leaflet.css" />
-        <script type="text/javascript" src="js/leaflet/leaflet.js"></script>
 
+
+        <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="lib/leaflet/leaflet.css" />
+        <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
+
+        <!-- styling -->
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
-        <link rel="stylesheet" href="js/locatecontrol/L.Control.Locate.min.css" />
-        <script src="js/locatecontrol/L.Control.Locate.min.js" ></script>
+
+
+
+
+        <link rel="stylesheet" href="lib/locatecontrol/L.Control.Locate.min.css" />
+        <script src="lib/locatecontrol/L.Control.Locate.min.js" ></script>
 
     </head>
     <body>
     <span id="log">log</span>
             <div id="map">ICI</div>
-
+    <div  class="leaflet-control-locate leaflet-bar leaflet-control leaflet-bottom leaflet-right">
+    <button id="ooo-click-me" type="button" class="btn btn-danger leaflet-control">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    </button>
+    </div>
         <script type="text/javascript" src="js/index.js"></script>
 
     </body>

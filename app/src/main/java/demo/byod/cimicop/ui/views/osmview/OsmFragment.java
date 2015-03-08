@@ -49,6 +49,9 @@ public class OsmFragment extends Fragment {
         });
         mOsmView.loadUrl("file:///android_asset/www/index.html");
 
+        //for bridge toJava
+        mOsmView.addJavascriptInterface(new JavaJSBridge(this), "JSBridge");
+
         return rootView;
     }
 
