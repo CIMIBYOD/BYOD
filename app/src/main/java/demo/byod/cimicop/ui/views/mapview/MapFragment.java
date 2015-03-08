@@ -36,7 +36,9 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map, container, false);
 
-        MapView mapView = (MapView) rootView.findViewById(R.id.mapview);
+       /* SRE inactivated for test WebView
+
+       MapView mapView = (MapView) rootView.findViewById(R.id.mapview);
         mapView.setAccessToken("pk.eyJ1IjoiYXNoYXJwZWZyIiwiYSI6IjVvQXFtZDAifQ.C_7U9O7OT1IZPUACJ4VTDg");
         mapView.setTileSource(new MapboxTileLayer("asharpefr.lcd7hho8"));
 
@@ -80,7 +82,7 @@ public class MapFragment extends Fragment {
                 // Commit the transaction
                 transaction.commit();
             }
-        });
+        });*/
         return rootView;
     }
 }
