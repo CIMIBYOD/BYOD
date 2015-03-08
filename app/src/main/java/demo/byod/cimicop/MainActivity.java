@@ -2,11 +2,13 @@ package demo.byod.cimicop;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import demo.byod.cimicop.core.services.connectivity.XmppService;
 import demo.byod.cimicop.ui.views.alertview.AlertSelectorFragment;
 import demo.byod.cimicop.ui.views.mapview.MapFragment;
 
@@ -22,6 +24,9 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new MapFragment())
                     .commit();
         }
+
+        Intent intent = new Intent(this, XmppService.class);
+        startService(intent);
     }
 
 
