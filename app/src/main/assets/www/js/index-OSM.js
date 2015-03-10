@@ -1,9 +1,9 @@
 try {
-           var map = L.map('map').setView([37.75, -122.23], 10);
+            var map = new L.Map('map');
 
-             L.esri.basemapLayer('Imagery').addTo(map);
-             L.esri.basemapLayer('ImageryLabels').addTo(map);
-
+            var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib = 'Map data © OpenStreetMap contributors';
+            var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 
       L.control.locate({
         //  position: 'topleft',  // set the location of the control
