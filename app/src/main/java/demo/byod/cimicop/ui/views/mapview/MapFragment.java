@@ -49,7 +49,7 @@ public class MapFragment extends Fragment {
             }
         });
 
-        CartoManager.getInstance().setMapView(mapView, rootView.getContext());
+        //CartoManager.getInstance().setMap(mapView, rootView.getContext());
 
         return rootView;
     }

@@ -3,6 +3,7 @@ package demo.byod.cimicop.core.managers;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.overlay.GpsLocationProvider;
@@ -19,14 +20,18 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import demo.byod.cimicop.core.models.SituationEntity;
+import demo.byod.cimicop.ui.views.osmview.OsmFragment;
+import demo.byod.cimicop.ui.views.osmview.OsmView;
 
 public class CartoManager {
 
     private static CartoManager instance = null;
     GpsLocationProvider providerGps;
-    private MapView mapview = null;
+    private OsmFragment map = null;
     private Context context = null;
     private HashMap<String, Object> mapObjectsCache = new HashMap<String, Object>();
 
@@ -41,23 +46,13 @@ public class CartoManager {
         return instance;
     }
 
-    public void setMapView(MapView mapview, Context context) {
+    public void setMap(OsmFragment map, Context context) {
+        //[SR_TODEL]
+        Log.i("CIMI", "CartoManager::setMap");
 
-        this.mapview = mapview;
+        this.map = map;
         this.context = context;
 
-        mapview.setAccessToken("pk.eyJ1IjoiYXNoYXJwZWZyIiwiYSI6IjVvQXFtZDAifQ.C_7U9O7OT1IZPUACJ4VTDg");
-        mapview.setTileSource(new MapboxTileLayer("asharpefr.lcd7hho8"));
-
-        providerGps = new GpsLocationProvider(context);
-
-
-        UserLocationOverlay myLocationOverlay = new UserLocationOverlay(providerGps, mapview);
-        myLocationOverlay.enableMyLocation();
-        myLocationOverlay.enableFollowLocation();
-
-        myLocationOverlay.setDrawAccuracyEnabled(true);
-        mapview.getOverlays().add(myLocationOverlay);
 
 
         this.addOrUpdateSituationEntities(SituationManager.getInstance().getSituationEntities());
@@ -67,42 +62,54 @@ public class CartoManager {
 
 
     public void addOrUpdateSituationEntities(HashMap<String, SituationEntity> entities) {
-
-        if (mapview != null && context != null) {
+      //[SR_TODEL]
+        Log.i("CIMI", "CartoManager::addOrUpdateSituationEntities");
+        if (map != null && context != null) {
             for (Map.Entry<String, SituationEntity> e : entities.entrySet()) {
 
                 if (this.mapObjectsCache.containsKey(e.getKey())) {
+                    //[SR_TODEL]
+                    Log.i("CartoManager", "updating  "+e.getKey()+"  ...");
                     //SituationEntity already displayed on the map, updating the map object
                     this.updateFromSituationEntity(e.getKey(), e.getValue());
 
                 } else {
+                    //[SR_TODEL]
+                    Log.i("CIMI", "CartoManager::adding");
                     //SituationEntity doesn't exist on the map, creating the map object
-                    Object displayedObject = this.createFromSituationEntity(e.getKey(), e.getValue());
-                    if (displayedObject instanceof Marker) {
-                        mapview.addMarker((Marker) displayedObject);
-                    } else if (displayedObject instanceof PathOverlay) {
-                        mapview.addOverlay((PathOverlay) displayedObject);
-                    }
+                    final JSONObject displayedObject = this.createFromSituationEntity(e.getValue());
+
+                    //[SR_TODEL]
+                    TimerTask timert = new TimerTask()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            map.addBso(displayedObject);
+                        }
+                    };
+                    new Timer().scheduleAtFixedRate(timert, 2000, 1000);
+
+
                 }
             }
-            //Force refresh of the map
-            //mapview.invalidate();
+
         }
 
     }
 
     public void removeSituationEntities(HashMap<String, SituationEntity> entities) {
 
-        for (Map.Entry<String, SituationEntity> e : entities.entrySet()) {
+      /*  for (Map.Entry<String, SituationEntity> e : entities.entrySet()) {
 
             if (this.mapObjectsCache.containsKey(e.getKey())) {
                 //SituationEntity already displayed on the map, updating the map object
-                if (mapview != null && context != null) {
+                if (map != null && context != null) {
                     Object displayedObject = this.mapObjectsCache.get(e.getKey());
                     if (displayedObject instanceof Marker) {
-                        mapview.removeMarker((Marker) displayedObject);
+                        map.removeMarker((Marker) displayedObject);
                     } else if (displayedObject instanceof PathOverlay) {
-                        mapview.removeOverlay((PathOverlay) displayedObject);
+                        map.removeOverlay((PathOverlay) displayedObject);
                     }
                 }
                 this.mapObjectsCache.remove(e.getKey());
@@ -112,48 +119,28 @@ public class CartoManager {
             }
         }
         //Force refresh of the map
-        if (mapview != null && context != null) {
+        if (map != null && context != null) {
             // mapview.invalidate();
         }
+        */
 
     }
 
-    private Object createFromSituationEntity(String id, SituationEntity se) {
+    private JSONObject createFromSituationEntity(SituationEntity se) {
 
-        Object resultOject = null;
-        if (se != null && se.getShape() != null) {
-            JSONObject shape = se.getShape();
-            try {
-                String type = shape.getString("type");
-                if (type != null && type.equalsIgnoreCase("ponctual")) {
+        JSONObject bsoInJson = new JSONObject();
+        try {
+            bsoInJson.put("id", se.getId());
+            bsoInJson.put("type", se.getType());
+            bsoInJson.put("name", se.getName());
+            bsoInJson.put("shape", se.getShape());
 
-                    JSONArray coords = shape.getJSONArray("coords");
-                    JSONObject latLng = coords.getJSONObject(0);
-                    if (latLng != null) {
-                        double lat = latLng.getDouble("lat");
-                        double lng = latLng.getDouble("lng");
-
-                        Marker m = new Marker(mapview, se.getName(), se.getType(), new LatLng(lat, lng));
-                        m.setIcon(new Icon(context, Icon.Size.LARGE, "city", "3887be"));
-                        resultOject = m;
-                    }
-
-                } else if (type != null && type.equalsIgnoreCase("polygon")) {
-                    PathOverlay line = new PathOverlay(Color.argb(240, 240, 0, 0), 3);
-                    line.getPaint().setStyle(Paint.Style.FILL);
-
-                    line.addPoint(new LatLng(51.2, 0.1));
-                    line.addPoint(new LatLng(51.7, 0.3));
-                    line.addPoint(new LatLng(52.7, 1.3));
-                    line.addPoint(new LatLng(51.2, 0.1));
-                    resultOject = line;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        return resultOject;
+        //add to cache
+        this.mapObjectsCache.put(se.getId(),bsoInJson);
+        return bsoInJson;
     }
 
     private void updateFromSituationEntity(String id, SituationEntity se) {

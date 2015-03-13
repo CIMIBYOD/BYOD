@@ -24,8 +24,8 @@ public class SituationManager {
             ex1.put("type", "ponctual");
             JSONArray coords = new JSONArray();
             JSONObject latLng = new JSONObject();
-            latLng.put("lat", 2.00);
-            latLng.put("lng", 10.00);
+            latLng.put("lat", 48.85);
+            latLng.put("lng", 2.4);
             coords.put(latLng);
             ex1.put("coords", coords);
 

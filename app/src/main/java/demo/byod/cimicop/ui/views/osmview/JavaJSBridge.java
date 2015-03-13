@@ -23,11 +23,16 @@ public class JavaJSBridge {
      * Show a toast from the web page
      */
     @JavascriptInterface
-    public void signal(String msg) {
-        Log.i("JavaJSBridge", "msg=[" + msg + "]");
-        Log.i("JavaJSBridge", "mContext=[" + mContext.toString() + "]");
-        Log.i("JavaJSBridge", "mOsmView=[" + ((OsmFragment) mContext).mOsmView.toString() + "]");
-        try {
+    public void log(String msg) {
+        Log.i("CIMI", "msg=[" + msg + "]");
+
+    }
+
+
+    @JavascriptInterface
+    public void touch() {
+
+       try {
 
             ((OsmFragment) mContext).mOsmView.post(new Runnable() {
                 public void run() {
