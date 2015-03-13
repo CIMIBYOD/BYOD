@@ -74,16 +74,26 @@ public class OsmFragment extends Fragment {
 
 
 
-    public void addBso(final JSONObject bso) {
+    private void _scheduleWhenViewReady() {
+        //isReady
+        if(!mOsmView.isReady()) {
+
+
+        }
+    }
+
+
+    public void addBso( JSONObject bso) {
         Log.i("OsmFragment", "addBso  " + bso.toString());
-        mBso = bso.toString();
+        final String inBso ;
+        inBso = bso.toString();
 
         try {
 
             mOsmView.post(new Runnable() {
                 public void run() {
-                    Log.i("OsmFragment", "addBso in UI  " + mBso);
-                    mOsmView.loadUrl("javascript:addBso('" + mBso + "')");
+                    Log.i("OsmFragment", "addBso in UI  " + inBso);
+                    mOsmView.loadUrl("javascript:addBso('" + inBso + "')");
                 }
             });
 

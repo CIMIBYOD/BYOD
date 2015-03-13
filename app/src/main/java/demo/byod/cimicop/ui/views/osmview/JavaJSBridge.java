@@ -30,13 +30,13 @@ public class JavaJSBridge {
 
 
     @JavascriptInterface
-    public void touch() {
+    public void mapReady() {
 
        try {
 
             ((OsmFragment) mContext).mOsmView.post(new Runnable() {
                 public void run() {
-                    ((OsmFragment) mContext).mOsmView.loadUrl("javascript:draw()");
+                    ((OsmFragment) mContext).mOsmView.setReady();
                 }
             });
 
