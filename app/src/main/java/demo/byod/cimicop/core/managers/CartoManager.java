@@ -47,13 +47,9 @@ public class CartoManager {
     }
 
     public void setMap(OsmFragment map, Context context) {
-        //[SR_TODEL]
-        Log.i("CIMI", "CartoManager::setMap");
 
         this.map = map;
         this.context = context;
-
-
 
         this.addOrUpdateSituationEntities(SituationManager.getInstance().getSituationEntities());
 
@@ -62,34 +58,18 @@ public class CartoManager {
 
 
     public void addOrUpdateSituationEntities(HashMap<String, SituationEntity> entities) {
-      //[SR_TODEL]
-        Log.i("CIMI", "CartoManager::addOrUpdateSituationEntities");
+
         if (map != null && context != null) {
             for (Map.Entry<String, SituationEntity> e : entities.entrySet()) {
 
                 if (this.mapObjectsCache.containsKey(e.getKey())) {
-                    //[SR_TODEL]
-                    Log.i("CartoManager", "updating  "+e.getKey()+"  ...");
                     //SituationEntity already displayed on the map, updating the map object
                     this.updateFromSituationEntity(e.getKey(), e.getValue());
 
                 } else {
-                    //[SR_TODEL]
-                    Log.i("CIMI", "CartoManager::adding");
                     //SituationEntity doesn't exist on the map, creating the map object
                     final JSONObject displayedObject = this.createFromSituationEntity(e.getValue());
-
-                    //[SR_TODEL]
-                    TimerTask timert = new TimerTask()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            map.addBso(displayedObject);
-                        }
-                    };
-                    new Timer().scheduleAtFixedRate(timert, 2000, 1000);
-
+                    map.addBso(displayedObject);
 
                 }
             }

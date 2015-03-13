@@ -17,7 +17,6 @@ import demo.byod.cimicop.R;
  * TODO: document your custom view class.
  */
 public class OsmView extends WebView {
-private boolean _ready=false;
 
     public OsmView(Context context) {
         super(context);
@@ -31,11 +30,4 @@ private boolean _ready=false;
         super(context, attrs, defStyle);
     }
 
-
-    public void setReady() {
-        _ready = true;
-    }
-    public boolean isReady(){
-        return _ready;
-    }
 }

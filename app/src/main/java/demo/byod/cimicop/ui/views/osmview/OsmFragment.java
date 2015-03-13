@@ -1,6 +1,7 @@
 package demo.byod.cimicop.ui.views.osmview;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -24,8 +25,7 @@ public class OsmFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     OsmView mOsmView=null;
-    boolean OsmViewLoaded=false;
-    String mBso=null;
+    Context mContext;
 
     public OsmFragment() {
         // Required empty public constructor
@@ -42,6 +42,7 @@ public class OsmFragment extends Fragment {
 
        //create mapview
         mOsmView = (OsmView) rootView.findViewById(R.id.osm_webview);
+        mContext =  rootView.getContext();
         WebSettings webSettings = mOsmView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
@@ -52,14 +53,9 @@ public class OsmFragment extends Fragment {
             }
         });
 
-        mOsmView.setWebViewClient(new WebViewClient() {
 
-            public void onPageFinished(WebView view, String url) {
-                OsmViewLoaded = true;
-            }
-        });
 
-        CartoManager.getInstance().setMap(this, rootView.getContext());
+
 
         //for bridge toJava
         mOsmView.addJavascriptInterface(new JavaJSBridge(this), "JSBridge");
@@ -67,20 +63,16 @@ public class OsmFragment extends Fragment {
         //navigate
         mOsmView.loadUrl("file:///android_asset/www/index.html");
 
-
-
         return rootView;
     }
 
-
-
-    private void _scheduleWhenViewReady() {
-        //isReady
-        if(!mOsmView.isReady()) {
-
-
-        }
+    // JS map loaded
+    public void mapReady() {
+        //can launch now Cato manager
+        CartoManager.getInstance().setMap(this, mContext);
     }
+
+
 
 
     public void addBso( JSONObject bso) {
@@ -92,7 +84,6 @@ public class OsmFragment extends Fragment {
 
             mOsmView.post(new Runnable() {
                 public void run() {
-                    Log.i("OsmFragment", "addBso in UI  " + inBso);
                     mOsmView.loadUrl("javascript:addBso('" + inBso + "')");
                 }
             });

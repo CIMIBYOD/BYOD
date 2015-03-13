@@ -24,7 +24,7 @@ public class JavaJSBridge {
      */
     @JavascriptInterface
     public void log(String msg) {
-        Log.i("CIMI", "msg=[" + msg + "]");
+        Log.i("JS",  msg );
 
     }
 
@@ -36,7 +36,7 @@ public class JavaJSBridge {
 
             ((OsmFragment) mContext).mOsmView.post(new Runnable() {
                 public void run() {
-                    ((OsmFragment) mContext).mOsmView.setReady();
+                    ((OsmFragment) mContext).mapReady();
                 }
             });
 
