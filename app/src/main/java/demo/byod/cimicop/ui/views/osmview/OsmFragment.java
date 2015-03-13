@@ -77,7 +77,7 @@ public class OsmFragment extends Fragment {
     public void addBso(final JSONObject bso) {
         Log.i("OsmFragment", "addBso  " + bso.toString());
         mBso = bso.toString();
-       
+
         try {
 
             mOsmView.post(new Runnable() {

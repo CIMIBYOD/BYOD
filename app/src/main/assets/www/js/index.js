@@ -36,23 +36,27 @@
       var draw = function(){
        addBso();
      }
+
       ////////////////////////////////////////////////////////////////////////////////////
-      var testBso;
+   
 
 
 
       var addBso = function(bsoJson){
 
-       JSBridge.log("Map - bsoJson " + bsoJson);
+       //JSBridge.log("Map - bsoJson " + bsoJson);
         var bso = JSON.parse(bsoJson);
-       JSBridge.log("Map - addBso " + bso);
-        JSBridge.log("Map - addBso id " + bso.id);
+      // JSBridge.log("Map - addBso " + bso);
+       // JSBridge.log("Map - addBso id " + bso.id);
      // var myBso = {"id":"id1","type":"name1","name":"explosion","shape":{"type":"ponctual","coords":[{"lat":48.85,"lng":2.4}]}};
 
      //  testBso = bso;
       // L.marker([myBso.shape.coords[0].lat,myBso.shape.coords[0].lng]).addTo(map);
-       L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lng)).addTo(map);
+      if(bso.shape.type == "ponctual"){
+        var layer =  L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lng));
+       layer.addTo(map);
+     }
 
       }
 
-     //addBso();                 
+                    
