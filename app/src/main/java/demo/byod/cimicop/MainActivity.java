@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import demo.byod.cimicop.core.services.connectivity.XmppService;
 import demo.byod.cimicop.ui.views.alertview.AlertSelectorFragment;
 import demo.byod.cimicop.ui.views.mapview.MapFragment;
+import demo.byod.cimicop.ui.views.osmview.OsmFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -21,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new MapFragment())
+                    .add(R.id.container, new OsmFragment())
                     .commit();
         }
 
