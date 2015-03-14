@@ -1,10 +1,26 @@
-      /**************************************/
-      /**********      Utils         *********/
-      /**************************************/  
-      var $debug = true;
+/*************************************/
+/********   Configuration    ********/
+/**************************************/  
+var config={
+  debug:true,
+  map :{
+  //initial map location
+  location: new L.LatLng(48.85, 2.4),
+//initial zoom 
+zoomLevel : 10
 
-      var _log = function(msg){
-        if(typeof(JSBridge) === "undefined"){
+}
+
+}
+
+
+/**************************************/
+/**********      Utils         *********/
+/**************************************/  
+var $debug = config.debug;
+
+var _log = function(msg){
+  if(typeof(JSBridge) === "undefined"){
         //in browser
         console.log(msg);
       }else{
@@ -20,56 +36,88 @@
 
     }
 
-    _log("loading index.js ..." );
 
-    /**************************************/
-    /**********    Classes       *********/
-    /**************************************/
-
-
-
-    /**********     Cache class    *********/
-
-    var Cache = (function () {
-      function Cache() {
-        this._cache = {};
+    //transform ponctual Bso to leaflet marker
+    //@private
+    var _toMarker = function(bso){
+     try{
+      return _bindPopup(L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lon)),bso);
+      }catch(reason){
+        _log("ERROR: unable to transform ponctual to Marker with reason :" +reason);
       }
-
-      Cache.prototype.put = function (key, value) {
-        var normalizedKey = normalizeKey(key);
-        var current = this._cache[normalizedKey];
-        this._cache[normalizedKey] = value;
-        return current;
-      };
-
-      Cache.prototype.get = function (key) {
-       var normalizedKey = normalizeKey(key);
-       return this._cache[normalizedKey];
-     };
+   }
 
 
+    //transform area Bso to leaflet polygone
+    //@private
+    var _toPolygon = function(bso){
+     try{
+      var edges=[];
+      for (var i=0;i<bso.shape.coords.length;i++){
+        edges.push(L.latLng(bso.shape.coords[i].lat, bso.shape.coords[i].lon));
+      }
+      return _bindPopup(L.polygon(edges),bso);
 
-     Cache.prototype.remove = function (key) {
+      }catch(reason){
+        _log("ERROR: unable to transform area to polygone with reason :" +reason);
+      }
+   }
+    //add popup info to bso
+   var _bindPopup = function(layer,bso){
+    return layer.bindPopup("<b>"+bso.type+"</b><br>"+bso.name);
+   }
+
+
+  _log("loading index.js ..." );
+
+  /**************************************/
+  /**********    Classes       *********/
+  /**************************************/
+
+
+
+  /**********     Cache class    *********/
+
+  var Cache = (function () {
+    function Cache() {
+      this._cache = {};
+    }
+
+    Cache.prototype.put = function (key, value) {
       var normalizedKey = normalizeKey(key);
       var current = this._cache[normalizedKey];
-      if (current !== undefined) {
-        delete this._cache[normalizedKey];
-      }
+      this._cache[normalizedKey] = value;
       return current;
     };
 
-    var normalizeKey = function(key){
-     return "$"+key.replace(/\W/g, '_');
-   }
-   return Cache;
- })();
+    Cache.prototype.get = function (key) {
+     var normalizedKey = normalizeKey(key);
+     return this._cache[normalizedKey];
+   };
 
 
- /**************************************/
- /**********    Functions       *********/
- /**************************************/
 
- /**********     addBso     *********/
+   Cache.prototype.remove = function (key) {
+    var normalizedKey = normalizeKey(key);
+    var current = this._cache[normalizedKey];
+    if (current !== undefined) {
+      delete this._cache[normalizedKey];
+    }
+    return current;
+  };
+
+  var normalizeKey = function(key){
+   return "$"+key.replace(/\W/g, '_');
+ }
+ return Cache;
+})();
+
+
+/**************************************/
+/**********    Functions       *********/
+/**************************************/
+
+/**********     addBso     *********/
 //add bso on map
 var addBso = function(bsoJson){
 
@@ -80,20 +128,27 @@ var addBso = function(bsoJson){
 }
 //@private
 var _addBso = function(bso){
-   var layer;
-   if(bso.shape.type == "ponctual"){
-    layer =  L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lng));
+ var layer;
+ if(bso.shape.type == "ponctual"){
+
+  layer = _toMarker(bso);
+  if(layer != undefined){
     layer.addTo(map);
     cache.put(bso.id,layer);
+  }
 
-  }else if(bso.shape.type == "area"){
+}else if(bso.shape.type == "area"){
 
-
-
+layer = _toPolygon(bso);
+  if(layer != undefined){
+    layer.addTo(map);
+    cache.put(bso.id,layer);
   }
 
 }
- /**********     removeBso     *********/
+
+}
+/**********     removeBso     *********/
   //remove bso from map
   var removeBso = function(id){
 
@@ -106,17 +161,16 @@ var _addBso = function(bso){
  //update bso from map
  var updateBso = function(bsoJson){
    _debug("updateBso");
-
    var bso = JSON.parse(bsoJson);
   //remove and create a new one
   removeBso(bso.id);
   addBso(bsoJson);
 }
 
- /**********    mapReady     *********/
+/**********    mapReady     *********/
  //map has been loaded
-var mapReady = function(){
- if(typeof(JSBridge) === "undefined"){
+ var mapReady = function(){
+   if(typeof(JSBridge) === "undefined"){
         //in browser
         console.log("map is ready!");
       }else{
@@ -124,25 +178,23 @@ var mapReady = function(){
         JSBridge.mapReady();
       }
 
-}
+    }
 
-/**************************************/
-/**********    MAIN          *********/
-/**************************************/
+    /**************************************/
+    /**********    MAIN          *********/
+    /**************************************/
  //Bso's cache
  var cache = new Cache();
 
  //Map
- var map = L.map('map').setView([37.75, -122.23], 10);
+ var map = L.map('map').setView(config.map.location,  config.map.zoomLevel);
 
  L.esri.basemapLayer('Imagery').addTo(map);
  L.esri.basemapLayer('ImageryLabels').addTo(map);
 
-   //bso layer
-  var myLayer = L.geoJson().addTo(map);
 
 //location control
- L.control.locate({
+L.control.locate({
               onLocationError: function(err) {console.log(err.message)},  // define an error callback function
               onLocationOutsideMapBounds:  function(context) { // called when outside map boundaries
                 console.log(context.options.strings.outsideMapBoundsMsg);
@@ -151,24 +203,30 @@ var mapReady = function(){
             }).addTo(map);
 
 
-map.setView(new L.LatLng(48.85, 2.4), 11);   
 
 //tell android java context that map is ready
 mapReady();
 
- 
+
       //button
-      $("#ooo-click-me").click(function(e){
+     // $("#ooo-click-me").click(function(e){
 
-       JSBridge.touch();
+    //   JSBridge.touch();
 
-     });
+    // });
 
 
       ////////////////////////////////////////////////////////////////////////////////////
 
 
+      if(config.test){
 
+//$.getScript( "js/spec/testVector.js", function( data, textStatus, jqxhr ) {
+//
+//  console.log( "testVector loaded with status : " +textStatus );
+//});
+
+    }
 
 
 
