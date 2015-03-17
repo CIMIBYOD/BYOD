@@ -90,7 +90,7 @@ public class CartoManager {
                 this.mapObjectsCache.remove(e.getKey());
 
             } else {
-               Log.w("Trying to remove from map unknown BSO of id "+e.getKey());
+               Log.w("CartoManager","Trying to remove from map unknown BSO of id "+e.getKey());
             }
         }
 
