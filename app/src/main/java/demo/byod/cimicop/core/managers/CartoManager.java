@@ -80,29 +80,21 @@ public class CartoManager {
 
     public void removeSituationEntities(HashMap<String, SituationEntity> entities) {
 
-      /*  for (Map.Entry<String, SituationEntity> e : entities.entrySet()) {
+        for (Map.Entry<String, SituationEntity> e : entities.entrySet()) {
 
             if (this.mapObjectsCache.containsKey(e.getKey())) {
                 //SituationEntity already displayed on the map, updating the map object
                 if (map != null && context != null) {
-                    Object displayedObject = this.mapObjectsCache.get(e.getKey());
-                    if (displayedObject instanceof Marker) {
-                        map.removeMarker((Marker) displayedObject);
-                    } else if (displayedObject instanceof PathOverlay) {
-                        map.removeOverlay((PathOverlay) displayedObject);
-                    }
+                    map.removeBso(e.getKey());
                 }
                 this.mapObjectsCache.remove(e.getKey());
 
             } else {
-                //SituationEntity doesn't exist on the map
+               Log.w("Trying to remove from map unknown BSO of id "+e.getKey());
             }
         }
-        //Force refresh of the map
-        if (map != null && context != null) {
-            // mapview.invalidate();
-        }
-        */
+
+
 
     }
 
@@ -124,6 +116,16 @@ public class CartoManager {
     }
 
     private void updateFromSituationEntity(String id, SituationEntity se) {
+        JSONObject bsoInJson = new JSONObject();
+        try {
+            bsoInJson.put("id", se.getId());
+            bsoInJson.put("type", se.getType());
+            bsoInJson.put("name", se.getName());
+            bsoInJson.put("shape", se.getShape());
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        map.updateBso(bsoInJson);
     }
 }
