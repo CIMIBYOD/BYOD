@@ -223,36 +223,47 @@ function getColor(d) {
 
 legend.onAdd = function (map) {
 
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
-        labels = [];
-
-        $(div).attr("id","action").hide();
-
+    var div = L.DomUtil.create('div', 'c-alert-panel-width c-alert-panel-background legend');
+       
+       //set ID and hide it
+    $(div).attr("id","action").hide();
 
     // loop through our density intervals and generate a label with a colored square for each interval
-   for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+	var shadowHtml ='<div class="c-alert-panel-right">';
+
+
+
+	 shadowHtml +='<ul class="c-alert-panel-list">';
+   for (var i = 0; i < 6; i++) {
+    var icon,text;
+    switch (i){
+      case 0: icon="fa-ambulance"; text="sos";
+      break;
+      case 1: icon="fa-street-view"; text="report";
+      break;
+       case 2: icon="fa-bomb"; text="bomb";
+      break;
+      case 3: icon="fa-ban"; text="no-way";
+      break;
+      case 4: icon="fa-camera"; text="picture";
+      break;
+      case 5: icon="fa-exclamation-triangle";  text="alert";
+      break;
     }
-/*  div.innerHTML +=  
-'<div class="panel panel-default"><div class="panel-heading"><span class="panel-title">Reports</span></div>'+
-  '<div class="panel-body">';
-  
- 
+        shadowHtml +=
+		 '<li>'+
+     '<a href="#" class="thumbnail text-center text-uppercase bg-info">'+
+         '<i class="fa '+icon+'  fa-2x"></i>'+
+          '<span class="glyphicon-class">'+text+'</span>'+
+        '</li>'+
+        '</a>';
+       //     '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+        //    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+	shadowHtml +='</ul>';
+	shadowHtml +='</div>';
+	div.innerHTML = shadowHtml;
 
- div.innerHTML += '<div class="list-group">' +
-  '<a href="#" class="list-group-item active">'+
-    '<p class="list-group-item-text">Boom</p>'+
-  '</a>'+
-   '<a href="#" class="list-group-item">'+
-    '<p class="list-group-item-text">Paf</p>'+
-  '</a>'+
-'</div>'
-
- div.innerHTML +='</div></div>';
-*/
     return div;
 };
 
