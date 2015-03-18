@@ -252,7 +252,7 @@ legend.onAdd = function (map) {
     }
         shadowHtml +=
 		 '<li>'+
-     '<a href="#" class="thumbnail text-center text-uppercase bg-info">'+
+     '<a href="#" class="btn btn-default btn-block">'+
          '<i class="fa '+icon+'  fa-2x"></i>'+
           '<span class="glyphicon-class">'+text+'</span>'+
         '</li>'+
@@ -285,19 +285,4 @@ show = true;
      });
 
 
-      ////////////////////////////////////////////////////////////////////////////////////
-
-
-      if(config.test){
-
-//$.getScript( "js/spec/testVector.js", function( data, textStatus, jqxhr ) {
-//
-//  console.log( "testVector loaded with status : " +textStatus );
-//});
-
     }
-
-
-
-
-
