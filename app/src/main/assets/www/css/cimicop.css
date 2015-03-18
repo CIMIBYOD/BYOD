@@ -11,6 +11,7 @@ width:170px;
     background: rgba(255,255,255,0.8);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 5px;
+	padding-bottom: 10px;
 }
 
 
@@ -33,6 +34,12 @@ width:170px;
 
 }
 
+.c-alert-panel-list  a{
+  width:80px;
+  height:60px;
+
+}
+
 .c-alert-panel-list .thumbnail{
   margin-bottom: 0px;
 }
@@ -40,7 +47,7 @@ width:170px;
 
 .c-alert-panel-list i{
   display: block;
-  padding-bottom: 10px;
+ 
   }
   
 .c-alert-panel-list a {
