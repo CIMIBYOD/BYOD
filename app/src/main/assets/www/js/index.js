@@ -11,7 +11,7 @@ var config={
 	   },
 	   afgha:{
 		   location: new L.LatLng(34.59, 69.8),
-		   mapUrl:'http://192.168.1.130/arcgis/rest/services/SWContest/Afgha/MapServer',
+		   mapUrl:'http://192.168.1.130/arcgis/rest/services/SWContest/Afghanistan/MapServer',
 		   zoomLevel : 12,
 	   }
   }
