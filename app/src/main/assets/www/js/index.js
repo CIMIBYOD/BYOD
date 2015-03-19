@@ -202,7 +202,7 @@ layer = _toPolygon(bso);
  }
  else { 
 	 map.setView(config.map.afgha.location,  config.map.afgha.zoomLevel);
-	 L.esri.dynamicMapLayer( config.map.afgha.mapURL).addTo(map);
+	 L.esri.dynamicMapLayer( config.map.afgha.mapUrl).addTo(map);
 
  }
 
