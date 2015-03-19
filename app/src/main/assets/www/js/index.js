@@ -3,7 +3,7 @@
 /**************************************/  
 var config={
   debug:true,
-  online:true,
+  mapSrc:"afghaTiled",
   map :{ 
 	   france:{
 		location: new L.LatLng(48.85, 2.4),
@@ -13,7 +13,13 @@ var config={
 		   location: new L.LatLng(34.59, 69.8),
 		   mapUrl:'http://192.168.1.130/arcgis/rest/services/SWContest/Afghanistan/MapServer',
 		   zoomLevel : 12,
-	   }
+	   },
+	   afghaTiled:{
+		   location: new L.LatLng(34.59, 69.8),
+		   mapUrl:'http://192.168.246.20/arcgis/services/Contestreduit/MapServer/WMSServer',
+		   layers:'0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33',
+		   zoomLevel : 12,
+	   },
   }
 
 }
@@ -194,25 +200,24 @@ layer = _toPolygon(bso);
 
  //Map
  var map = L.map('map')
- 
- if (config.online){
+   _log("Map source is '"+config.mapSrc+"'" );
+ if (config.mapSrc == 'france'){
 	 map.setView(config.map.france.location,  config.map.france.zoomLevel);
 	 L.esri.basemapLayer('Imagery').addTo(map);
 	 L.esri.basemapLayer('ImageryLabels').addTo(map);
  }
- else { 
+ if (config.mapSrc == 'afgha') { 
 	 map.setView(config.map.afgha.location,  config.map.afgha.zoomLevel);
 	 L.esri.dynamicMapLayer( config.map.afgha.mapUrl).addTo(map);
-
+ }
+ if (config.mapSrc == 'afghaTiled') { 
+	map.setView(config.map.afghaTiled.location,  config.map.afghaTiled.zoomLevel);
+	L.tileLayer.wms(config.map.afghaTiled.mapUrl, {
+    layers: config.map.afghaTiled.layers,
+    }).addTo(map);
  }
  
- /*
-  L.tileLayer.wms("http://192.168.246.20/arcgis/services/Contestreduit/MapServer/WMSServer", {
-    layers: '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33',
-}).addTo(map);
  
- */
-
 
 //location control
 L.control.locate({
@@ -239,9 +244,8 @@ alertPanel.onAdd = function (map) {
        //set ID and hide it
     $(div).attr("id","action").hide();
 
-    // loop through our density intervals and generate a label with a colored square for each interval
+    // build alert panel buttons
 	var shadowHtml ='<div class="c-alert-panel-right">';
-
 
 
 	 shadowHtml +='<ul class="c-alert-panel-list">';
@@ -280,7 +284,7 @@ alertPanel.onAdd = function (map) {
 alertPanel.addTo(map);
 
 
-      //button
+      //alert panel show/hide
       var show=true;
       $("#ooo-click-me").click(function(e){
         if(show){
