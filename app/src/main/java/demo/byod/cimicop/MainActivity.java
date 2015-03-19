@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import demo.byod.cimicop.core.services.connectivity.XmppService;
+import demo.byod.cimicop.core.services.location.LocationService;
+import demo.byod.cimicop.core.services.situation.SituationService;
 import demo.byod.cimicop.ui.views.alertview.AlertSelectorFragment;
 import demo.byod.cimicop.ui.views.mapview.MapFragment;
 import demo.byod.cimicop.ui.views.osmview.OsmFragment;
@@ -26,8 +28,14 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-        Intent intent = new Intent(this, XmppService.class);
-        startService(intent);
+        Intent intentXmppService = new Intent(this, XmppService.class);
+        startService(intentXmppService);
+
+        Intent intenLocationServicet = new Intent(this, LocationService.class);
+        startService(intenLocationServicet);
+
+        Intent intentSituationService = new Intent(this, SituationService.class);
+        startService(intentSituationService);
     }
 
 

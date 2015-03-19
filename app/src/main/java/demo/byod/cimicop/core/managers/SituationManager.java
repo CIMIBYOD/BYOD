@@ -36,7 +36,6 @@ public class SituationManager {
             e.printStackTrace();
         }
 
-
     }
 
     public static SituationManager getInstance(){

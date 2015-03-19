@@ -25,6 +25,8 @@
         </activity>
 
         <service android:name=".core.services.connectivity.XmppService" />
+        <service android:name=".core.services.location.LocationService" />
+        <service android:name=".core.services.situation.SituationService" />
     </application>
 
 </manifest>

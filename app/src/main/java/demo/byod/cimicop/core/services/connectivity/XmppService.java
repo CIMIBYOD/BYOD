@@ -21,9 +21,9 @@ import demo.byod.cimicop.core.managers.SituationManager;
 
 public class XmppService extends Service implements PacketListener {
 
-    public static final String HOST = "10.0.0.114";
+    public static final String HOST = "serverc2";
     public static final int PORT = 5222;
-    public static final String ROOM = "france@conference.cimicop";
+    public static final String ROOM = "tocivilian@conference.serverc2";
     public static final String LOG = "asharpe";
     public static final String PWD = "asharpe";
 
@@ -89,12 +89,14 @@ public class XmppService extends Service implements PacketListener {
 
     @Override
     public void processPacket(Packet packet) {
-        Message message = (Message) packet;
-        if (message != null) {
-            String body = message.getBody();
-            String from = message.getFrom();
-            Log.w("XMPP", from + " = " + body);
-            SituationManager.getInstance().addSituationEntityFromString(body);
+        if(packet instanceof  Message) {
+            Message message = (Message) packet;
+            if (message != null) {
+                String body = message.getBody();
+                String from = message.getFrom();
+                Log.w("XMPP", from + " = " + body);
+                SituationManager.getInstance().addSituationEntityFromString(body);
+            }
         }
     }
 }
