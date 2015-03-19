@@ -3,15 +3,21 @@
 /**************************************/  
 var config={
   debug:true,
-  map :{
-  //initial map location
-  location: new L.LatLng(48.85, 2.4),
-//initial zoom 
-zoomLevel : 10
+  online:true,
+  map :{ 
+	   france:{
+		location: new L.LatLng(48.85, 2.4),
+		zoomLevel : 10,
+	   },
+	   afgha:{
+		   location: new L.LatLng(34.59, 69.8),
+		   mapUrl:'http://192.168.1.130/arcgis/rest/services/SWContest/Afgha/MapServer',
+		   zoomLevel : 12,
+	   }
+  }
 
 }
 
-}
 
 
 /**************************************/
@@ -187,10 +193,18 @@ layer = _toPolygon(bso);
  var cache = new Cache();
 
  //Map
- var map = L.map('map').setView(config.map.location,  config.map.zoomLevel);
+ var map = L.map('map')
+ 
+ if (config.online){
+	 map.setView(config.map.france.location,  config.map.france.zoomLevel);
+	 L.esri.basemapLayer('Imagery').addTo(map);
+	 L.esri.basemapLayer('ImageryLabels').addTo(map);
+ }
+ else { 
+	 map.setView(config.map.afgha.location,  config.map.afgha.zoomLevel);
+	 L.esri.dynamicMapLayer( config.map.afgha.mapURL).addTo(map);
 
- L.esri.basemapLayer('Imagery').addTo(map);
- L.esri.basemapLayer('ImageryLabels').addTo(map);
+ }
 
 
 //location control
@@ -208,22 +222,12 @@ L.control.locate({
 mapReady();
 
 
-var legend = L.control({position: 'bottomright'});
+var alertPanel = L.control({position: 'bottomright'});
 
-function getColor(d) {
-    return d > 1000 ? '#800026' :
-           d > 500  ? '#BD0026' :
-           d > 200  ? '#E31A1C' :
-           d > 100  ? '#FC4E2A' :
-           d > 50   ? '#FD8D3C' :
-           d > 20   ? '#FEB24C' :
-           d > 10   ? '#FED976' :
-                      '#FFEDA0';
-}
 
-legend.onAdd = function (map) {
+alertPanel.onAdd = function (map) {
 
-    var div = L.DomUtil.create('div', 'c-alert-panel-width c-alert-panel-background legend');
+    var div = L.DomUtil.create('div', 'c-alert-panel-width c-alert-panel-background');
        
        //set ID and hide it
     $(div).attr("id","action").hide();
@@ -257,8 +261,7 @@ legend.onAdd = function (map) {
           '<span class="glyphicon-class">'+text+'</span>'+
         '</li>'+
         '</a>';
-       //     '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-        //    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+
     }
 	shadowHtml +='</ul>';
 	shadowHtml +='</div>';
@@ -267,7 +270,7 @@ legend.onAdd = function (map) {
     return div;
 };
 
-legend.addTo(map);
+alertPanel.addTo(map);
 
 
       //button
