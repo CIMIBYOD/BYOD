@@ -3,7 +3,7 @@
 /**************************************/  
 var config={
   debug:true,
-  mapSrc:"afghaTiled",
+  mapSrc:"france",
   map :{ 
 	   france:{
 		location: new L.LatLng(48.85, 2.4),
@@ -53,7 +53,10 @@ var _log = function(msg){
     //@private
     var _toMarker = function(bso){
      try{
-      return _bindPopup(L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lon)),bso);
+      var markerIcon;
+      if(bso.type =='danger'){markerIcon = L.AwesomeMarkers.icon({icon: 'warning', prefix: 'fa', markerColor: 'red'});}
+      else{markerIcon = L.AwesomeMarkers.icon({icon: 'info', prefix: 'fa', markerColor: 'orange'});}
+      return _bindPopup(L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lon), {icon: markerIcon}),bso);
       }catch(reason){
         _log("ERROR: unable to transform ponctual to Marker with reason :" +reason);
       }
@@ -68,7 +71,10 @@ var _log = function(msg){
       for (var i=0;i<bso.shape.coords.length;i++){
         edges.push(L.latLng(bso.shape.coords[i].lat, bso.shape.coords[i].lon));
       }
-      return _bindPopup(L.polygon(edges),bso);
+      var color;
+       if(bso.type =='danger'){color = "#ff0000";}
+      else{color = "#FF8100";}
+      return _bindPopup(L.polygon(edges,{weight:1,color:color}),bso);
 
       }catch(reason){
         _log("ERROR: unable to transform area to polygone with reason :" +reason);
@@ -284,16 +290,10 @@ alertPanel.onAdd = function (map) {
 alertPanel.addTo(map);
 
 
-      //alert panel show/hide
-      var show=true;
-      $("#ooo-click-me").click(function(e){
-        if(show){
-          $("#action").show();
-show = false;
-        }else{
-           $("#action").hide();
-show = true;
-        }
+//alert panel show/hide
+var show=true;
+$("#ooo-click-me").click(function(e){
 
+   $("#action").toggle( "fade" );
 
-     });
+});
