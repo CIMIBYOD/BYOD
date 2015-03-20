@@ -69,7 +69,9 @@ var _log = function(msg){
      try{
       var edges=[];
       for (var i=0;i<bso.shape.coords.length;i++){
-        edges.push(L.latLng(bso.shape.coords[i].lat, bso.shape.coords[i].lon));
+        if(bso.shape.coords[i] !== null){
+            edges.push(L.latLng(bso.shape.coords[i].lat, bso.shape.coords[i].lon));
+        }
       }
       var color;
        if(bso.type =='danger'){color = "#ff0000";}

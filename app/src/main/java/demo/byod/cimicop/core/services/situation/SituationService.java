@@ -5,21 +5,13 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import demo.byod.cimicop.core.managers.SituationManager;
 
@@ -30,7 +22,7 @@ public class SituationService extends Service {
 
     public static final long TIME_BTW_REFRESH = 1000 * 60;
 
-    public static final String SITUATION_SERVICE = "http://serverc2:8585/TOMSDataService.svc/bso/cimicop/situation/tocivilian";
+    public static final String SITUATION_SERVICE = "http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/situation/tocivilian";
 
 
     @Override

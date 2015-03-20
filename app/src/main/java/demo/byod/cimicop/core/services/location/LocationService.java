@@ -1,13 +1,9 @@
 package demo.byod.cimicop.core.services.location;
 
 import android.app.Service;
-
 import android.content.Intent;
-
 import android.os.IBinder;
 import android.util.Log;
-
-import com.cocoahero.android.geojson.util.JSONUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,7 +19,7 @@ public class LocationService extends Service{
 
     public static final long TIME_BTW_REFRESH = 1000 * 60;
 
-    public static final String POSITION_SERVICE = "http://serverc2:8585/TOMSDataService.svc/bso/cimicop/position/fromcivilian/";
+    public static final String POSITION_SERVICE = "http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/position/fromcivilian/";
     public static final String USER = "user1";
 
     public double lat = 34.589;
