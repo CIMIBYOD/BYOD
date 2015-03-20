@@ -21,7 +21,7 @@ import demo.byod.cimicop.core.managers.SituationManager;
 
 public class XmppService extends Service implements PacketListener {
 
-    public static final String HOST = "serverc2";
+    public static final String HOST = "192.168.1.100";
     public static final int PORT = 5222;
     public static final String ROOM = "tocivilian@conference.serverc2";
     public static final String LOG = "asharpe";
