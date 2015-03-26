@@ -246,17 +246,14 @@ var alertPanel = L.control({position: 'bottomright'});
 
 
 alertPanel.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'c-alert-panel-width c-alert-panel-background');
+    var div = L.DomUtil.create('div',"c-alert-panel-width");
        
        //set ID and hide it
     $(div).attr("id","action").hide();
 
     // build alert panel buttons
-	var shadowHtml ='<div class="c-alert-panel-right">';
+	var shadowHtml ='<div class="c-alert-panel-list">';
 
-
-	 shadowHtml +='<ul class="c-alert-panel-list">';
    for (var i = 0; i < 6; i++) {
     var icon,text;
     switch (i){
@@ -274,16 +271,9 @@ alertPanel.onAdd = function (map) {
       break;
     }
         shadowHtml +=
-		 '<li>'+
-     '<a href="#" class="btn btn-default btn-block">'+
-         '<i class="fa '+icon+'  fa-2x"></i>'+
-          '<span class="glyphicon-class">'+text+'</span>'+
-        '</li>'+
-        '</a>';
-
+        '<button type="button" class="btn btn-danger"><i class="fa '+icon+'  fa-2x"></i><span class="glyphicon-class">'+text+'</span></button>';
     }
-	shadowHtml +='</ul>';
-	shadowHtml +='</div>';
+	shadowHtml +='</ul>';	shadowHtml +='</div>';
 	div.innerHTML = shadowHtml;
 
     return div;
