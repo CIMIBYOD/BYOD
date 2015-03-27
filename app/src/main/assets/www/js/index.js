@@ -3,23 +3,34 @@
 /**************************************/  
 var config={
   debug:true,
+  //which src to choose for map server (see below)
   mapSrc:"france",
+   //which report url to choose to create reports (see below)
+  reportUrl:"demo",
   map :{ 
-	   france:{
-		location: new L.LatLng(48.85, 2.4),
-		zoomLevel : 10,
-	   },
-	   afgha:{
-		   location: new L.LatLng(34.59, 69.8),
-		   mapUrl:'http://192.168.1.130/arcgis/rest/services/SWContest/Afghanistan/MapServer',
-		   zoomLevel : 12,
-	   },
+     france:{
+      location: new L.LatLng(48.85, 2.4),
+      zoomLevel : 10,
+       },
+       //untiled afghanistan map
+  	   afgha:{
+  		   location: new L.LatLng(34.59, 69.8),
+  		   mapUrl:'http://192.168.1.130/arcgis/rest/services/SWContest/Afghanistan/MapServer',
+  		   zoomLevel : 12,
+  	   },
+        //tiled afghanistan map
 	   afghaTiled:{
 		   location: new L.LatLng(34.59, 69.8),
 		   mapUrl:'http://192.168.246.20/arcgis/services/Contestreduit/MapServer/WMSServer',
 		   layers:'0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33',
 		   zoomLevel : 12,
 	   },
+  },
+  alertPanel:{
+     reportUrl:{
+      test:'http://localhost:90/cimicop/situation/tocivilian',
+      demo:'http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/situation/tocivilian'
+     }
   }
 
 }
@@ -254,24 +265,29 @@ alertPanel.onAdd = function (map) {
     // build alert panel buttons
 	var shadowHtml ='<div class="c-alert-panel-list">';
 
-   for (var i = 0; i < 6; i++) {
+   for (var i = 0; i < 8; i++) {
     var icon,text;
     switch (i){
-      case 0: icon="fa-ambulance"; text="sos";
+      case 0: icon="icon/riot.png"; text="sos";
       break;
-      case 1: icon="fa-street-view"; text="report";
+      case 1: icon="icon/armed-group.png"; text="report";
       break;
-       case 2: icon="fa-bomb"; text="bomb";
+       case 2: icon="icon/bomb.png"; text="bomb";
       break;
-      case 3: icon="fa-ban"; text="no-way";
+      case 3: icon="icon/death.png"; text="no-way";
       break;
-      case 4: icon="fa-camera"; text="picture";
+      case 4: icon="icon/injured.png"; text="picture";
       break;
-      case 5: icon="fa-exclamation-triangle";  text="alert";
+      case 5: icon="icon/tank.png";  text="alert";
       break;
+       case 6: icon="icon/kidnap.png";  text="alert";
+      break;
+       case 7: icon="icon/other.png";  text="alert";
+      break;
+     
     }
         shadowHtml +=
-        '<button type="button" class="btn btn-danger"><i class="fa '+icon+'  fa-2x"></i><span class="glyphicon-class">'+text+'</span></button>';
+        '<button type="button" class="btn btn-primary"><img  src="'+icon+'"></img><span class="glyphicon-class">'+text+'</span></button>';
     }
 	shadowHtml +='</ul>';	shadowHtml +='</div>';
 	div.innerHTML = shadowHtml;
