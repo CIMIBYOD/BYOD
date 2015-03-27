@@ -268,21 +268,21 @@ alertPanel.onAdd = function (map) {
    for (var i = 0; i < 8; i++) {
     var icon,text;
     switch (i){
-      case 0: icon="icon/riot.png"; text="sos";
+      case 0: icon="icon/riot.png"; text="riot";
       break;
-      case 1: icon="icon/armed-group.png"; text="report";
+      case 1: icon="icon/armed-group.png"; text="militia";
       break;
        case 2: icon="icon/bomb.png"; text="bomb";
       break;
-      case 3: icon="icon/death.png"; text="no-way";
+      case 3: icon="icon/death.png"; text="dead";
       break;
-      case 4: icon="icon/injured.png"; text="picture";
+      case 4: icon="icon/injured.png"; text="injured";
       break;
-      case 5: icon="icon/tank.png";  text="alert";
+      case 5: icon="icon/tank.png";  text="vehicle";
       break;
-       case 6: icon="icon/kidnap.png";  text="alert";
+       case 6: icon="icon/kidnap.png";  text="kinapping";
       break;
-       case 7: icon="icon/other.png";  text="alert";
+       case 7: icon="icon/other.png";  text="report";
       break;
      
     }
