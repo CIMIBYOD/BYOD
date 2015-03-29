@@ -1,4 +1,18 @@
-//
+//area/event
+//safe/warning/danger
+/*
+"armed-group"
+   && report.subtype != "bomb"
+   && report.subtype != "death"
+   && report.subtype != "injured"
+   && report.subtype != "jeep"
+   && report.subtype != "kidnap"
+   && report.subtype != "other" 
+   && report.subtype != "riot" 
+   && report.subtype != "tank" 
+
+
+*/
 var marker1 = {
 	id:"Marker.01",
 	type: "danger",

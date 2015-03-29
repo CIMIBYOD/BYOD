@@ -13,8 +13,10 @@
 
 }
 
-.c-alert-panel-list i{
+.c-alert-panel-list img{
   display: block;
+  margin-left: auto;
+  margin-right: auto;
  
   }
   
