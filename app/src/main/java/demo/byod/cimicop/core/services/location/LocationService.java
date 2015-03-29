@@ -2,57 +2,76 @@ package demo.byod.cimicop.core.services.location;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
+import demo.byod.cimicop.core.managers.RestQueryManager;
+import demo.byod.cimicop.core.preferences.PreferencesManager;
 
-public class LocationService extends Service{
+/*
+ *
+ */
+public class LocationService extends Service implements
+        SharedPreferences.OnSharedPreferenceChangeListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
-    public static final long TIME_BTW_REFRESH = 1000 * 60;
+    public static final long TIME_BTW_REFRESH = 5000; //Todo get from prefs
+    private static final String LOCATION_SERVICE_TAG = "LOC-SRVC";
+    private boolean sendCurrentLocationToServer = false;
 
-    public static final String POSITION_SERVICE = "http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/position/fromcivilian/";
-    public static final String USER = "user1";
-
-    public double lat = 34.589;
-    public double lon = 69.763;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        //Get init prefs values and adding listener on pref changes
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sendCurrentLocationToServer = sharedPref.getBoolean(PreferencesManager.LOCATION_PUSH, false);
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+        //Create GoogleApiClient to access LocationServices.FusedLocationApi
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        Log.i(LOCATION_SERVICE_TAG, "onCreate() DONE");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        new Thread(new Runnable() {
-            public void run() {
-                while(true){
+        googleApiClient.connect();
 
-                    sendCurrentLocation();
-                    try {
-                        Thread.sleep(TIME_BTW_REFRESH);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-
+        Log.i(LOCATION_SERVICE_TAG, "onStartCommand() DONE");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
+
+        //Removing listener on pref changes
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+
+        googleApiClient.disconnect();
+
+        Log.i(LOCATION_SERVICE_TAG, "onDestroy() DONE");
         super.onDestroy();
     }
 
@@ -72,49 +91,61 @@ public class LocationService extends Service{
     }
 
 
-    private void sendCurrentLocation(){
+    @Override
+    // Caution: When you call registerOnSharedPreferenceChangeListener(), the preference manager does
+    // not currently store a strong reference to the listener. You must store a strong reference to
+    // the listener, or it will be susceptible to garbage collection. We recommend you keep a reference
+    // to the listener in the instance data of an object that will exist as long as you need the listener.
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-            // 2. make POST request to the given URL
-            HttpPut httpPUT = new HttpPut(POSITION_SERVICE+USER);
+        if (key.equals(PreferencesManager.LOCATION_PUSH)) {
+            sendCurrentLocationToServer = sharedPreferences.getBoolean(PreferencesManager.LOCATION_PUSH, false);
+            Log.i(LOCATION_SERVICE_TAG, "Location PUSH preferences changed to = " + sendCurrentLocationToServer);
 
-            JSONObject body = new JSONObject();
-
-            //replace with string
-            JSONObject position = new JSONObject();
-            JSONArray coordsArray = new JSONArray();
-            JSONObject coords = new JSONObject();
-            this.lat += 0.0001;
-            this.lon += 0.0001;
-            String latString = lat+"";
-            String lonString = lon+"";
-
-            coords.put("lat", latString.replace(".",","));
-            coords.put("lon", lonString.replace(".",","));
-            coordsArray.put(coords);
-
-            position.put("coords", coordsArray);
-            body.put("position", position.toString());
-
-            // 4. convert JSONObject to JSON to String
-            String json = body.toString();
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-            // 6. set httpPost Entity
-            httpPUT.setEntity(se);
-            // 7. Set some headers to inform server about the type of the content
-            httpPUT.setHeader("Accept", "application/json");
-            httpPUT.setHeader("Content-type", "application/json");
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPUT);
-            String JSONString = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
-            Log.d("httpResponse", JSONString);
-
-        } catch (Exception e) {
-            Log.d("sendCurrentLocation", e.getLocalizedMessage());
+            if (googleApiClient != null) {
+                if (sendCurrentLocationToServer) {
+                    if (!googleApiClient.isConnected() || googleApiClient.isConnecting()) {
+                        googleApiClient.connect();
+                        Log.i(LOCATION_SERVICE_TAG, "STARTED Listening & Sending location");
+                    }
+                } else {
+                    googleApiClient.disconnect();
+                    Log.i(LOCATION_SERVICE_TAG, "STOPPED Listening & Sending location");
+                }
+            }
         }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(TIME_BTW_REFRESH);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+        Log.i(LOCATION_SERVICE_TAG, "GoogleApiClient requestLocationUpdates onConnected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(LOCATION_SERVICE_TAG, "GoogleApiClient connection has been suspend");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(LOCATION_SERVICE_TAG, "GoogleApiClient connection has failed");
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i(LOCATION_SERVICE_TAG, "Location received: " + location.toString());
+        if (location != null) {
+            RestQueryManager.sendLocation(location.getLatitude(), location.getLongitude(), location.getAccuracy());
+        }
+
     }
 
 }

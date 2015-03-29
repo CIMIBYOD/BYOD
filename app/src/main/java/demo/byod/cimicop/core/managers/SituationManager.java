@@ -45,7 +45,7 @@ public class SituationManager {
         return instance;
     }
 
-
+    //
     public HashMap<String, SituationEntity> getSituationEntities() {
 
         return this.entities;
@@ -67,7 +67,7 @@ public class SituationManager {
             String name = ies.getString("name");
             JSONObject shape = ies.getJSONObject("shape");
 
-            SituationEntity se = new SituationEntity(id, name, type, shape);
+            SituationEntity se = new SituationEntity(id, type, name, shape);
             Log.w("SituationManager", se.toString());
             this.addOrUpdateSituationEntity(se);
 

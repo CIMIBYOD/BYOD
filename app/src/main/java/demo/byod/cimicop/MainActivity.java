@@ -11,15 +11,15 @@ import android.view.MenuItem;
 import demo.byod.cimicop.core.services.connectivity.XmppService;
 import demo.byod.cimicop.core.services.location.LocationService;
 import demo.byod.cimicop.core.services.situation.SituationService;
-import demo.byod.cimicop.ui.views.alertview.AlertSelectorFragment;
-import demo.byod.cimicop.ui.views.mapview.MapFragment;
 import demo.byod.cimicop.ui.views.osmview.OsmFragment;
+import demo.byod.cimicop.ui.views.preferences.PreferencesFragment;
 
 
 public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
@@ -36,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intentSituationService = new Intent(this, SituationService.class);
         startService(intentSituationService);
+
     }
 
 
@@ -56,21 +57,17 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.open_alert_selector) {
-            // Perform action on click
-            // Create new fragment and transaction
-            Fragment newFragment = new AlertSelectorFragment();
+            Fragment settingsFragment = new PreferencesFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack
-            transaction.replace(R.id.container, newFragment);
+            transaction.replace(R.id.container, settingsFragment);
             transaction.addToBackStack(null);
 
             // Commit the transaction
             transaction.commit();
+
             return true;
         }
 

@@ -2,24 +2,24 @@
 var marker1 = {
 	id:"Marker.01",
 	type: "danger",
-	name:"marker-01",
+	name:"CMDARMY.0.003",
 	shape:{
 	type : "ponctual",
-	coords:[{lat:48.90,lon:2.5}]
+	coords:[{lat:34.588018,lon:69.759742}]
 	}
 }
 
 var marker2 = {
 	id:"Marker.02",
 	type: "watch",
-	name:"marker-02",
+	name:"CMDARMY.0.004",
 	shape:{
 	type : "ponctual",
-	coords:[{lat:48.85,lon:2.5}]
+	coords:[{lat:34.588502,lon:69.764589}]
 	}
 }
 
-
+/*
 var polygon1 = {
 	id:"Polygon.01",
 	type: "danger",
@@ -47,11 +47,11 @@ var polygon2 = {
 		]
 	}
 }
-
+*/
 //test add
 addBso(JSON.stringify(marker1));
 addBso(JSON.stringify(marker2));
-
+/*
 addBso(JSON.stringify(polygon1));
 addBso(JSON.stringify(polygon2));
 
@@ -92,3 +92,4 @@ setTimeout(function(){
    }
 },5000);
 
+*/

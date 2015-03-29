@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <PreferenceCategory
+        android:key="pref_key_user_settings"
+        android:title="@string/pref_user_title">
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_location_settings"
+        android:title="@string/pref_location_title">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_key_push_location"
+            android:summary="@string/pref_summary_push_location"
+            android:title="@string/pref_title_push_location" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

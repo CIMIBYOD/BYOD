@@ -7,6 +7,7 @@ import android.util.Log;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
+import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.MessageTypeFilter;
@@ -14,6 +15,7 @@ import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.util.dns.HostAddress;
+import org.jivesoftware.smackx.muc.DiscussionHistory;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 
 import demo.byod.cimicop.core.managers.SituationManager;
@@ -51,7 +53,9 @@ public class XmppService extends Service implements PacketListener {
                     connection.addPacketListener(XmppService.this, filter);
 
                     MultiUserChat muc2 = new MultiUserChat(connection, ROOM);
-                    muc2.join(LOG);
+                    DiscussionHistory dh = new DiscussionHistory();
+                    dh.setMaxStanzas(0);
+                    muc2.join(LOG, null, dh, SmackConfiguration.getPacketReplyTimeout());
 
                     muc2.addMessageListener(XmppService.this);
 

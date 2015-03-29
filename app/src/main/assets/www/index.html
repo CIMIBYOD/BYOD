@@ -2,33 +2,33 @@
 
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-    <link rel="stylesheet" type="text/css" href="css/cimicop.css" />
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
+    <link rel="stylesheet" type="text/css" href="css/cimicop.css"/>
 
 
     <title>Cimicop</title>
     <style type="text/css">
-    html, body, #map
-    {
+        html, body, #map
+        {
         height: 100%;
-    }
-    #map
-    {
+        }
+        #map
+        {
         width: 100%;
-    }
+        }
     </style>
-
 
 
     <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
 
 
     <!-- map -->
-    <link rel="stylesheet" type="text/css" href="lib/leaflet/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="lib/leaflet/leaflet.css"/>
     <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
     <script src="lib/esri-leaflet/esri-leaflet.js"></script>
 
@@ -39,34 +39,32 @@
     <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css"/>
 
     <!-- plugins -->
-    <link rel="stylesheet" href="lib/locatecontrol/L.Control.Locate.min.css" />
-    <script src="lib/locatecontrol/L.Control.Locate.min.js" ></script>
+    <link rel="stylesheet" href="lib/locatecontrol/L.Control.Locate.min.css"/>
+    <script src="lib/locatecontrol/L.Control.Locate.min.js"></script>
 
-    <link rel="stylesheet" href="lib/awesome-markers/leaflet.awesome-markers.css" />
-    <script src="lib/awesome-markers/leaflet.awesome-markers.min.js" ></script>
+    <link rel="stylesheet" href="lib/awesome-markers/leaflet.awesome-markers.css"/>
+    <script src="lib/awesome-markers/leaflet.awesome-markers.min.js"></script>
 
-   <!-- effects -->
-    <link rel="stylesheet" href="lib/jquery-ui-custom/jquery-ui.min.css" />
-     <script src="lib/jquery-ui-custom/jquery-ui.min.js" ></script>
+    <!-- effects -->
+    <link rel="stylesheet" href="lib/jquery-ui-custom/jquery-ui.min.css"/>
+    <script src="lib/jquery-ui-custom/jquery-ui.min.js"></script>
 
 </head>
 <body>
 
 <!-- map -->
-  <div id="map"></div>
+<div id="map"></div>
 
-  <!-- alert control -->
-  <div  class="leaflet-control-locate leaflet-bar leaflet-control leaflet-bottom leaflet-right">
+<!-- alert control -->
+<div class="leaflet-control-locate leaflet-bar leaflet-control leaflet-bottom leaflet-right">
     <button id="ooo-click-me" type="button" class="btn btn-danger leaflet-control">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-  </button>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    </button>
 </div>
-
-
 
 
 <script type="text/javascript" src="js/index.js"></script>
 <!-- FOR TEST ONLY  <script type="text/javascript" src="spec/testVector.js"></script> -->
-
+<script type="text/javascript" src="spec/testVector.js"></script>
 </body>
 </html>
