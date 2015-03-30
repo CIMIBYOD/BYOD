@@ -35,6 +35,7 @@
 
     <!-- styling -->
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css"/>
 
@@ -45,33 +46,60 @@
     <link rel="stylesheet" href="lib/awesome-markers/leaflet.awesome-markers.css" />
     <script src="lib/awesome-markers/leaflet.awesome-markers.min.js" ></script>
 
-   <!-- effects -->
+    <!-- effects -->
     <link rel="stylesheet" href="lib/jquery-ui-custom/jquery-ui.min.css" />
-     <script src="lib/jquery-ui-custom/jquery-ui.min.js" ></script>
+    <script src="lib/jquery-ui-custom/jquery-ui.min.js" ></script>
+
+    <!-- reactjs -->
+     <script src="lib/reactjs/react.min.js"></script>
+    <script src="lib/reactjs/JSXTransformer.js"></script>
 
     <!-- application configuration -->
     <script type="text/javascript" src="js/config.js"></script>
 </head>
 <body>
 
-<!-- map -->
-  <div id="map"></div>
+    <!-- map -->
+    <div id="map"></div>
 
-  <!-- alert control -->
-  <div  class="leaflet-control-locate leaflet-bar leaflet-control leaflet-bottom leaflet-right">
-    <button id="alert" type="button" class="btn btn-danger leaflet-control">
-      <img  src="icon/menu.png"></img>
-  </button>
-</div>
+    <!-- alert control -->
+    <div  class="leaflet-control-locate leaflet-bar leaflet-control leaflet-bottom leaflet-right">
+        <button id="report-btn" type="button" class="btn btn-danger leaflet-control">
+          <img  src="icon/menu.png"></img>
+      </button>
+  </div>
+
+<div id="report-panel-placeholder"></div>
 
 
+  <script type="text/javascript" src="js/tools.js"></script>
+  <script type="text/javascript" src="js/mapview.js"></script>
+  <script type="text/jsx" src="js/reportpanel.js"></script>
 
+  <script type="text/javascript" src="js/main.js"></script>
 
-<script type="text/javascript" src="js/tools.js"></script>
-<script type="text/javascript" src="js/mapview.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+  <script type="text/jsx">
 
-<!-- FOR TEST ONLY  <script type="text/javascript" src="spec/testVector.js"></script> -->
+ 
+var reports = [
+  {icon:"icon/riot.png", text:"riot",id:"riot"},
+ {icon:"icon/armed-group.png", text:"militia",id:"militia"},
+ {icon:"icon/bomb.png", text:"bomb",id:"bomb"},
+ {icon:"icon/death.png", text:"dead",id:"dead"},
+ {icon:"icon/injured.png", text:"injured",id:"injured"},
+ {icon:"icon/tank.png", text:"vehicle",id:"vehicle"},
+ {icon:"icon/kidnap.png", text:"kinapping",id:"kinapping"},
+ {icon:"icon/other.png", text:"report",id:"report"}
+ ];
+
+ React.render(
+  <ReportPanel data={reports} />,
+  document.getElementById('report-panel-placeholder')
+);
+
+  </script>
+
+  <!-- FOR TEST ONLY  <script type="text/javascript" src="spec/testVector.js"></script> -->
 
 </body>
 </html>

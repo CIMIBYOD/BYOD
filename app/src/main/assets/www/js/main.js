@@ -88,14 +88,25 @@ alertPanel.onAdd = function (map) {
 alertPanel.addTo(map);
 
 
+
+var position = $("#report-btn").offset();
+console.log("position.top = "+position.top);
+console.log("position.left = "+position.left);
+console.log("width = "+$("#report-btn").width());
+console.log("height = "+$("#report-btn").height());
+
+
+
+
 //alert panel show/hide
 var show=true;
-$("#alert").click(function(e){
+$("#report-btn").click(function(e){
    $("#action").toggle( "fade" );
 });
 
 //alert panel actions
 $(".c-alert-panel-list button").click(function(e){
   console.log("clicked : " + $(this).attr("id"));
+  event.stopPropagation();
 
 });

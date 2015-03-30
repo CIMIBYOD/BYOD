@@ -1,5 +1,7 @@
 .c-alert-panel-width{
   width:170px;
+  z-index: 20000 !important;
+   pointer-events: auto !important;
 }
 
 
@@ -10,6 +12,8 @@
   margin : 2px;
   font-size: 12px;
   text-align: center;
+  pointer-events: auto !important;
+
 
 }
 
@@ -17,7 +21,21 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+  pointer-events: auto !important;
  
   }
+
+ 
+
+ .c-alert-floating-panel{
+
+  width:170px;
+  z-index: 20000 !important;
+  position: fixed;
+  top: 250px;
+  left:600px;
+
+ }
+
   
 
