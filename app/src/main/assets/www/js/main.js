@@ -43,52 +43,6 @@ L.control.locate({
 mapReady();
 
 
-var alertPanel = L.control({position: 'bottomright'});
-
-
-alertPanel.onAdd = function (map) {
-    var div = L.DomUtil.create('div',"c-alert-panel-width");
-
-       //set ID and hide it
-    $(div).attr("id","action").hide();
-
-    // build alert panel buttons
-	var shadowHtml ='<div class="c-alert-panel-list">';
-
-   for (var i = 0; i < 8; i++) {
-    var icon,text,id;
-    switch (i){
-      case 0: icon="icon/riot.png"; text="riot";id="militia";
-      break;
-      case 1: icon="icon/armed-group.png"; text="militia";id="militia";
-      break;
-       case 2: icon="icon/bomb.png"; text="bomb";id="bomb";
-      break;
-      case 3: icon="icon/death.png"; text="dead";id="dead";
-      break;
-      case 4: icon="icon/injured.png"; text="injured";id="injured";
-      break;
-      case 5: icon="icon/tank.png";  text="vehicle";id="vehicle";
-      break;
-       case 6: icon="icon/kidnap.png";  text="kinapping";id="kinapping";
-      break;
-       case 7: icon="icon/other.png";  text="report";id="report";
-      break;
-
-    }
-        shadowHtml +=
-        '<button id="'+ id +'" type="button" class="btn btn-primary"><img  src="'+icon+'"></img><span class="glyphicon-class">'+text+'</span></button>';
-    }
-	shadowHtml +='</ul>';	shadowHtml +='</div>';
-	div.innerHTML = shadowHtml;
-
-    return div;
-};
-
-alertPanel.addTo(map);
-
-
-
 var position = $("#report-btn").offset();
 console.log("position.top = "+position.top);
 console.log("position.left = "+position.left);
@@ -101,7 +55,19 @@ console.log("height = "+$("#report-btn").height());
 //alert panel show/hide
 var show=true;
 $("#report-btn").click(function(e){
-   $("#action").toggle( "fade" );
+  if(show == true){
+  _log("Opening report panel ... ");
+  show = false;
+  React.render(
+    React.createElement(ReportPanel, null),
+    document.getElementById('report-panel-placeholder')
+    );
+  }else{
+    _log("Dismounting report panel ... ");
+    show = true;
+   React.unmountComponentAtNode(document.getElementById('report-panel-placeholder'));
+  }
+
 });
 
 //alert panel actions

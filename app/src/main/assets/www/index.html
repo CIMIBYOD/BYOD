@@ -52,9 +52,9 @@
 
     <!-- reactjs -->
      <script src="lib/reactjs/react.min.js"></script>
-    <script src="lib/reactjs/JSXTransformer.js"></script>
+     <!-- DEV_ONLY <script src="lib/reactjs/JSXTransformer.js"></script> -->
 
-    <!-- application configuration -->
+   <!-- application configuration -->
     <script type="text/javascript" src="js/config.js"></script>
 </head>
 <body>
@@ -74,31 +74,11 @@
 
   <script type="text/javascript" src="js/tools.js"></script>
   <script type="text/javascript" src="js/mapview.js"></script>
-  <script type="text/jsx" src="js/reportpanel.js"></script>
+  <script type="text/javascript" src="js/reportpanel.js"></script>
 
   <script type="text/javascript" src="js/main.js"></script>
 
-  <script type="text/jsx">
-
- 
-var reports = [
-  {icon:"icon/riot.png", text:"riot",id:"riot"},
- {icon:"icon/armed-group.png", text:"militia",id:"militia"},
- {icon:"icon/bomb.png", text:"bomb",id:"bomb"},
- {icon:"icon/death.png", text:"dead",id:"dead"},
- {icon:"icon/injured.png", text:"injured",id:"injured"},
- {icon:"icon/tank.png", text:"vehicle",id:"vehicle"},
- {icon:"icon/kidnap.png", text:"kinapping",id:"kinapping"},
- {icon:"icon/other.png", text:"report",id:"report"}
- ];
-
- React.render(
-  <ReportPanel data={reports} />,
-  document.getElementById('report-panel-placeholder')
-);
-
-  </script>
-
+  
   <!-- FOR TEST ONLY  <script type="text/javascript" src="spec/testVector.js"></script> -->
 
 </body>

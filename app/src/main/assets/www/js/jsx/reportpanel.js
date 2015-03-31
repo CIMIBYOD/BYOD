@@ -1,4 +1,4 @@
-var ReportPanel = React.createClass({displayName: "ReportPanel",
+var ReportPanel = React.createClass({
 
  getInitialState: function() {
 
@@ -50,13 +50,13 @@ componentDidMount: function() {
     };
     var reports = this.state.data.reports.map(function (report) {
       return (
-       React.createElement("button", {id: report.id, type: "button", className: "btn btn-primary"}, React.createElement("img", {src: report.icon}), React.createElement("span", {className: "glyphicon-class"}, report.label))
+       <button id={report.id} type="button" className="btn btn-primary"><img  src={report.icon}></img><span className="glyphicon-class">{report.label}</span></button>
        );
     });
     return (
-      React.createElement("div", {id: "report-panel", className: "c-alert-panel-list c-alert-floating-panel", style: startStyle}, 
-      reports
-      )
+      <div id="report-panel" className="c-alert-panel-list c-alert-floating-panel" style={startStyle}>
+      {reports}
+      </div>
       );
   }
 });
