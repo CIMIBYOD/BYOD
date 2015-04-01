@@ -11,17 +11,17 @@ _log("loading map view ..." );
  var map = L.map('map')
    _log("Map source is '"+config.mapSrc+"'" );
  if (config.mapSrc == 'france'){
-	 map.setView(config.map.france.location,  config.map.france.zoomLevel);
-	 L.esri.basemapLayer('Imagery').addTo(map);
-	 L.esri.basemapLayer('ImageryLabels').addTo(map);
+   map.setView(config.map.france.location,  config.map.france.zoomLevel);
+   L.esri.basemapLayer('Imagery').addTo(map);
+   L.esri.basemapLayer('ImageryLabels').addTo(map);
  }
  if (config.mapSrc == 'afgha') {
-	 map.setView(config.map.afgha.location,  config.map.afgha.zoomLevel);
-	 L.esri.dynamicMapLayer( config.map.afgha.mapUrl).addTo(map);
+   map.setView(config.map.afgha.location,  config.map.afgha.zoomLevel);
+   L.esri.dynamicMapLayer( config.map.afgha.mapUrl).addTo(map);
  }
  if (config.mapSrc == 'afghaTiled') {
-	map.setView(config.map.afghaTiled.location,  config.map.afghaTiled.zoomLevel);
-	L.tileLayer.wms(config.map.afghaTiled.mapUrl, {
+  map.setView(config.map.afghaTiled.location,  config.map.afghaTiled.zoomLevel);
+  L.tileLayer.wms(config.map.afghaTiled.mapUrl, {
     layers: config.map.afghaTiled.layers,
     }).addTo(map);
  }
@@ -41,15 +41,6 @@ L.control.locate({
 
 //tell android java context that map is ready
 mapReady();
-
-
-var position = $("#report-btn").offset();
-console.log("position.top = "+position.top);
-console.log("position.left = "+position.left);
-console.log("width = "+$("#report-btn").width());
-console.log("height = "+$("#report-btn").height());
-
-
 
 
 //alert panel show/hide
@@ -72,7 +63,7 @@ $("#report-btn").click(function(e){
 
 //alert panel actions
 $(".c-alert-panel-list button").click(function(e){
-  console.log("clicked : " + $(this).attr("id"));
-  event.stopPropagation();
+  e.stopPropagation();
+  $(e.target).blur();
 
 });
