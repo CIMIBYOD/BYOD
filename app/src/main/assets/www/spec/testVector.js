@@ -2,30 +2,10 @@
 A REGLER
 
 1) l'ID a disparu des BSO ...
-
+2) les icones des markers
 
 */
 
-//area/event
-//safe/warning/danger
-/*
-"armed-group"
-   && report.subtype != "bomb"
-   && report.subtype != "death"
-   && report.subtype != "injured"
-   && report.subtype != "kidnap"
-   && report.subtype != "other" 
-   && report.subtype != "riot" 
-   && report.subtype != "tank" 
-
-"type": "area",
-  "subtype": "warning",
-  "name": "Zone-001",
-  "description": null,
-  "shape": {
-    "type": "area",
-    "coords": [
-*/
 var markers = [];
 var cpt=1;
 var marker = {

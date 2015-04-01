@@ -61,9 +61,4 @@ $("#report-btn").click(function(e){
 
 });
 
-//alert panel actions
-$(".c-alert-panel-list button").click(function(e){
-  e.stopPropagation();
-  $(e.target).blur();
 
-});

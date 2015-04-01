@@ -22,6 +22,16 @@ var ReportPanel = React.createClass({displayName: "ReportPanel",
 componentDidMount: function() {
      //fade in
      $("#"+this.state.data.compID ).toggle( "fade" );
+
+     //alert panel actions
+    $(".c-alert-panel-list button").click(function(e){
+      console.log(" Clicked "+ $(this).attr('id'));
+     var that = this;
+       setTimeout(function () {
+           $(that.element).blur();
+       },500);
+
+    });
    },
    componentWillUnmount : function() {
      //fade out
