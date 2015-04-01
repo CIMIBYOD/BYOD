@@ -62,13 +62,71 @@ layer = _toPolygon(bso);
     }
 
     /**********    transform ponctual Bso to leaflet marker     *********/
+//define icons
+
+var markerIcons = {};
+var icon = L.icon({
+    iconUrl: 'icon/armed-group-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["armed-group"]=icon;
+
+icon = L.icon({
+    iconUrl: 'icon/death-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["death"]=icon;
+
+icon = L.icon({
+    iconUrl: 'icon/injured-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["injured"]=icon;
+
+icon = L.icon({
+    iconUrl: 'icon/kidnap-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["kidnap"]=icon;
+
+icon = L.icon({
+    iconUrl: 'icon/other-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["other"]=icon;
+
+icon = L.icon({
+    iconUrl: 'icon/riot-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["riot"]=icon;
+
+icon = L.icon({
+    iconUrl: 'icon/tank-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["tank"]=icon;
+
+icon = L.icon({
+    iconUrl: 'icon/bomb-marker.png',
+    popupAnchor: [1, -16],
+    iconSize:     [32, 32]
+    });
+markerIcons["bomb"]=icon;
+
+
         //@private
         var _toMarker = function(bso){
          try{
-          var markerIcon;
-          if(bso.type =='danger'){markerIcon = L.AwesomeMarkers.icon({icon: 'warning', prefix: 'fa', markerColor: 'red'});}
-          else{markerIcon = L.AwesomeMarkers.icon({icon: 'info', prefix: 'fa', markerColor: 'orange'});}
-          return _bindPopup(L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lon), {icon: markerIcon}),bso);
+            return _bindPopup(L.marker(L.latLng(bso.shape.coords[0].lat, bso.shape.coords[0].lon), {icon: markerIcons[bso.subtype]}),bso);
+
           }catch(reason){
             _log("ERROR: unable to transform ponctual to Marker with reason :" +reason);
           }
@@ -86,8 +144,10 @@ layer = _toPolygon(bso);
             }
           }
           var color;
-           if(bso.type =='danger'){color = "#ff0000";}
-          else{color = "#FF8100";}
+           if(bso.subtype =='danger'){color = "#ff0000";}
+           else if(bso.subtype =='warning'){color = "#FF8100";}
+           else if(bso.subtype =='safe'){color = "#00b35a";}
+           else{color = "#ff0000";}
           return _bindPopup(L.polygon(edges,{weight:1,color:color}),bso);
 
           }catch(reason){
@@ -96,5 +156,5 @@ layer = _toPolygon(bso);
        }
         //add popup info to bso
        var _bindPopup = function(layer,bso){
-        return layer.bindPopup("<b>"+bso.type+"</b><br>"+bso.name);
+        return layer.bindPopup("<b>"+bso.name+"</b><br>"+bso.description);
        }
