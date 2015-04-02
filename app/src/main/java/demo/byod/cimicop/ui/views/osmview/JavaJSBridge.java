@@ -20,7 +20,7 @@ public class JavaJSBridge {
     }
 
     /**
-     * Show a toast from the web page
+     * Logging utility
      */
     @JavascriptInterface
     public void log(String msg) {
@@ -28,7 +28,9 @@ public class JavaJSBridge {
 
     }
 
-
+    /**
+     * Triggered when html map view is loaded
+     */
     @JavascriptInterface
     public void mapReady() {
 

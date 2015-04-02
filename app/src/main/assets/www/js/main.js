@@ -42,11 +42,10 @@ L.control.locate({
 //tell android java context that map is ready
 mapReady();
 
-
 //alert panel show/hide
 var show=true;
 $("#report-btn").click(function(e){
-  if(show == true){
+ if(show == true){
   _log("Opening report panel ... ");
   show = false;
   React.render(

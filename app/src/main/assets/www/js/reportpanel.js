@@ -14,22 +14,24 @@ var ReportPanel = React.createClass({displayName: "ReportPanel",
  {icon:"icon/kidnap.png", label:"kinapping",id:"kinapping"},
  {icon:"icon/other.png", label:"report",id:"report"}
  ];
+ 
 
  var  data={compID:"report-panel",reports:reports};
  return {data: data};
 },
 
 componentDidMount: function() {
+  var self  = this;
      //fade in
      $("#"+this.state.data.compID ).toggle( "fade" );
 
      //alert panel actions
-    $(".c-alert-panel-list button").click(function(e){
-      console.log(" Clicked "+ $(this).attr('id'));
-     var that = this;
-       setTimeout(function () {
-           $(that.element).blur();
-       },500);
+     $(".c-alert-panel-list button").click(function(e){
+      self.getLocation();
+      var that = this;
+      setTimeout(function () {
+       $(that.element).blur();
+     },500);
 
     });
    },
@@ -37,8 +39,30 @@ componentDidMount: function() {
      //fade out
      $("#"+this.state.data.compID ).toggle( "fade",null,100 );
    },
-   render: function() {
-     _log("rendering ReportPanel ..." );
+   getLocation: function(){
+    var success = function (position) {
+      var latitude  = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      _log("Latitude: " +latitude +  "Longitude: " + longitude);
+    };
+
+
+    var error = function(reason) {
+      _log("ERROR : Unable to retrieve your location: "+reason);
+    };
+
+
+    if (navigator.geolocation) {
+     navigator.geolocation.getCurrentPosition(success, error);
+   } else {
+     _log("ERROR : GeoLocation not available !!" );
+
+   }
+
+
+ },
+ render: function() {
+   _log("rendering ReportPanel ..." );
 
      //define position againts 'open panel button'
      var position = $("#report-btn").offset();

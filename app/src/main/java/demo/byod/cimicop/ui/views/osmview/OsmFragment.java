@@ -45,15 +45,14 @@ public class OsmFragment extends Fragment {
         mContext =  rootView.getContext();
         WebSettings webSettings = mOsmView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setGeolocationEnabled(true);
 
-       //for Geolocation access
+       //for Geolocation access (automatic grant access)
         mOsmView.setWebChromeClient(new WebChromeClient() {
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                 callback.invoke(origin, true, false);
             }
         });
-
-
 
 
 
