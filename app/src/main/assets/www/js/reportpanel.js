@@ -10,9 +10,9 @@ var ReportPanel = React.createClass({displayName: "ReportPanel",
  {icon:"icon/bomb.png", label:"bomb",id:"bomb"},
  {icon:"icon/death.png", label:"dead",id:"dead"},
  {icon:"icon/injured.png", label:"injured",id:"injured"},
- {icon:"icon/tank.png", label:"vehicle",id:"vehicle"},
- {icon:"icon/kidnap.png", label:"kinapping",id:"kinapping"},
- {icon:"icon/other.png", label:"report",id:"report"}
+ {icon:"icon/tank.png", label:"vehicle",id:"tank"},
+ {icon:"icon/kidnap.png", label:"kinapping",id:"kidnap"},
+ {icon:"icon/other.png", label:"report",id:"other"}
  ];
  
 
@@ -68,26 +68,29 @@ componentWillUnmount : function() {
       }
     }
 
+
 // geolocation callback
 var geoSuccess = function (position) {
-  
+
   var latitude  = position.coords.latitude;
   var longitude = position.coords.longitude;
-  _log("Latitude: " +latitude +  "Longitude: " + longitude);
   
   report.shape.coords=[{lat:latitude,lon:longitude}];
 
-  $.post( "http://localhost:90/cimicop/situation/tocivilian",
-  report,
-  function( data,textStatus ,jqXHR) {
-    console.log("data= "+data);
-    console.log("textStatus= "+textStatus);
-   },
-   "json");
-    
-}; 
+  _log(JSON.stringify(report));
 
+  $.ajax({
+    url: 'http://localhost:90/cimicop/situation/tocivilian',
+    type: 'POST',
+    data: JSON.stringify(report),
+    contentType: 'application/json',
+    dataType: 'json',
+    success: function(msg) {
+       _log("report sending success");
+    }
+  });
 
+}
 var geoError = function(reason) {
   _log("ERROR : Unable to retrieve your location: "+reason);
 };
@@ -99,8 +102,6 @@ if (navigator.geolocation) {
  _log("ERROR : GeoLocation not available !!" );
 
 }
-
-
 
 },
 
