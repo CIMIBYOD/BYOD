@@ -125,6 +125,22 @@ icon = L.icon({
 });
 markerIcons["bomb"]=icon;
 
+icon = L.icon({
+  iconUrl: 'icon/aircraft-marker.png',
+  popupAnchor: [1, -16],
+  iconSize:     [32, 32]
+});
+markerIcons["aircraft"]=icon;
+
+icon = L.icon({
+  iconUrl: 'icon/helico-marker.png',
+  popupAnchor: [1, -16],
+  iconSize:     [32, 32]
+});
+markerIcons["helico"]=icon;
+
+
+
 
 //@private
 var _toMarker = function(bso){

@@ -123,6 +123,37 @@ marker = {
 markers.push(marker);
 
 
+marker = {
+	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
+	type: "event",
+	subtype: "aircraft",
+	name:"aircraft",
+	description: "a description",
+	shape:{
+	type : "ponctual",
+	coords:[{lat:48.85,lon:(2.4 +cpt*0.1)}]
+	}
+}
+markers.push(marker);
+
+
+marker = {
+	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
+	type: "event",
+	subtype: "helico",
+	name:"helico",
+	description: "a description",
+	shape:{
+	type : "ponctual",
+	coords:[{lat:48.85,lon:(2.4 +cpt*0.1)}]
+	}
+}
+markers.push(marker);
+
+
+
 
 var polygon1 = {
 	id:"Polygon.01",

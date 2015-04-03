@@ -90,6 +90,9 @@ if(typeof(reported.subtype) == "undefined"){
    && reported.subtype != "other" 
    && reported.subtype != "riot" 
    && reported.subtype != "tank" 
+   && reported.subtype != "helico" 
+   && reported.subtype != "aircraft" 
+   
    ){
     valid = false;
   report+="- report.subtype is unknown " +reported.subtype +" || ";

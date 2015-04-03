@@ -10,10 +10,14 @@ var ReportPanel = React.createClass({
  {icon:"icon/bomb.png", label:"bomb",id:"bomb"},
  {icon:"icon/death.png", label:"dead",id:"dead"},
  {icon:"icon/injured.png", label:"injured",id:"injured"},
- {icon:"icon/tank.png", label:"vehicle",id:"tank"},
  {icon:"icon/kidnap.png", label:"kinapping",id:"kidnap"},
- {icon:"icon/other.png", label:"report",id:"other"}
+ {icon:"icon/tank.png", label:"vehicle",id:"tank"},
+ {icon:"icon/aircraft.png", label:"aircraft",id:"aircraft"},
+ {icon:"icon/helico.png", label:"helicopter",id:"helico"},
+  {icon:"icon/other.png", label:"report",id:"other"},
  ];
+
+
  
 
  var  data={compID:"report-panel",reports:reports};
@@ -116,8 +120,9 @@ if (navigator.geolocation) {
      var buttonTop = position.top;
      var buttonLeft = position.left;
      var buttonWidth = $("#report-btn").outerWidth();
-     var panelHeight = 256;
+     var panelHeight = 320;
      var panelWidth = 170;
+  
 
      var panelTop = buttonTop - 10 - panelHeight;
      var panelLeft = buttonLeft -  (panelWidth - buttonWidth);
