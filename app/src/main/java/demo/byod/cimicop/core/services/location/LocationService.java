@@ -1,9 +1,13 @@
 package demo.byod.cimicop.core.services.location;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -15,7 +19,9 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import demo.byod.cimicop.R;
 import demo.byod.cimicop.core.managers.RestQueryManager;
+import demo.byod.cimicop.core.managers.RestrictedZoneInclusionManager;
 import demo.byod.cimicop.core.preferences.PreferencesManager;
 
 /*
@@ -33,6 +39,7 @@ public class LocationService extends Service implements
 
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
+    private RestrictedZoneInclusionManager restrictedZoneMgr;
 
     @Override
     public void onCreate() {
@@ -49,6 +56,8 @@ public class LocationService extends Service implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        restrictedZoneMgr = new RestrictedZoneInclusionManager(LocationService.this);
 
         Log.i(LOCATION_SERVICE_TAG, "onCreate() DONE");
     }
@@ -143,9 +152,26 @@ public class LocationService extends Service implements
     public void onLocationChanged(Location location) {
         Log.i(LOCATION_SERVICE_TAG, "Location received: " + location.toString());
         if (location != null) {
+
+            //Appel au gestionnaire REST pour diffuser la position
             RestQueryManager.sendLocation(location.getLatitude(), location.getLongitude(), location.getAccuracy());
+
+            //Appel au controleur de position pour vérifier l'inclusion dans des zones de dangers
+            restrictedZoneMgr.checkLocation(location.getLatitude(), location.getLongitude(), location.getAccuracy());
+
         }
 
+    }
+
+    public void generateZoneEntryNotification(String zoneName) {
+
+       NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Notification notif = new Notification();
+        notif.icon= R.drawable.ic_action_location_2;
+        notif.tickerText="ALARM, ALARM ! Entering in restricted zone : "+zoneName;
+        notif.sound=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        nMgr.notify(1, notif);
     }
 
 }
