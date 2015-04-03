@@ -160,5 +160,9 @@ var _toPolygon = function(bso){
 }
 //add popup info to bso
 var _bindPopup = function(layer,bso){
-  return layer.bindPopup("<b>"+bso.name+"</b><br>"+bso.description);
+  try{
+    console.log("bso.datetime is " + typeof(bso.datetime));
+  var validity = new Date(parseInt(bso.datetime)).toDateString();
+  return layer.bindPopup("<h5><b>"+bso.name+"</b></h5><br>"+"<b>report date : "+validity+"</b><br>"+bso.description);
+}catch(e){/*TODO*/}
 }

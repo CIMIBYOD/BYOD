@@ -19,7 +19,9 @@ var ReportPanel = React.createClass({
  var  data={compID:"report-panel",reports:reports};
  return {data: data};
 },
-
+/* ReactJS lifeCycle
+*
+*/
 componentDidMount: function() {
   var self  = this;
      //fade in
@@ -27,7 +29,8 @@ componentDidMount: function() {
 
      //alert panel actions
      $(".c-alert-panel-list button").click(function(e){
-      self.getLocation();
+      var reportType = $(this).attr("id");
+      self.sendReport(reportType);
       var that = this;
       setTimeout(function () {
        $(that.element).blur();
@@ -35,34 +38,77 @@ componentDidMount: function() {
 
     });
    },
-   componentWillUnmount : function() {
+   /* ReactJS lifeCycle
+*
+*/
+componentWillUnmount : function() {
      //fade out
      $("#"+this.state.data.compID ).toggle( "fade",null,100 );
    },
-   getLocation: function(){
-    var success = function (position) {
-      var latitude  = position.coords.latitude;
-      var longitude = position.coords.longitude;
-      _log("Latitude: " +latitude +  "Longitude: " + longitude);
-    };
+   /*
+   * send Report
+   *  report are then sent to webC2
+   * @param type of report, (bomb,kidnap ...)
+   * @param lat latitude
+   * @param lon longitude
+   * @param data data added to report (comment, picture ..)
+   */
+   sendReport: function(type,data){
+
+    //report 
+    var report =  {
+      type: "event",
+      subtype: type,
+      datetime:new Date().getTime(),
+      name:"todo",
+      description: "todo",
+      shape:{
+        type : "ponctual",
+        coords:[{lat:"",lon:""}]
+      }
+    }
+
+// geolocation callback
+var geoSuccess = function (position) {
+  
+  var latitude  = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  _log("Latitude: " +latitude +  "Longitude: " + longitude);
+  
+  report.shape.coords=[{lat:latitude,lon:longitude}];
+
+  $.post( "http://localhost:90/cimicop/situation/tocivilian",
+  report,
+  function( data,textStatus ,jqXHR) {
+    console.log("data= "+data);
+    console.log("textStatus= "+textStatus);
+   },
+   "json");
+    
+}; 
 
 
-    var error = function(reason) {
-      _log("ERROR : Unable to retrieve your location: "+reason);
-    };
+var geoError = function(reason) {
+  _log("ERROR : Unable to retrieve your location: "+reason);
+};
+
+// geolocation MUST be available for report
+if (navigator.geolocation) {
+ navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+} else {
+ _log("ERROR : GeoLocation not available !!" );
+
+}
 
 
-    if (navigator.geolocation) {
-     navigator.geolocation.getCurrentPosition(success, error);
-   } else {
-     _log("ERROR : GeoLocation not available !!" );
 
-   }
+},
 
-
- },
- render: function() {
-   _log("rendering ReportPanel ..." );
+     /* ReactJS render
+   *
+   */
+   render: function() {
+     _log("rendering ReportPanel ..." );
 
      //define position againts 'open panel button'
      var position = $("#report-btn").offset();

@@ -5,11 +5,12 @@ A REGLER
 2) les icones des markers
 
 */
-
+console.log(new Date().getTime());
 var markers = [];
 var cpt=1;
 var marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "armed-group",
 	name:"armed-group",
@@ -24,6 +25,7 @@ markers.push(marker);
 
 marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "bomb",
 	name:"bomb",
@@ -37,6 +39,7 @@ markers.push(marker);
 
 marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "death",
 	name:"death",
@@ -50,6 +53,7 @@ markers.push(marker);
 
 marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "kidnap",
 	name:"kidnap",
@@ -63,6 +67,7 @@ markers.push(marker);
 
 marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "injured",
 	name:"injured",
@@ -76,6 +81,7 @@ markers.push(marker);
 
 marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "other",
 	name:"other",
@@ -89,6 +95,7 @@ markers.push(marker);
 
 marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "riot",
 	name:"riot",
@@ -103,6 +110,7 @@ markers.push(marker);
 
 marker = {
 	id:"Marker."+ cpt++,
+	datetime:"1428053296573",
 	type: "event",
 	subtype: "tank",
 	name:"tank",
@@ -118,6 +126,7 @@ markers.push(marker);
 
 var polygon1 = {
 	id:"Polygon.01",
+	datetime:"1428053296573",
 	type: "area",
 	subtype: "danger",
 	name:"polygon-01",
@@ -134,6 +143,7 @@ var polygon1 = {
 
 var polygon2 = {
 	id:"Polygon.02",
+	datetime:"1428053296573",
 	type: "area",
 	subtype: "warning",
 	name:"polygon-02",
@@ -152,6 +162,7 @@ var polygon2 = {
 
 var polygon3 = {
 	id:"Polygon.03",
+	datetime:"1428053296573",
 	type: "area",
 	subtype: "safe",
 	name:"polygon-03",

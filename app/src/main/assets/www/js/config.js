@@ -29,7 +29,7 @@ var config={
   alertPanel:{
      reportUrl:{
       test:'http://localhost:90/cimicop/situation/tocivilian',
-      demo:'http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/situation/tocivilian'
+      demo:'http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/report/fromcivilian'
      }
   }
 
