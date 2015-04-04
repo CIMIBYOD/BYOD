@@ -16,7 +16,10 @@ var ReportDetail = React.createClass({
           <div className="panel-heading">Report details</div>
              <div className="panel-body">
              <textarea>here...</textarea>
-    
+             <form>
+            <input type="file" id="capture" name="capture"  accept="image/*" capture="camera" />
+            <input type="submit"/>
+            </form>
              </div>
           </div>
       );

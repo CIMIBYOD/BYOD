@@ -15,8 +15,11 @@ var ReportDetail = React.createClass({displayName: "ReportDetail",
           React.createElement("div", {id: "detail-panel", className: "panel panel-primary", style: startStyle}, 
           React.createElement("div", {className: "panel-heading"}, "Report details"), 
              React.createElement("div", {className: "panel-body"}, 
-             React.createElement("textarea", null, "here...")
-    
+             React.createElement("textarea", null, "here..."), 
+             React.createElement("form", null, 
+            React.createElement("input", {type: "file", id: "capture", name: "capture", accept: "image/*", capture: "camera"}), 
+            React.createElement("input", {type: "submit"})
+            )
              )
           )
       );
