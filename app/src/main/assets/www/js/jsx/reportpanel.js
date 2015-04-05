@@ -37,6 +37,7 @@ componentDidMount: function() {
       self.sendReport(reportType);
       var that = this;
       setTimeout(function () {
+        $(that.element).removeClass("active");
        $(that.element).blur();
      },500);
 
@@ -140,7 +141,7 @@ if (navigator.geolocation) {
        );
     });
     return (
-      <div id="report-panel" className="c-alert-panel-list c-alert-floating-panel" style={startStyle}>
+      <div id="report-panel" className="c-report-panel-list c-report-floating-panel" style={startStyle}>
       {reports}
       </div>
       );
