@@ -1,5 +1,33 @@
 var ReportDetail = React.createClass({
- /* ReactJS render
+ /* ReactJS lifeCycle
+*
+*/
+componentDidMount: function() {
+     var loadFileBtn = document.querySelector('.loadFileBtn');
+    var fileInputField = document.querySelector('.hiddenFileInput');
+    var img = document.querySelector('img');
+
+            console.log("%% loadFileBtn elem = "+loadFileBtn);
+            console.log("%% fileInputField elem = "+fileInputField);
+            console.log("%% img elem = "+img);
+
+
+    loadFileBtn.addEventListener('click', function() {
+        console.log("%% loadFileBtn.addEventListener");
+        fileInputField.click();
+    }.bind(this));
+
+    fileInputField.addEventListener('change', function(evt) {
+        console.log('%% Change', evt);
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            img.src = evt.target.result;
+        };
+
+        reader.readAsDataURL(evt.target.files[0]);
+    });
+   },
+   /* ReactJS render
    *
    */
    render: function() {
@@ -16,12 +44,14 @@ var ReportDetail = React.createClass({
           <div className="panel-heading">Report details</div>
              <div className="panel-body">
              <textarea>here...</textarea>
-             <form>
-            <input type="file" id="capture" name="capture"  accept="image/*" capture="camera" />
-            <input type="submit"/>
-            </form>
+             <img src="" />
+             <input type="file" className="hiddenFileInput"/>
+             <button className="loadFileBtn">Load File</button>
              </div>
           </div>
       );
   }
 });
+
+
+

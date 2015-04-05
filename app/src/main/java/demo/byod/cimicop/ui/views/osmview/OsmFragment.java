@@ -1,74 +1,44 @@
 package demo.byod.cimicop.ui.views.osmview;
 
 import android.app.Activity;
-import android.content.ComponentName;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
 import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
 
-import demo.byod.cimicop.MainActivity;
 import demo.byod.cimicop.R;
 import demo.byod.cimicop.core.managers.CartoManager;
-
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Bundle;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.view.KeyEvent;
-import android.webkit.ValueCallback;
-import android.webkit.WebView;
-import android.webkit.WebChromeClient;
-import android.webkit.WebViewClient;
-import android.provider.Settings;
-import android.widget.Toast;
 
 
 public class OsmFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
-    OsmView mOsmView=null;
+    OsmView mOsmView = null;
     Context mContext;
 
-    public Uri imageUri;
-    private static final int FILECHOOSER_RESULTCODE   = 2888;
-    private ValueCallback<Uri> mUploadMessage;
-    private Uri mCapturedImageURI = null;
 
-
+    public static final int INPUT_FILE_REQUEST_CODE = 1;
+    private ValueCallback<Uri[]> mFilePathCallback;
+    private String mCameraPhotoPath;
 
 
     public OsmFragment() {
@@ -82,148 +52,99 @@ public class OsmFragment extends Fragment {
 
 
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_osm, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_osm, container, false);
 
-       //create mapview
+        //create mapview
         mOsmView = (OsmView) rootView.findViewById(R.id.osm_webview);
-        mContext =  rootView.getContext();
+        mContext = rootView.getContext();
         WebSettings webSettings = mOsmView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setGeolocationEnabled(true);
         webSettings.setAllowFileAccess(true);
 
 
-
-       //for Geolocation access (automatic grant access)
+        //for Geolocation access (automatic grant access)
         mOsmView.setWebChromeClient(new WebChromeClient() {
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                 callback.invoke(origin, true, false);
             }
 
-            //The undocumented magic method override
-            //Eclipse will swear at you if you try to put @Override here
-            // For Android 3.0+
-            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
-                Log.i("OsmFragment", "openFileChooser with message  [Eclipse will swear at you if you try to] " + uploadMsg);
 
-                mUploadMessage = uploadMsg;
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                i.setType("image/*");
-                startActivityForResult(Intent.createChooser(i,"File Chooser"), FILECHOOSER_RESULTCODE);
+            public boolean onShowFileChooser(
+                    WebView webView, ValueCallback<Uri[]> filePathCallback,
+                    WebChromeClient.FileChooserParams fileChooserParams) {
 
-            }
+                Log.i("OsmFragment", "onShowFileChooser");
 
-            // For Android 3.0+
-            public void openFileChooser( ValueCallback uploadMsg, String acceptType ) {
-                Log.i("OsmFragment", "openFileChooser with message  [For Android 3.0+] " + uploadMsg);
+                if (mFilePathCallback != null) {
+                    mFilePathCallback.onReceiveValue(null);
+                }
+                mFilePathCallback = filePathCallback;
 
-                mUploadMessage = uploadMsg;
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                i.setType("*/*");
-                startActivityForResult(
-                        Intent.createChooser(i, "File Browser"),
-                        FILECHOOSER_RESULTCODE);
-            }
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    Log.i("OsmFragment", "Create the File where the photo should go");
 
-            //For Android 4.1
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture){
-                Log.i("OsmFragment", "openFileChooser with message  [For Android 4.1] " + uploadMsg);
-
-                mUploadMessage = uploadMsg;
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                i.setType("image/*");
-                startActivityForResult( Intent.createChooser( i, "File Chooser" ), FILECHOOSER_RESULTCODE );
-
-            }
-
-            // openFileChooser for Android 3.0+
-         /*   public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType){
-                Log.i("OsmFragment", "openFileChooser with message   " + uploadMsg);
-
-                // Update message
-                mUploadMessage = uploadMsg;
-
-                try{
-
-                    // Create AndroidExampleFolder at sdcard
-
-                    File imageStorageDir = new File(
-                            Environment.getExternalStoragePublicDirectory(
-                                    Environment.DIRECTORY_PICTURES)
-                            , "cimicop");
-
-                    if (!imageStorageDir.exists()) {
-                        // Create AndroidExampleFolder at sdcard
-                        imageStorageDir.mkdirs();
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                        takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                        Log.e("OsmFragment", "Unable to create Image File", ex);
                     }
 
-                    // Create camera captured image file path and name
-                    File file = new File(
-                            imageStorageDir + File.separator + "IMG_"
-                                    + String.valueOf(System.currentTimeMillis())
-                                    + ".jpg");
-
-                    mCapturedImageURI = Uri.fromFile(file);
-                    Log.i("OsmFragment", "image URI is   " + mCapturedImageURI);
-
-
-                    // Camera capture image intent
-                    final Intent captureIntent = new Intent(
-                            android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
-                    captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
-
-                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                    i.addCategory(Intent.CATEGORY_OPENABLE);
-                    i.setType("image/*");
-
-                    // Create file chooser intent
-                    Intent chooserIntent = Intent.createChooser(i, "Image Chooser");
-
-                    // Set camera intent to file chooser
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS
-                            , new Parcelable[] { captureIntent });
-
-                    // On select image call onActivityResult method of activity
-                    startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
-
-                }
-                catch(Exception e){
-                    Log.e("OsmFragment", "Exception:" + e);
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(photoFile));
+                    } else {
+                        takePictureIntent = null;
+                    }
                 }
 
+                Log.i("OsmFragment", "mCameraPhotoPath=" + mCameraPhotoPath);
+
+
+                Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                contentSelectionIntent.setType("image/*");
+
+                Intent[] intentArray;
+                if (takePictureIntent != null) {
+                    intentArray = new Intent[]{takePictureIntent};
+                } else {
+                    intentArray = new Intent[0];
+                }
+
+                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+                Log.i("OsmFragment", "startActivityForResult");
+                startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE);
+
+                return true;
             }
 
-            // openFileChooser for Android < 3.0
-            public void openFileChooser(ValueCallback<Uri> uploadMsg){
-                Log.i("OsmFragment", "openFileChooser with message  (Android < 3.0) " + uploadMsg);
 
-                openFileChooser(uploadMsg, "");
+            private File createImageFile() throws IOException {
+                // Create an image file name
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String imageFileName = "JPEG_" + timeStamp + "_";
+                File storageDir = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES);
+                File imageFile = File.createTempFile(
+                        imageFileName,  /* prefix */
+                        ".jpg",         /* suffix */
+                        storageDir      /* directory */
+                );
+                return imageFile;
             }
-
-            //openFileChooser for other Android versions
-            public void openFileChooser(ValueCallback<Uri> uploadMsg,
-                                        String acceptType,
-                                        String capture) {
-                Log.i("OsmFragment", "openFileChooser with message  ( other Android versions) " + uploadMsg);
-
-                openFileChooser(uploadMsg, acceptType);
-            }
-
-
-
-            // The webPage has 2 filechoosers and will send a
-            // console message informing what action to perform,
-            // taking a photo or updating the file
-*/
-
 
         });
-
-
 
 
         //for bridge toJava
@@ -237,43 +158,39 @@ public class OsmFragment extends Fragment {
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                    Intent intent) {
-        Log.i("OsmFragment", "onActivityResult with requestCode   " + requestCode);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode==FILECHOOSER_RESULTCODE)
-        {
+        Log.i("OsmFragment", "onActivityResult requestCode=" + requestCode);
 
-            if (null == this.mUploadMessage) {
-                return;
-
-            }
-
-            Uri result=null;
-
-            try{
-                if (resultCode != -1 /*RESULT_OK*/) {
-
-                    result = null;
-
-                } else {
-
-                    // retrieve from the private variable if the intent is null
-                    result = intent == null ? mCapturedImageURI : intent.getData();
-                }
-            }
-            catch(Exception e)
-            {
-                Log.e("OsmFragment", "activity:" + e);
-
-            }
-
-            mUploadMessage.onReceiveValue(result);
-            mUploadMessage = null;
-
+        if (requestCode != INPUT_FILE_REQUEST_CODE || mFilePathCallback == null) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
         }
 
+        Uri[] results = null;
+
+        // Check that the response is a good one
+        if (resultCode == Activity.RESULT_OK) {
+            Log.i("OsmFragment", "onActivityResult resultCode= Activity.RESULT_OK)");
+            if (data == null) {
+                // If there is not data, then we may have taken a photo
+                if (mCameraPhotoPath != null) {
+                    results = new Uri[]{Uri.parse(mCameraPhotoPath)};
+                }
+            } else {
+                String dataString = data.getDataString();
+                if (dataString != null) {
+                    results = new Uri[]{Uri.parse(dataString)};
+                }
+            }
+        }
+        Log.i("OsmFragment", "onActivityResult onReceiveValue)");
+
+        mFilePathCallback.onReceiveValue(results);
+        mFilePathCallback = null;
+        return;
     }
+
 
     // JS map loaded
     public void mapReady() {
@@ -282,11 +199,9 @@ public class OsmFragment extends Fragment {
     }
 
 
-
-
-    public void addBso( JSONObject bso) {
+    public void addBso(JSONObject bso) {
         Log.i("OsmFragment", "addBso  " + bso.toString());
-        final String inBso ;
+        final String inBso;
         inBso = bso.toString();
 
         try {
@@ -302,9 +217,10 @@ public class OsmFragment extends Fragment {
 
         }
     }
+
     public void updateBso(JSONObject bso) {
         Log.i("OsmFragment", "updateBso  " + bso.toString());
-        final String inBso ;
+        final String inBso;
         inBso = bso.toString();
 
         try {
@@ -320,9 +236,10 @@ public class OsmFragment extends Fragment {
 
         }
     }
+
     public void removeBso(String id) {
         Log.i("OsmFragment", "removeBso  " + id);
-        final String inId = id ;
+        final String inId = id;
         try {
 
             mOsmView.post(new Runnable() {

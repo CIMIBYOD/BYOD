@@ -1,5 +1,33 @@
 var ReportDetail = React.createClass({displayName: "ReportDetail",
- /* ReactJS render
+ /* ReactJS lifeCycle
+*
+*/
+componentDidMount: function() {
+     var loadFileBtn = document.querySelector('.loadFileBtn');
+    var fileInputField = document.querySelector('.hiddenFileInput');
+    var img = document.querySelector('img');
+
+            console.log("%% loadFileBtn elem = "+loadFileBtn);
+            console.log("%% fileInputField elem = "+fileInputField);
+            console.log("%% img elem = "+img);
+
+
+    loadFileBtn.addEventListener('click', function() {
+        console.log("%% loadFileBtn.addEventListener");
+        fileInputField.click();
+    }.bind(this));
+
+    fileInputField.addEventListener('change', function(evt) {
+        console.log('%% Change', evt);
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            img.src = evt.target.result;
+        };
+
+        reader.readAsDataURL(evt.target.files[0]);
+    });
+   },
+   /* ReactJS render
    *
    */
    render: function() {
@@ -16,12 +44,14 @@ var ReportDetail = React.createClass({displayName: "ReportDetail",
           React.createElement("div", {className: "panel-heading"}, "Report details"), 
              React.createElement("div", {className: "panel-body"}, 
              React.createElement("textarea", null, "here..."), 
-             React.createElement("form", null, 
-            React.createElement("input", {type: "file", id: "capture", name: "capture", accept: "image/*", capture: "camera"}), 
-            React.createElement("input", {type: "submit"})
-            )
+             React.createElement("img", {src: ""}), 
+             React.createElement("input", {type: "file", className: "hiddenFileInput"}), 
+             React.createElement("button", {className: "loadFileBtn"}, "Load File")
              )
           )
       );
   }
 });
+
+
+
