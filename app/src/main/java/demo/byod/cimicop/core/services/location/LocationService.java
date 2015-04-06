@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -143,7 +144,21 @@ public class LocationService extends Service implements
     public void onLocationChanged(Location location) {
         Log.i(LOCATION_SERVICE_TAG, "Location received: " + location.toString());
         if (location != null) {
-            RestQueryManager.sendLocation(location.getLatitude(), location.getLongitude(), location.getAccuracy());
+            LocationUpdateTask task = new LocationUpdateTask();
+            task.execute(new Location[] { location });
+        }
+
+    }
+
+    class LocationUpdateTask extends AsyncTask<Location, Void, Void> {
+
+
+        protected Void doInBackground(Location... locations) {
+            //Execurte the network related option here
+            for(Location location: locations){
+                RestQueryManager.getInstance().sendLocation(location.getLatitude(), location.getLongitude(), location.getAccuracy());
+            }
+            return null;
         }
 
     }

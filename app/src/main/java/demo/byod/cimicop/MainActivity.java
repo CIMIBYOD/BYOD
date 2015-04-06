@@ -2,6 +2,7 @@ package demo.byod.cimicop;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,21 +12,28 @@ import android.view.MenuItem;
 import demo.byod.cimicop.core.services.connectivity.XmppService;
 import demo.byod.cimicop.core.services.location.LocationService;
 import demo.byod.cimicop.core.services.situation.SituationService;
+import demo.byod.cimicop.ui.views.login.LoginFragment;
 import demo.byod.cimicop.ui.views.osmview.OsmFragment;
 import demo.byod.cimicop.ui.views.preferences.PreferencesFragment;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    private static Context instance = null;
+    public static Context getContext() {
+        return instance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        instance = this.getApplicationContext();
+
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new OsmFragment())
-                    .commit();
+            //getFragmentManager().beginTransaction().add(R.id.container, new OsmFragment()).commit();
+            getFragmentManager().beginTransaction().add(R.id.container, new LoginFragment()).commit();
         }
 
         Intent intentXmppService = new Intent(this, XmppService.class);

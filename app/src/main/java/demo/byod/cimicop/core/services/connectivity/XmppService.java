@@ -3,29 +3,20 @@ package demo.byod.cimicop.core.services.connectivity;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
+import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.PacketListener;
-import org.jivesoftware.smack.SmackConfiguration;
-import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.filter.MessageTypeFilter;
-import org.jivesoftware.smack.filter.PacketFilter;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Packet;
-import org.jivesoftware.smack.util.dns.HostAddress;
-import org.jivesoftware.smackx.muc.DiscussionHistory;
-import org.jivesoftware.smackx.muc.MultiUserChat;
-
-import demo.byod.cimicop.core.managers.SituationManager;
+import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 
 
-public class XmppService extends Service implements PacketListener {
+public class XmppService extends Service{
 
-    public static final String HOST = "192.168.1.100";
+    public static final String HOST = "192.168.1.95";
     public static final int PORT = 5222;
-    public static final String ROOM = "tocivilian@conference.serverc2";
+    public static final String ROOM = "france@conference.cimicop";
     public static final String LOG = "asharpe";
     public static final String PWD = "asharpe";
 
@@ -38,27 +29,29 @@ public class XmppService extends Service implements PacketListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-
         new Thread(new Runnable() {
             public void run() {
 
-                ConnectionConfiguration config = new ConnectionConfiguration(HOST, PORT);
-                config.setUsedHostAddress(new HostAddress(HOST));
-                config.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-                XMPPConnection connection = new XMPPConnection(config);
+                XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
+                        .setUsernameAndPassword(LOG, PWD)
+                        .setServiceName("cimicop")
+                        .setHost(HOST)
+                        .setPort(5222)
+                        .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
+                        .build();
+
+                AbstractXMPPConnection conn2 = new XMPPTCPConnection(config);
+
+
                 try {
-                    connection.connect();
-                    connection.login(LOG, PWD);// Log into the server
-                    PacketFilter filter = new MessageTypeFilter(Message.Type.chat);
-                    connection.addPacketListener(XmppService.this, filter);
+                    conn2.connect();
+                    conn2.login(LOG,PWD);
 
-                    MultiUserChat muc2 = new MultiUserChat(connection, ROOM);
-                    DiscussionHistory dh = new DiscussionHistory();
-                    dh.setMaxStanzas(0);
-                    muc2.join(LOG, null, dh, SmackConfiguration.getPacketReplyTimeout());
-
-                    muc2.addMessageListener(XmppService.this);
-
+                    // Create a new presence. Pass in false to indicate we're unavailable._
+                    Presence presence = new Presence(Presence.Type.available);
+                    presence.setStatus("Gone fishing");
+// Send the packet (assume we have an XMPPConnection instance called "con").
+                    conn2.sendStanza(presence);
 
                 } catch (XMPPException e) {
                     e.printStackTrace();
@@ -91,16 +84,4 @@ public class XmppService extends Service implements PacketListener {
         super.onRebind(intent);
     }
 
-    @Override
-    public void processPacket(Packet packet) {
-        if(packet instanceof  Message) {
-            Message message = (Message) packet;
-            if (message != null) {
-                String body = message.getBody();
-                String from = message.getFrom();
-                Log.w("XMPP", from + " = " + body);
-                SituationManager.getInstance().addSituationEntityFromString(body);
-            }
-        }
-    }
 }
