@@ -5,3 +5,4 @@ DB/data/mongod.lock
 DB/data/ongserver-dev.0
 DB/data/ongserver-dev.ns
 DB/data/storage.bson
+ANDROID-APP/.idea/workspace.xml
