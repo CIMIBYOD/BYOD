@@ -17,6 +17,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import demo.byod.cimicop.core.managers.RestQueryManager;
+import demo.byod.cimicop.core.managers.RestrictedZoneManager;
 import demo.byod.cimicop.core.preferences.PreferencesManager;
 
 /*
@@ -144,12 +145,11 @@ public class LocationService extends Service implements
     public void onLocationChanged(Location location) {
         Log.i(LOCATION_SERVICE_TAG, "Location received: " + location.toString());
         if (location != null) {
-            LocationUpdateTask task = new LocationUpdateTask();
             task.execute(new Location[] { location });
         }
 
     }
-
+    private LocationUpdateTask task = new LocationUpdateTask();
     class LocationUpdateTask extends AsyncTask<Location, Void, Void> {
 
 
@@ -157,6 +157,7 @@ public class LocationService extends Service implements
             //Execurte the network related option here
             for(Location location: locations){
                 RestQueryManager.getInstance().sendLocation(location.getLatitude(), location.getLongitude(), location.getAccuracy());
+                RestrictedZoneManager.getInstance().checkLocation(location.getLatitude(), location.getLongitude(), location.getAccuracy());
             }
             return null;
         }

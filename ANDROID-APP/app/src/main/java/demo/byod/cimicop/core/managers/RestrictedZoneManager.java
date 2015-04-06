@@ -26,10 +26,17 @@ import demo.byod.cimicop.core.services.location.LocationService;
  */
 public class RestrictedZoneManager {
 
-    private LocationService locationService;
+    private static RestrictedZoneManager instance;
 
-    public RestrictedZoneManager(LocationService ls) {
-        this.locationService = ls;
+    public RestrictedZoneManager(){
+
+    }
+
+    public static RestrictedZoneManager getInstance(){
+        if(instance == null){
+            instance = new RestrictedZoneManager();
+        }
+        return instance;
     }
 
     public void checkLocation(double latitude, double longitude, float accuracy) {
@@ -69,6 +76,7 @@ public class RestrictedZoneManager {
                     if(c) {
                         //TODO : Afficher la notification
                         //locationService.generateZoneEntryNotification(se.getName());
+                        this.generateZoneEntryNotification(se.getName());
                     }
 
                 }
@@ -82,7 +90,7 @@ public class RestrictedZoneManager {
 
     public void generateZoneEntryNotification(String zoneName) {
 
-        NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager nMgr = (NotificationManager) MainActivity.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification notif = new Notification();
         notif.icon= R.drawable.ic_action_location_2;
