@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.mapbox.mapboxsdk\mapbox-android-sdk\0.7.1\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d452013fe38dfc090baf06365db11497705fb630">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-9c3efc8493bc87648ec4a413e4f65d5b5f0cc7ca.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-19e355d8d14e59bea2e9eb338669001924ffec1e.jar" />
+    </item>
+    <item
+        jar="F:\ASD\.gradle\caches\modules-2\files-2.1\com.jakewharton\disklrucache\2.0.2\93b399470e72c0bc8cb52379943b63c9aa586cd8\disklrucache-2.0.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="93b399470e72c0bc8cb52379943b63c9aa586cd8">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\disklrucache-2.0.2-2fd40663484f2fdb25b1d4ef9cea4c8da0018dc6.jar" />
+    </item>
+    <item
+        jar="F:\ASD\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\library-2.4.0-c725e71c7c0d5bd61c43e926ed45bcef8231ef7c.jar" />
+    </item>
+    <item
+        jar="F:\ASD\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.2.0\c0b52915a48fa91b1b94a28d4a2997bac5f524df\okio-1.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c0b52915a48fa91b1b94a28d4a2997bac5f524df">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\okio-1.2.0-b16612cea5e8edc300b3a90e05d12fee07f9fad7.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-f135cbf2eb7f4d96dc2e0711e2f24d3fcb1255ed.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-2650daa72a5f6b09b46a5b5743d8017e816c2c0a.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\libs\asmack-android-15-0.8.10.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="224557299296a954cff1c2342ab6c40d3d19e7fe">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\asmack-android-15-0.8.10-de3ccf51b33b3813fa51a605f077df46b17c3eff.jar" />
+    </item>
+    <item
+        jar="E:\Program Files\Android SDK\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-0a83a14f1ac94b110a18b01fe9da1d94beee8f73.jar" />
+    </item>
+    <item
+        jar="F:\ASD\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.2.0\959c454243581fdf730abfd4f4745441724bcf2c\okhttp-2.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="959c454243581fdf730abfd4f4745441724bcf2c">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\okhttp-2.2.0-04a47c236b0ea88d90b45d279483a1c13724bcf6.jar" />
+    </item>
+    <item
+        jar="F:\ASD\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp-urlconnection\2.2.0\cb20062e14c523637b7643295418097b48cccec2\okhttp-urlconnection-2.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cb20062e14c523637b7643295418097b48cccec2">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\okhttp-urlconnection-2.2.0-f84dcc45074a784d6a34ddb3b62f6d39782ef03a.jar" />
+    </item>
+    <item
+        jar="F:\ASD\.gradle\caches\modules-2\files-2.1\com.vividsolutions\jts\1.13\3ccfb9b60f04d71add996a666ceb8902904fd805\jts-1.13.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3ccfb9b60f04d71add996a666ceb8902904fd805">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\jts-1.13-9f7cee80277d4191e5cdae51e1b9ee78f55aded8.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-dbfc2b78d122d6cf422f741406f6dfc95725d8d8.jar" />
+    </item>
+
+</items>
