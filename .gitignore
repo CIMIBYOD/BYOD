@@ -6,3 +6,10 @@ DB/data/ongserver-dev.0
 DB/data/ongserver-dev.ns
 DB/data/storage.bson
 ANDROID-APP/.idea/workspace.xml
+ANDROID-APP/.gradle/2.2.1/taskArtifacts/cache.properties.lock
+ANDROID-APP/.gradle/2.2.1/taskArtifacts/fileHashes.bin
+ANDROID-APP/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin
+ANDROID-APP/.gradle/2.2.1/taskArtifacts/outputFileStates.bin
+ANDROID-APP/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin
+ANDROID-APP/.idea/workspace.xml
+ANDROID-APP/build/intermediates/dex-cache/cache.xml

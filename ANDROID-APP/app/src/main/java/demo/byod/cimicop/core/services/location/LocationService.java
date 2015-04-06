@@ -145,11 +145,11 @@ public class LocationService extends Service implements
     public void onLocationChanged(Location location) {
         Log.i(LOCATION_SERVICE_TAG, "Location received: " + location.toString());
         if (location != null) {
-            task.execute(new Location[] { location });
+            new LocationUpdateTask().execute(new Location[] { location });
         }
 
     }
-    private LocationUpdateTask task = new LocationUpdateTask();
+
     class LocationUpdateTask extends AsyncTask<Location, Void, Void> {
 
 
