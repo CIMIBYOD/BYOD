@@ -22,6 +22,8 @@ componentDidMount: function() {
   var reader = new FileReader();
   reader.onload = function (evt) {
     img.src = evt.target.result;
+      console.log("%% img.src =["+img.src+"]");
+
   };
 
   reader.readAsDataURL(evt.target.files[0]);

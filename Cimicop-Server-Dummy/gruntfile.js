@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 		  options: {
 			keepalive : true,
 			port: 9001,
-			base: '../app/src/main/assets/www'
+			base: '../ANDROID-APP/app/src/main/assets/www'
 		  }
 		}
 	  }
