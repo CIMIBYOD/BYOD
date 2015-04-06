@@ -1,13 +1,16 @@
-.c-alert-panel-width{
+/*.c-alert-panel-width{
   width:170px;
   z-index: 20000 !important;
    pointer-events: auto !important;
-}
+}*/
 
 
+/*
 
+* Report panel  - main list
+*/
 
-.c-alert-panel-list  button{
+.c-report-panel-list  button{
   float: left;
   width:80px;
   height:60px;
@@ -19,7 +22,7 @@
 
 }
 
-.c-alert-panel-list img{
+.c-report-panel-list img{
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -29,7 +32,7 @@
 
  
 
- .c-alert-floating-panel{
+ .c-report-floating-panel{
 
   width:170px;
   z-index: 20000 !important;
@@ -37,6 +40,55 @@
   border-radius: 4px;
  
  }
+
+
+/*
+
+* Report panel -  details 
+*/
+
+.report-body{
+  width:100%;
+display:block;
+
+}
+.report-command{
+  width:100%;
+
+
+}
+
+.report-command  button{
+margin:2px;
+}
+.report-command  #back-to-list{
+float:left;
+
+}
+.report-command  #take-a-picture{
+float:right;
+
+}
+.report-command  #send-report{
+float:right;
+
+}
+    
+
+ .c-report-detail-hiddenFileInput {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.c-picture{
+  width:64px;
+  height:64px;
+
+}
 
   
 

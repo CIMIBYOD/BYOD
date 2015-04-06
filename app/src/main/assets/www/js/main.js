@@ -49,9 +49,15 @@ $("#report-btn").click(function(e){
   _log("Opening report panel ... ");
   show = false;
   React.render(
-    React.createElement(ReportPanel, null),
+
+
+React.createElement(ReportDetail, null),
     document.getElementById('report-panel-placeholder')
     );
+
+   /* React.createElement(ReportPanel, null),
+    document.getElementById('report-panel-placeholder')
+    );*/
   }else{
     _log("Dismounting report panel ... ");
     show = true;

@@ -11,6 +11,8 @@ server = restify.createServer({
   version: '0.1.0'
 });
 
+server.use(restify.CORS());
+server.use(restify.fullResponse());
 server.use(restify.bodyParser({ mapParams: false }));
 
 
@@ -19,15 +21,14 @@ server.get('/cimicop/situation/tocivilian', respond);
 //Content-Type: application/json
 server.post('/cimicop/situation/tocivilian', function create(req, res, next) {
 
-  console.log("header is "+req.header('content-type'));
-
+ 
   //check content Type
   var report="";
   var valid = true;
   try{
     if(!req.is('application/json')){
       valid = false;
-      report+="- content type is not application/json "+" || ";
+      report+="- content type is not application/json  but "+req.header('content-type')+"  || ";
     }
 
 //check DTO
@@ -45,71 +46,85 @@ server.post('/cimicop/situation/tocivilian', function create(req, res, next) {
 }
 
 */
-var report = req.body;
 
-if(typeof(report.id) == "undefined"){
+var reported = req.body;
+
+/* Disabled, no ID to send 
+if(typeof(reported.id) == "undefined"){
   valid = false;
   report+="- report.id is mandatory " +" || ";
 }else{
-  if(report.id != "new"){
+  if(reported.id != "new"){
     valid = false;
-    report+="- report.id should be 'new' but is " +report.id +" || ";
+    report+="- report.id should be 'new' but is " +reported.id +" || ";
   }
-}
+}*/
 
-if(typeof(report.type) == "undefined"){
+if(typeof(reported.type) == "undefined"){
   valid = false;
   report+="- report.type is mandatory " +" || ";
 }
 
-if( report.type != "event"){
+if(typeof(reported.datetime) == "undefined"){
   valid = false;
-  report+="- (report.type should be an 'event' but is " +report.type +" || ";
+  report+="- report.datetime is mandatory " +" || ";
+}
+
+if( reported.type != "event"){
+  valid = false;
+  report+="- (report.type should be an 'event' but is " +reported.type +" || ";
 }
 
 
-if(typeof(report.subtype) == "undefined"){
+if(typeof(reported.subtype) == "undefined"){
   valid = false;
   report+="- report.subtype is mandatory "  +" || ";
 }else{
 
-  if( report.subtype != "armed-group"
-   && report.subtype != "bomb"
-   && report.subtype != "death"
-   && report.subtype != "injured"
-   && report.subtype != "jeep"
-   && report.subtype != "kidnap"
-   && report.subtype != "other" 
-   && report.subtype != "riot" 
-   && report.subtype != "tank" 
+  if( reported.subtype != "armed-group"
+   && reported.subtype != "bomb"
+   && reported.subtype != "dead"
+   && reported.subtype != "injured"
+   && reported.subtype != "militia"
+   && reported.subtype != "kidnap"
+   && reported.subtype != "other" 
+   && reported.subtype != "riot" 
+   && reported.subtype != "tank" 
+   && reported.subtype != "helico" 
+   && reported.subtype != "aircraft" 
+   
    ){
     valid = false;
-  report+="- report.subtype is unknown " +report.subtype +" || ";
+  report+="- report.subtype is unknown " +reported.subtype +" || ";
 }
 }
 
 
-
-if(typeof(report.name) == "undefined"){
+if(typeof(reported.name) == "undefined"){
   valid = false;
   report+="- report.name is mandatory " +" || ";
 }
 
-if(typeof(report.description) == "undefined"){
+
+if(typeof(reported.description) == "undefined"){
   valid = false;
   report+="- report.description is mandatory "  +" || ";
 }
 
-if(typeof(report.shape) == "undefined"){
+
+if(typeof(reported.shape) == "undefined"){
   valid = false;
   report+="- report.shape is mandatory " +" || ";
 }else{
 
-  if(report.shape.type != "ponctual"){
+  if(reported.shape.type != "ponctual"){
     valid = false;
-    report+="- (report.shape.type should be a ponctual but is " +report.shape.type +" || ";
+    report+="- (report.shape.type should be a ponctual but is " +reported.shape.type +" || ";
   }
-  var coords = JSON.parse(report.shape.coords);
+
+
+ // var coords = JSON.parse(reported.shape.coords);
+ var coords = reported.shape.coords;
 
   if(coords.length != 1){
     valid = false;
@@ -129,17 +144,18 @@ if(typeof(report.shape) == "undefined"){
 }
 
 }catch(e){
+  console.log("ERROR : report parsing failed : "+ e +" details :" +report);
   valid = false;
-  report+="BOOM :  "+e;
-
 }
+
 if(valid){
+   console.log("SUCCESS");
   res.send(200,req.body);  
 }else{
-  res.send(500,report+"    "+req.body);  
+  console.log("ERROR : " +report);
+  res.send(500,report);  
 }
 });
-
 
 server.listen(90, function() {
   console.log('%s listening at %s', server.name, server.url);

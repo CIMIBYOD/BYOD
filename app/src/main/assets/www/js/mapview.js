@@ -125,6 +125,22 @@ icon = L.icon({
 });
 markerIcons["bomb"]=icon;
 
+icon = L.icon({
+  iconUrl: 'icon/aircraft-marker.png',
+  popupAnchor: [1, -16],
+  iconSize:     [32, 32]
+});
+markerIcons["aircraft"]=icon;
+
+icon = L.icon({
+  iconUrl: 'icon/helico-marker.png',
+  popupAnchor: [1, -16],
+  iconSize:     [32, 32]
+});
+markerIcons["helico"]=icon;
+
+
+
 
 //@private
 var _toMarker = function(bso){
@@ -160,5 +176,9 @@ var _toPolygon = function(bso){
 }
 //add popup info to bso
 var _bindPopup = function(layer,bso){
-  return layer.bindPopup("<b>"+bso.name+"</b><br>"+bso.description);
+  try{
+    console.log("bso.datetime is " + typeof(bso.datetime));
+  var validity = new Date(parseInt(bso.datetime)).toDateString();
+  return layer.bindPopup("<h5><b>"+bso.name+"</b></h5><br>"+"<b>report date : "+validity+"</b><br>"+bso.description);
+}catch(e){/*TODO*/}
 }
