@@ -36,12 +36,12 @@ componentDidMount: function() {
      var startStyle = { //panel is invisible when created
       //display: 'none',
       position: 'fixed',
-      top: "30"+"px",
-      left:"30"+"px",
-     // width:'80%',
-    //  height:'80%',
-     //marginLeft: 'auto',
-     //marginRight: 'auto'
+      top: "20"+"px",
+      left:"50"+"px",
+     width:'80%',
+      height:'80%',
+     marginLeft: 'auto',
+     marginRight: 'auto'
     };
     return (
       <div id="detail-panel" className="panel panel-primary"  style={startStyle}>
@@ -68,6 +68,3 @@ componentDidMount: function() {
       );
   }
 });
-
-
-

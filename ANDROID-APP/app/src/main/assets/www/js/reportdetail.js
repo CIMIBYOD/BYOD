@@ -3,30 +3,30 @@ var ReportDetail = React.createClass({displayName: "ReportDetail",
 *
 */
 componentDidMount: function() {
-     var loadFileBtn = document.querySelector('.loadFileBtn');
-    var fileInputField = document.querySelector('.hiddenFileInput');
-    var img = document.querySelector('img');
+ var loadFileBtn = document.querySelector('#take-a-picture');
+ var fileInputField = document.querySelector('.c-report-detail-hiddenFileInput');
+ var img = document.querySelector('.c-picture');
 
-            console.log("%% loadFileBtn elem = "+loadFileBtn);
-            console.log("%% fileInputField elem = "+fileInputField);
-            console.log("%% img elem = "+img);
+ console.log("%% loadFileBtn elem = "+loadFileBtn);
+ console.log("%% fileInputField elem = "+fileInputField);
+ console.log("%% img elem = "+img);
 
 
-    loadFileBtn.addEventListener('click', function() {
-        console.log("%% loadFileBtn.addEventListener");
-        fileInputField.click();
-    }.bind(this));
+ loadFileBtn.addEventListener('click', function() {
+  console.log("%% loadFileBtn.addEventListener");
+  fileInputField.click();
+}.bind(this));
 
-    fileInputField.addEventListener('change', function(evt) {
-        console.log('%% Change', evt);
-        var reader = new FileReader();
-        reader.onload = function (evt) {
-            img.src = evt.target.result;
-        };
+ fileInputField.addEventListener('change', function(evt) {
+  console.log('%% Change', evt);
+  var reader = new FileReader();
+  reader.onload = function (evt) {
+    img.src = evt.target.result;
+  };
 
-        reader.readAsDataURL(evt.target.files[0]);
-    });
-   },
+  reader.readAsDataURL(evt.target.files[0]);
+});
+},
    /* ReactJS render
    *
    */
@@ -36,22 +36,35 @@ componentDidMount: function() {
      var startStyle = { //panel is invisible when created
       //display: 'none',
       position: 'fixed',
-      top: "30"+"px",
-      left:"30"+"px"
-     };
-       return (
-          React.createElement("div", {id: "detail-panel", className: "panel panel-primary", style: startStyle}, 
-          React.createElement("div", {className: "panel-heading"}, "Report details"), 
-             React.createElement("div", {className: "panel-body"}, 
-             React.createElement("textarea", null, "here..."), 
-             React.createElement("img", {src: ""}), 
-             React.createElement("input", {type: "file", className: "hiddenFileInput"}), 
-             React.createElement("button", {className: "loadFileBtn"}, "Load File")
-             )
-          )
+      top: "20"+"px",
+      left:"50"+"px",
+     width:'80%',
+      height:'80%',
+     marginLeft: 'auto',
+     marginRight: 'auto'
+    };
+    return (
+      React.createElement("div", {id: "detail-panel", className: "panel panel-primary", style: startStyle}, 
+      React.createElement("div", {className: "panel-heading"}, "Report details"), 
+      React.createElement("div", {className: "panel-body"}, 
+      React.createElement("input", {id: "hiddenFileInput", type: "file", className: "c-report-detail-hiddenFileInput"}), 
+      React.createElement("div", {className: "report-command"}, 
+        React.createElement("button", {id: "back-to-list", type: "button", className: "btn btn-primary btn-sm"}, React.createElement("span", {className: "glyphicon glyphicon-arrow-left"})), 
+        React.createElement("button", {id: "send-report", type: "button", className: "btn btn-primary btn-sm"}, React.createElement("span", {className: "glyphicon glyphicon-send"})), 
+        React.createElement("button", {id: "take-a-picture", type: "button", className: "btn btn-primary btn-sm"}, React.createElement("span", {className: "glyphicon glyphicon-camera"}))
+     ), 
+     
+      React.createElement("div", {contentEditable: "true", className: "report-body"}, 
+       React.createElement("img", {src: "", className: "c-picture img-thumbnail"}), 
+      "here..."
+      )
+     
+      
+
+
+      
+      )
+      )
       );
   }
 });
-
-
-
