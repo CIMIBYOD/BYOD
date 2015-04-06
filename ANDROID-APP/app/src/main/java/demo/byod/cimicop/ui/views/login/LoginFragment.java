@@ -79,6 +79,11 @@ public class LoginFragment extends Fragment {
             String username = uname.getText().toString();
             String pass = password.getText().toString();
 
+            //TODO remove only for testing
+            if(username.equals("test")&& pass.equals("test")){
+                getFragmentManager().beginTransaction().add(R.id.container, new OsmFragment()).commit();
+            }
+
             String server = username.substring(username.indexOf("@"));
             String login_service = "http://"+server+":9000/auth/local";
 
