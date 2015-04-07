@@ -48,10 +48,14 @@
 */
 
 .report-body{
+  margin-top:50px;
+  height:130px;
   width:100%;
-display:block;
+  display:block;
+  resize: none;
 
 }
+
 .report-command{
   width:100%;
 
@@ -74,7 +78,10 @@ float:right;
 
 }
     
+.c-picture{
+    float:right;
 
+}
  .c-report-detail-hiddenFileInput {
     width: 0;
     height: 0;
@@ -84,11 +91,7 @@ float:right;
     left: 0;
 }
 
-.c-picture{
-  width:64px;
-  height:64px;
 
-}
 
   
 
