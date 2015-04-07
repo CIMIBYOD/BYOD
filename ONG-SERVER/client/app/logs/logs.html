@@ -2,7 +2,7 @@
 
 <div class="container">
   <ul class="list-group">
-    <li class="list-group-item" ng-repeat="log in logs">
+    <li class="list-group-item" ng-repeat="log in logs | limitTo:20" >
         <span class="text-muted">{{log}}</span>
     </li>
   </ul>

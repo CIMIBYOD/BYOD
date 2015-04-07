@@ -81,6 +81,24 @@ exports.changePassword = function(req, res, next) {
 };
 
 /**
+ * Revoque a users
+ */
+exports.revoke = function(req, res, next) {
+  var revokedUserId = req.params.id;
+
+  User.findById(revokedUserId, function (err, user) {
+      var oldRevokeStatus = user.is_revoqued;
+      user.is_revoqued = !oldRevokeStatus;
+
+      user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.send(200);
+      });
+
+  });
+};
+
+/**
  * Get my info
  */
 exports.me = function(req, res, next) {

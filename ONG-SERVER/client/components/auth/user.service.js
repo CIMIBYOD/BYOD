@@ -12,6 +12,12 @@ angular.module('ongServerApp')
           controller:'password'
         }
       },
+      revoke: {
+        method: 'PUT',
+        params: {
+          controller:'revoke'
+        }
+      },
       get: {
         method: 'GET',
         params: {

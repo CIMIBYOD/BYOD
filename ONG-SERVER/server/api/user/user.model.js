@@ -17,7 +17,7 @@ var UserSchema = new Schema({
   is_connected_xmpp: Boolean,
   last_known_position: String,
   last_update_timestamp: String,
-  is_revoqued: Boolean,
+  is_revoqued: Boolean
 });
 
 /**

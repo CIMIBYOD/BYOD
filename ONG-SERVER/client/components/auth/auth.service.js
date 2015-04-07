@@ -61,12 +61,13 @@ angular.module('ongServerApp')
 
         return User.save(user,
           function(data) {
-            $cookieStore.put('token', data.token);
-            currentUser = User.get();
+            //Don't need to change current user with the new one
+            //$cookieStore.put('token', data.token);
+            //currentUser = User.get();
             return cb(user);
           },
           function(err) {
-            this.logout();
+            //this.logout();
             return cb(err);
           }.bind(this)).$promise;
       },
