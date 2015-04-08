@@ -14,7 +14,7 @@ var ReportPanel = React.createClass({
  {icon:"icon/tank.png", label:"vehicle",id:"tank"},
  {icon:"icon/aircraft.png", label:"aircraft",id:"aircraft"},
  {icon:"icon/helico.png", label:"helicopter",id:"helico"},
-  {icon:"icon/other.png", label:"report",id:"other"},
+ {icon:"icon/other.png", label:"report",id:"other"},
  ];
 
 
@@ -27,90 +27,30 @@ var ReportPanel = React.createClass({
 *
 */
 componentDidMount: function() {
-  var self  = this;
-     //fade in
-     $("#"+this.state.data.compID ).toggle( "fade" );
+ 
+       //fade in
+       $("#"+this.state.data.compID ).toggle( "fade" );
 
-     //alert panel actions
-     $(".c-alert-panel-list button").click(function(e){
-      var reportType = $(this).attr("id");
-      self.sendReport(reportType);
-      var that = this;
-      setTimeout(function () {
-        $(that.element).removeClass("active");
-       $(that.element).blur();
-     },500);
+       //alert panel actions (open report details view)
+       var that = this;
+       $(".c-report-panel-list button").click(function(e){
+        var data = {reportType: $(this).attr("id")};
+        React.render(
+          <ReportDetail data={data} />,
+         document.getElementById('report-details-placeholder')
+         );
+        
+        $("#"+that.state.data.compID ).toggle( "fade");
 
-    });
-   },
-   /* ReactJS lifeCycle
-*
-*/
-componentWillUnmount : function() {
-     //fade out
-     $("#"+this.state.data.compID ).toggle( "fade",null,100 );
-   },
-   /*
-   * send Report
-   *  report are then sent to webC2
-   * @param type of report, (bomb,kidnap ...)
-   * @param lat latitude
-   * @param lon longitude
-   * @param data data added to report (comment, picture ..)
-   */
-   sendReport: function(type,data){
+       //remove me
+       setTimeout(function () {
+         window.app.view.visible = false; 
+         React.unmountComponentAtNode(document.getElementById('report-panel-placeholder'));
+       },500);
 
-    //report 
-    var report =  {
-      type: "event",
-      subtype: type,
-      datetime:new Date().getTime(),
-      name:"todo",
-      description: "todo",
-      shape:{
-        type : "ponctual",
-        coords:[{lat:"",lon:""}]
-      }
-    }
-
-
-// geolocation callback
-var geoSuccess = function (position) {
-
-  var latitude  = position.coords.latitude;
-  var longitude = position.coords.longitude;
-  
-  report.shape.coords=[{lat:latitude,lon:longitude}];
-
-  _log(JSON.stringify(report));
-
-  $.ajax({
-    url: 'http://localhost:90/cimicop/situation/tocivilian',
-    type: 'POST',
-    data: JSON.stringify(report),
-    contentType: 'application/json',
-    dataType: 'json',
-    success: function(msg) {
-       _log("report sending success");
-    }
-  });
-
-}
-var geoError = function(reason) {
-  _log("ERROR : Unable to retrieve your location: "+reason);
-};
-
-// geolocation MUST be available for report
-if (navigator.geolocation) {
- navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-} else {
- _log("ERROR : GeoLocation not available !!" );
-
-}
-
-},
-
-     /* ReactJS render
+     });
+     },
+   /* ReactJS render
    *
    */
    render: function() {
@@ -123,7 +63,7 @@ if (navigator.geolocation) {
      var buttonWidth = $("#report-btn").outerWidth();
      var panelHeight = 320;
      var panelWidth = 170;
-  
+
 
      var panelTop = buttonTop - 10 - panelHeight;
      var panelLeft = buttonLeft -  (panelWidth - buttonWidth);

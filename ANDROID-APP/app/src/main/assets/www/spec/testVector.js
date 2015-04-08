@@ -1,8 +1,11 @@
 /*
 A REGLER
 
-1) l'ID a disparu des BSO ...
-2) les icones des markers
+1) dead au lieu de death
+  report au lieu de other
+  point au lieu de ponctual
+  picture pas dans le send report ...
+  2) Que mettre dans name ???
 
 */
 console.log(new Date().getTime());

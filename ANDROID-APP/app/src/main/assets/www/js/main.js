@@ -3,9 +3,11 @@
     /**************************************/
 
 _log("loading map view ..." );
+var app={}
 
  //Bso's cache
  var cache = new Cache();
+ app.cache = cache;
 
  //Map
  var map = L.map('map')
@@ -26,7 +28,7 @@ _log("loading map view ..." );
     }).addTo(map);
  }
 
-
+ app.map = map;
 
 //location control
 L.control.locate({
@@ -43,24 +45,20 @@ L.control.locate({
 mapReady();
 
 //alert panel show/hide
-var show=true;
+ app.view={};
+ app.view.visible = false;
+
 $("#report-btn").click(function(e){
- if(show == true){
+ if(app.view.visible == false){
   _log("Opening report panel ... ");
-  show = false;
+  app.view.visible = true;
   React.render(
-
-
-React.createElement(ReportDetail, null),
+    React.createElement(ReportPanel, null),
     document.getElementById('report-panel-placeholder')
     );
-
-   /* React.createElement(ReportPanel, null),
-    document.getElementById('report-panel-placeholder')
-    );*/
   }else{
     _log("Dismounting report panel ... ");
-    show = true;
+    app.view.visible = false;
    React.unmountComponentAtNode(document.getElementById('report-panel-placeholder'));
   }
 
