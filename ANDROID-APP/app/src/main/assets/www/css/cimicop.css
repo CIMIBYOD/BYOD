@@ -47,6 +47,16 @@
 * Report panel -  details 
 */
 
+
+.detail-panel{
+  display:none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 .report-body{
   margin-top:50px;
   height:130px;

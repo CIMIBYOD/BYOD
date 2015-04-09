@@ -166,19 +166,10 @@ if (navigator.geolocation) {
    render: function() {
      _log("rendering ReportDetail ..." );
 
-     var startStyle = { //panel is invisible when created
-      display: 'none',
-      position: 'fixed',
-      top: "20"+"px",
-      left:"50"+"px",
-      width:'60%',
-      height:'40%',
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    };
+    
     return (
 
-      <div id="detail-panel" className="panel panel-primary"  style={startStyle}>
+      <div id="detail-panel" className="panel panel-primary detail-panel"  >
       <div className="panel-heading">Report details</div>
       <div className="panel-body">
       <input  id="hiddenFileInput" type="file" className="c-report-detail-hiddenFileInput" />
