@@ -1,0 +1,18 @@
+#map {
+  height: 500px;
+  width: 100%;
+}
+
+#subnavbar{
+  margin-top: -21px;
+  padding-top: 3px;
+  padding-left: 50px;
+  height: 40px;
+  background-color: #1a242f;
+}
+
+.margin{
+  margin-bottom: 10px;
+  margin-left: 10px;
+  z-index : 0;
+}

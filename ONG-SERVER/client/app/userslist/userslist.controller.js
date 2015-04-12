@@ -6,6 +6,14 @@ angular.module('ongServerApp')
     // Use the User $resource to fetch all users
     $scope.users = User.query();
 
+    $scope.domain_name = "";
+
+    $http.get('/api/configuration').success(function(config) {
+      if(config){
+        $scope.domain_name = config.domain_name;
+      }
+    });
+
 
     socket.syncUpdates('user', $scope.users, function(event, item, array){
       //console.log(item);
@@ -33,13 +41,20 @@ angular.module('ongServerApp')
     };
 
     $scope.errors = {};
+    $scope.user_login = "";
+    $scope.user_login_email =  $scope.user_login +"@" + $scope.domain_name;
+
+    $scope.updateLogin = function(value){
+      $scope.user_login_email =  $scope.user_login +"@" + $scope.domain_name;
+    };
+
     $scope.register = function(form) {
       $scope.submitted = true;
 
       if(form.$valid) {
         Auth.createUser({
           name: $scope.user.name,
-          email: $scope.user.email,
+          email: $scope.user_login_email,
           password: $scope.user.password
         })
           .catch( function(err) {

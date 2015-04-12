@@ -8,3 +8,16 @@
   margin-right:10px;
 }
 
+@-webkit-keyframes updated /* Safari and Chrome */
+{
+  from {color: #18bc9c;}
+  to {color: #2c3e50;}
+}
+
+.anim {
+  -webkit-animation: updated 5s;
+}
+
+body{
+
+}

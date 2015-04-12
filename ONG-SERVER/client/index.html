@@ -17,8 +17,9 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(client) app/vendor.css -->
   <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+  <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />-->
+  <link rel="stylesheet" href="app/cimicop.flaty.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css({.tmp,client}) app/app.css -->
@@ -27,12 +28,18 @@
   <link rel="stylesheet" href="app/account/login/login.css">
   <link rel="stylesheet" href="app/admin/admin.css">
   <link rel="stylesheet" href="app/app.css">
+  <link rel="stylesheet" href="app/cimicop.flaty.css">
   <link rel="stylesheet" href="app/logs/logs.css">
   <link rel="stylesheet" href="app/main/main.css">
+  <link rel="stylesheet" href="app/situation/situation.css">
   <link rel="stylesheet" href="app/userslist/userslist.css">
   <link rel="stylesheet" href="components/modal/modal.css">
   <!-- endinjector -->
   <!-- endbuild -->
+
+  <link rel="stylesheet" href="assets/js/leaflet-0.7.3/leaflet.css">
+  <link rel="stylesheet" href="assets/css/font-awesome.css">
+  <link rel="stylesheet" href="assets/css/leaflet.awesome-markers.css">
 </head>
 <body ng-app="ongServerApp">
 <!--[if lt IE 7]>
@@ -93,6 +100,9 @@
 <script src="app/logs/logs.js"></script>
 <script src="app/main/main.controller.js"></script>
 <script src="app/main/main.js"></script>
+<script src="app/situation/map/map.directive.js"></script>
+<script src="app/situation/situation.controller.js"></script>
+<script src="app/situation/situation.js"></script>
 <script src="app/userslist/userslist.controller.js"></script>
 <script src="app/userslist/userslist.js"></script>
 <script src="components/auth/auth.service.js"></script>
@@ -103,6 +113,9 @@
 <script src="components/socket/socket.service.js"></script>
 <!-- endinjector -->
 <!-- endbuild -->
+<script src="assets/js/leaflet-0.7.3/leaflet.js"></script>
+<script src="assets/js/leaflet-0.7.3/angular-leaflet-directive.js"></script>
+<script src="assets/js/leaflet.awesome-markers.js"></script>
 </body>
 </html>
 

@@ -1,0 +1,37 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div id="subnavbar">
+  <button class="btn btn-default btn-sm" ng-click="broadcastMessage()"><span class="glyphicon glyphicon-comment"></span> Broadcast Message</button>
+  <button class="btn btn-default btn-sm disabled" ng-click="broadcastMessage()"><span class="glyphicon glyphicon-upload"></span> Broadcast Report</button>
+  <button class="btn btn-default btn-sm disabled" ng-click="broadcastMessage()"><span class="glyphicon glyphicon-refresh"></span> Refresh Situation</button>
+  <button class="btn btn-default btn-sm disabled" ng-click="broadcastMessage()"><span class="glyphicon glyphicon-edit"></span> Edit Situation</button>
+
+</div>
+
+
+<leaflet id='map' map  markers="usersMarkers"></leaflet>
+
+
+
+
+<script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-header">
+    <h3 class="modal-title">{{getTitle();}}</h3>
+  </div>
+  <div class="modal-body">
+
+
+    <div class="row">
+      <label for="subject">Subject</label>
+      <input id="subject" type="text" style="width:100%" ng-model="subject">
+    </div>
+    <div class="row">
+      <label for="message">Message</label>
+      <textarea id="message" style="width:100%" rows="5" ng-model="msg" required="required"></textarea>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default btn-lg" ng-click="send()">Send</button>
+  </div>
+</script>

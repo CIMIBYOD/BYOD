@@ -15,12 +15,12 @@ var room_nick = 'server';
 //XMPP Account Details End Here
 
 //Now Creating XMPP Client
-var client = new xmppclient.Client({ 
+var client = new xmppclient.Client({
   jid: client_id,
   password: client_pwd,
   host: client_host,
   port: client_port,
-  reconnect: true,
+  reconnect: true
 });
 
 client.connection.socket.setTimeout(0)
@@ -34,9 +34,11 @@ client.on('online', function() {
       .c('x', { xmlns: 'http://jabber.org/protocol/muc' })
     );
 
+  /*
     client.send(new xmppclient.Element('message', { to: room_jid, type: 'groupchat' })
       .c('body').t('test')
     );
+    */
 
 
 });
@@ -72,14 +74,25 @@ client.on('stanza', function(stanza) {
     console.log('stanza' + stanza);
 })
 
-//dd
-// Updates an existing xmpp in the DB.
 exports.broadcast = function(req, res) {
     console.log(req);
+
+    var payload = req.body.payload;
+
     client.send(new xmppclient.Element('message', { to: room_jid, type: 'groupchat' })
-      .c('body').t('bbbb')
+        .c('body').t(JSON.stringify(payload))
     );
     return res.json("sent");
+};
+
+exports.send = function(req, res) {
+  var to = req.body.to;
+  var payload = req.body.payload;
+
+  client.send(new xmppclient.Element('message', { to: to, type: 'chat' })
+      .c('body').t(JSON.stringify(payload))
+  );
+  return res.json("sent");
 };
 
 function handleError(res, err) {

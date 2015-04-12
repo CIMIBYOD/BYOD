@@ -8,21 +8,24 @@ var User = require('../user/user.model');
 exports.update = function(req, res) {
 
   var userEmail = req.body.email;
-  var newPosition = req.body.position;
+  var newPosition = req.body.location;
   var userPassword = req.body.password; //TODO change/check instead the token and not the password
 
   User.findOne({ email: userEmail}, function (err, user){
     if (err) return res.json(err);
     if (!user) return res.send(401);
     if(user.authenticate(userPassword) && !user.is_revoqued) {
-      user.last_known_position = "newPosition";
+
+      console.log(newPosition);
+      user.last_known_position = newPosition;
       user.last_update_timestamp = Date.now();
       user.save(function(err) {
         if (err){
           console.log(err);
-        };
+        }
 
         //SEND LOCATION TO WEBC2
+        /*
         request({
           uri: "http://localhost:9000/api/location/test",
           method: "PUT",
@@ -31,6 +34,7 @@ exports.update = function(req, res) {
         }, function(error, response, body) {
           console.log(body);
         });
+        */
 
         res.json(user);
       });
@@ -41,9 +45,6 @@ exports.update = function(req, res) {
   });
 };
 
-exports.test = function(req, res) {
-  res.json("toto");
-}
 
 
 

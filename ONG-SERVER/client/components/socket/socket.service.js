@@ -35,20 +35,25 @@ angular.module('ongServerApp')
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function (item) {
-          var oldItem = _.find(array, {_id: item._id});
-          var index = array.indexOf(oldItem);
-          var event = 'created';
+          if(array !== undefined) {
+            var oldItem = _.find(array, {_id: item._id});
+            var index = array.indexOf(oldItem);
+            var event = 'created';
 
-          // replace oldItem if it exists
-          // otherwise just add item to the collection
-          if (oldItem) {
-            array.splice(index, 1, item);
-            event = 'updated';
-          } else {
-            array.push(item);
+            // replace oldItem if it exists
+            // otherwise just add item to the collection
+            if (oldItem) {
+              array.splice(index, 1, item);
+              event = 'updated';
+            } else {
+              array.push(item);
+            }
+            cb(event, item, array);
+          }else{
+            cb('updated', item, undefined);
           }
 
-          cb(event, item, array);
+
         });
 
         /**
@@ -56,8 +61,12 @@ angular.module('ongServerApp')
          */
         socket.on(modelName + ':remove', function (item) {
           var event = 'deleted';
-          _.remove(array, {_id: item._id});
-          cb(event, item, array);
+            if(array !== undefined) {
+              _.remove(array, {_id: item._id});
+              cb(event, item, array);
+            }else{
+              cb(event, item, undefined);
+            }
         });
       },
 
