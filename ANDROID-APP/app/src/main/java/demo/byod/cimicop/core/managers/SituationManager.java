@@ -17,25 +17,6 @@ public class SituationManager {
     private HashMap<String, SituationEntity> entities = new HashMap<String, SituationEntity>();
 
     public SituationManager(){
-
-        JSONObject ex1 = new JSONObject();
-
-        try {
-            ex1.put("type", "ponctual");
-            JSONArray coords = new JSONArray();
-            JSONObject latLng = new JSONObject();
-            latLng.put("lat", 48.85);
-            latLng.put("lon", 2.4);
-            coords.put(latLng);
-            ex1.put("coords", coords);
-
-            SituationEntity se = new SituationEntity("id1", "name1", "explosion", ex1);
-            this.entities.put(se.getId(), se);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public static SituationManager getInstance(){
@@ -47,19 +28,36 @@ public class SituationManager {
 
     //
     public HashMap<String, SituationEntity> getSituationEntities() {
-
         return this.entities;
     }
 
     public void addOrUpdateSituationEntity(SituationEntity se) {
-
         this.entities.put(se.getId(), se);
-
         CartoManager.getInstance().addOrUpdateSituationEntities(this.getSituationEntities());
+    }
+
+    public void fullUpdate(String json){
+
+        entities.clear();
+        try {
+            JSONObject r = new JSONObject(json);
+            JSONArray array = r.getJSONArray("entities");
+            for(int i=0; i<array.length(); i++){
+                String e = array.getString(i);
+                if(e != null){
+                    addSituationEntityFromString(e);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deltaUpdate(String json){
 
     }
 
-    public void addSituationEntityFromString(String jsonData) {
+    private void addSituationEntityFromString(String jsonData) {
         try {
             JSONObject ies = new JSONObject(jsonData);
             String id = ies.getString("id");

@@ -13,17 +13,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import demo.byod.cimicop.core.managers.RestQueryManager;
 import demo.byod.cimicop.core.managers.SituationManager;
 
-/**
- * Created by ASD on 20/03/2015.
- */
+
 public class SituationService extends Service {
 
     public static final long TIME_BTW_REFRESH = 1000 * 60;
-
-    public static final String SITUATION_SERVICE = "http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/situation/tocivilian";
-
 
     @Override
     public void onCreate() {
@@ -37,7 +33,7 @@ public class SituationService extends Service {
             public void run() {
                 while (true) {
                     Log.d("getCurrentSituation", "GET");
-                    getCurrentSituation();
+                    RestQueryManager.getInstance().getCurrentSituation();
                     try {
                         Thread.sleep(TIME_BTW_REFRESH);
                     } catch (InterruptedException e) {
@@ -71,35 +67,5 @@ public class SituationService extends Service {
     }
 
 
-    private void getCurrentSituation() {
 
-        try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-            // 2. make POST request to the given URL
-            HttpGet httpGET = new HttpGet(SITUATION_SERVICE);
-
-            ResponseHandler<String> handler = new BasicResponseHandler();
-            try{
-                String result = httpclient.execute(httpGET, handler);
-                Log.d("getCurrentSituation", " r =" +result);
-                JSONObject r = new JSONObject(result);
-                JSONArray array = r.getJSONArray("entities");
-                for(int i=0; i<array.length(); i++){
-                    String e = array.getString(i);
-                    if(e != null){
-                        SituationManager.getInstance().addSituationEntityFromString(e);
-                    }
-                }
-            }catch(Exception e){
-                Log.d("getCurrentSituation", e.getLocalizedMessage());
-            }
-
-
-
-
-        } catch (Exception e) {
-            Log.d("getCurrentSituation", e.getLocalizedMessage());
-        }
-    }
 }
