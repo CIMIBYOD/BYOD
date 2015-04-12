@@ -46,6 +46,8 @@ ANDROID-APP/.idea/libraries/support_v4_22_0_0.xml
 ANDROID-APP/.idea/workspace.xml
 ANDROID-APP/app/app.iml
 ANDROID-APP/build/intermediates/model_data.bin
+<<<<<<< HEAD
+=======
 ANDROID-APP/.gradle/2.2.1/taskArtifacts/cache.properties.lock
 ANDROID-APP/.gradle/2.2.1/taskArtifacts/fileHashes.bin
 ANDROID-APP/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin
@@ -61,3 +63,4 @@ ANDROID-APP/build/intermediates/dex-cache/cache.xml
 ANDROID-APP/build/intermediates/model_data.bin
 DB/data/journal/lsn
 ANDROID-APP/BYOD.iml
+>>>>>>> master
