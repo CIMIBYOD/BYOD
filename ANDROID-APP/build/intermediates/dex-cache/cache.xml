@@ -2,18 +2,130 @@
 <items version="2" >
 
     <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-2318427965e119421a7506e65d2e771689668fc8.jar" />
-    </item>
-    <item
         jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-01c1025957bc1c6aa6162247c87d8b04263f5333.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-f135cbf2eb7f4d96dc2e0711e2f24d3fcb1255ed.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-3f57e92f6648194e70a4e081da51e67474da8815.jar" />
+    </item>
+    <item
+        jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-extensions\4.1.0\b0968f9b209feb2f51d1a1e72238989271750625\smack-extensions-4.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b0968f9b209feb2f51d1a1e72238989271750625">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-extensions-4.1.0-4b5b7face7458ffb24b5a9b0969112250fda68b9.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-dbfc2b78d122d6cf422f741406f6dfc95725d8d8.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.mapbox.mapboxsdk\mapbox-android-sdk\0.7.1\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d452013fe38dfc090baf06365db11497705fb630">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-9c3efc8493bc87648ec4a413e4f65d5b5f0cc7ca.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-5f6013f398eb9370aee5dacafd5088aecc46916f.jar" />
+    </item>
+    <item
+        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-19e355d8d14e59bea2e9eb338669001924ffec1e.jar" />
+    </item>
+    <item
+        jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-tcp\4.1.0\b5043991d7ed52da15089fcfcbca1dd862d1af42\smack-tcp-4.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5043991d7ed52da15089fcfcbca1dd862d1af42">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-tcp-4.1.0-75af38774df99dac3812b2a552ae015f48e44a32.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-bf751facbec7fc7012e70cb83198d1c1736ce2d4.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-13748288bc3f1c602a9576f9bdc64e052b8ca628.jar" />
+    </item>
+    <item
+        jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-android-extensions\4.1.0\355b8e606f77ae354e86a84755d2dab9f7536121\smack-android-extensions-4.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="355b8e606f77ae354e86a84755d2dab9f7536121">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-android-extensions-4.1.0-fd8d88de1684bfe88c7d8fc9a6dc51f6e38cd87c.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-39f1f39fa247440a335015b5b52f0ba5e05e083f.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-871b5dfef1fbc9972127e9ace45eea285b68b1f7.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-e5105fc1b95e7f861f44f100902f981a7697f719.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-04d7b3ce9ef8f655060a85cae86419ed022104ac.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-fbd1523055e4dc5032397f31d6b7b747e1b28b79.jar" />
+    </item>
+    <item
+        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
+        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-2318427965e119421a7506e65d2e771689668fc8.jar" />
     </item>
     <item
         jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.0.0\classes.jar"
@@ -37,13 +149,6 @@
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-5aaab267f81c35965309afa4ec36880a05241752.jar" />
     </item>
     <item
-        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
-        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-f135cbf2eb7f4d96dc2e0711e2f24d3fcb1255ed.jar" />
-    </item>
-    <item
         jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -63,13 +168,6 @@
         revision="21.1.2"
         sha1="4b6d736ad02f64ba54f4a5712a4a453a2c3848b1">
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-im-4.1.0-eae3b6278d8cb475cd0582967b85c2914ddd5714.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-3f57e92f6648194e70a4e081da51e67474da8815.jar" />
     </item>
     <item
         jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.0.0\classes.jar"
@@ -121,25 +219,11 @@
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-5f5f3e1d3d840328b94afd409da31b85302bc01c.jar" />
     </item>
     <item
-        jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-extensions\4.1.0\b0968f9b209feb2f51d1a1e72238989271750625\smack-extensions-4.1.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b0968f9b209feb2f51d1a1e72238989271750625">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-extensions-4.1.0-4b5b7face7458ffb24b5a9b0969112250fda68b9.jar" />
-    </item>
-    <item
         jar="E:\ASD\.gradle\caches\modules-2\files-2.1\de.measite.minidns\minidns\0.1.7\993582d1455b93a5723d2af4b39d8679735b3550\minidns-0.1.7.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="993582d1455b93a5723d2af4b39d8679735b3550">
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\minidns-0.1.7-bf6c477d003c2a8274358b15f4003060e8b662b8.jar" />
-    </item>
-    <item
-        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-dbfc2b78d122d6cf422f741406f6dfc95725d8d8.jar" />
     </item>
     <item
         jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-util-cache\0.4.2-beta1\43e2a81f52600639daeb02ede60cc498a13614a5\jxmpp-util-cache-0.4.2-beta1.jar"
@@ -156,46 +240,11 @@
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-feaeffb313ebb26df472c0d88992c25b0a08f3ee.jar" />
     </item>
     <item
-        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.mapbox.mapboxsdk\mapbox-android-sdk\0.7.1\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="d452013fe38dfc090baf06365db11497705fb630">
-        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-9c3efc8493bc87648ec4a413e4f65d5b5f0cc7ca.jar" />
-    </item>
-    <item
         jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-8da54d3cdfce3326badc7b96ef35a11b6b744cf9.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-5f6013f398eb9370aee5dacafd5088aecc46916f.jar" />
-    </item>
-    <item
-        jar="E:\Projects\BYOD\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="E:\Projects\BYOD\app\build\intermediates\pre-dexed\debug\classes-19e355d8d14e59bea2e9eb338669001924ffec1e.jar" />
-    </item>
-    <item
-        jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-tcp\4.1.0\b5043991d7ed52da15089fcfcbca1dd862d1af42\smack-tcp-4.1.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b5043991d7ed52da15089fcfcbca1dd862d1af42">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-tcp-4.1.0-75af38774df99dac3812b2a552ae015f48e44a32.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-bf751facbec7fc7012e70cb83198d1c1736ce2d4.jar" />
     </item>
     <item
         jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.0.0\classes.jar"
@@ -219,46 +268,11 @@
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-android-4.1.0-36abf70a9fddf041ab5989837f1d6b5baf2a51d0.jar" />
     </item>
     <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-13748288bc3f1c602a9576f9bdc64e052b8ca628.jar" />
-    </item>
-    <item
         jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.jxmpp\jxmpp-core\0.4.2-beta1\14ade1a89b0f6db4fa481f9f8a721cdec69374de\jxmpp-core-0.4.2-beta1.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="14ade1a89b0f6db4fa481f9f8a721cdec69374de">
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\jxmpp-core-0.4.2-beta1-e5ca0d2c0f0daaa0dce4354b9eefb556d479d6bf.jar" />
-    </item>
-    <item
-        jar="E:\ASD\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack\smack-android-extensions\4.1.0\355b8e606f77ae354e86a84755d2dab9f7536121\smack-android-extensions-4.1.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="355b8e606f77ae354e86a84755d2dab9f7536121">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-android-extensions-4.1.0-fd8d88de1684bfe88c7d8fc9a6dc51f6e38cd87c.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-39f1f39fa247440a335015b5b52f0ba5e05e083f.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-871b5dfef1fbc9972127e9ace45eea285b68b1f7.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-e5105fc1b95e7f861f44f100902f981a7697f719.jar" />
     </item>
     <item
         jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.0.0\classes.jar"
@@ -273,20 +287,6 @@
         revision="21.1.2"
         sha1="74422a92b7bba8eb633ceecdb017530b67451731">
         <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\smack-sasl-provided-4.1.0-8d9165fef060dd87356f6c91b977b21055fe598f.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-04d7b3ce9ef8f655060a85cae86419ed022104ac.jar" />
-    </item>
-    <item
-        jar="E:\BYOD\ANDROID-APP\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
-        <dex dex="E:\BYOD\ANDROID-APP\app\build\intermediates\pre-dexed\debug\classes-fbd1523055e4dc5032397f31d6b7b747e1b28b79.jar" />
     </item>
 
 </items>
