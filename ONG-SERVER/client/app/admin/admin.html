@@ -1,14 +1,87 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="user in users">
-        <strong>{{user.name}}</strong><br>
-        <span class="text-muted">{{user.email}}</span>
-        <span class="text-muted">{{user}}</span>
-        <a ng-click="revoque(user)" class="revoque"><span class="glyphicon glyphicon-ban-circle"></span></a>
-        <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+  <form class="form-horizontal" ng-submit="update()">
 
-    </li>
-  </ul>
+    <div class="panel panel-primary">
+      <div class="panel-heading"><b>ONG SERVER</b></div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="domain_name" class="col-sm-2 control-label">Domain Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="domain_name" ng-model="domain_name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="xmpp_server" class="col-sm-2 control-label">XMPP Server</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="xmpp_server" ng-model="xmpp_server">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="xmpp_broadcast_room" class="col-sm-2 control-label">XMPP Broadcast room</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="xmpp_broadcast_room" ng-model="xmpp_broadcast_room">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel panel-primary">
+      <div class="panel-heading"><b>WEB C2</b></div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="server_host" class="col-sm-2 control-label">Server Host</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="server_host" ng-model="server_host">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="situation_from" class="col-sm-2 control-label">Situation From Civilians</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="situation_from" ng-model="situation_from">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="situation_to" class="col-sm-2 control-label">Situation To Civilians</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="situation_to" ng-model="situation_to">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="situation_ws" class="col-sm-2 control-label">Situation Web Service</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="situation_ws" ng-model="situation_ws">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="alert_ws" class="col-sm-2 control-label">Alert Web Service</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="alert_ws" ng-model="alert_ws">
+          </div>
+        </div>
+
+
+      <div class="form-group">
+        <label for="ws_sync" class="col-sm-2 control-label">Web Service Situation Sync (in minutes)</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="ws_sync" ng-model="situation_sync">
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+      <div class="pull-right">
+        <button class="btn btn-inverse btn-lg btn-login" type="submit" ng-click="update()">
+          <span class="glyphicon glyphicon-refresh"></span> Update
+        </button>
+      </div>
+    </div>
+
+  </form>
 </div>

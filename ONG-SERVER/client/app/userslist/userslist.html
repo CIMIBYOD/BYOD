@@ -3,7 +3,7 @@
 <div class="container">
 
 
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading"><b>New User:</b></div>
     <div class="panel-body">
       <form class="form" name="form" ng-submit="register(form)" novalidate>
@@ -22,22 +22,12 @@
         </div>
 
         <div class="col-sm-4">
-          <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
-                                            'has-error': form.email.$invalid && submitted }">
-            <label>Email</label>
+          <div class="form-group">
+            <label>Login</label>
 
-            <input type="email" name="email" class="form-control" ng-model="user.email"
-                   required
-                   mongoose-error/>
-            <p class="help-block" ng-show="form.email.$error.email && submitted">
-              Doesn't look like a valid email.
-            </p>
-            <p class="help-block" ng-show="form.email.$error.required && submitted">
-              What's your email address?
-            </p>
-            <p class="help-block" ng-show="form.email.$error.mongoose">
-              {{ errors.email }}
-            </p>
+            <input type="test" name="email" class="form-control" ng-model="user_login" ng-change="updateLogin(user_login)"
+                   required />
+
           </div>
         </div>
 
@@ -62,6 +52,18 @@
 
       </div>
       <div class="row">
+        <div class="col-sm-4">
+            <label><h4>Login Email : </h4> {{user_login_email}}</label>
+            <p class="help-block" ng-show="form.email.$error.email && submitted">
+              Doesn't look like a valid email.
+            </p>
+            <p class="help-block" ng-show="form.email.$error.required && submitted">
+              What's your login?
+            </p>
+            <p class="help-block" ng-show="form.email.$error.mongoose">
+              {{ errors.email }}
+            </p>
+        </div>
           <div class="pull-right">
             <button class="btn btn-inverse btn-lg btn-login" type="submit">
               <span class="glyphicon glyphicon-user"></span> Create New User
@@ -83,13 +85,13 @@
       </div>
       <div class="row">
         <div class="col-md-3">
-          <span class="text-muted"><b>Email:</b>{{user.email}}</span>
+          <span class="text"><b>Email:</b>{{user.email}}</span>
         </div>
         <div class="col-md-4">
-        <span class="text-muted"><b>Last Location:</b>{{user.last_known_position}}</span>
+        <span class="text anim"><b>Last Location:</b>Latitude: {{user.last_known_position.latitude}}, Longitude: {{user.last_known_position.longitude}}</span>
         </div>
           <div class="col-md-4">
-        <span class="text-muted"><b>Last Update:</b>{{convertTimeStamp(user.last_update_timestamp)}}</span>
+        <span class="text anim"><b>Last Update:</b>{{convertTimeStamp(user.last_update_timestamp)}}</span>
           </div>
         <div class="col-md-1">
           <div class="pull-right">
