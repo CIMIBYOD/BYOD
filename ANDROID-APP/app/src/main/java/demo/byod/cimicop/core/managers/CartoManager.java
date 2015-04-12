@@ -37,7 +37,6 @@ public class CartoManager {
 
         this.addOrUpdateSituationEntities(SituationManager.getInstance().getSituationEntities());
 
-
     }
 
 
