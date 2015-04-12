@@ -52,8 +52,9 @@ $("#report-btn").click(function(e){
  if(app.view.visible == false){
   _log("Opening report panel ... ");
   app.view.visible = true;
+  var data = {reportURL: config.reportPanel.reportURL[config.reportPanel.reportURL.use]};
   React.render(
-    React.createElement(ReportPanel, null),
+    React.createElement(ReportPanel, {data: data}),
     document.getElementById('report-panel-placeholder')
     );
   }else{

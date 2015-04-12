@@ -34,13 +34,13 @@ componentDidMount: function() {
        //alert panel actions (open report details view)
        var that = this;
        $(".c-report-panel-list button").click(function(e){
-        var data = {reportType: $(this).attr("id")};
+        var data = {reportType: $(this).attr("id"),reportURL:that.props.data.reportURL};
         React.render(
           <ReportDetail data={data} />,
          document.getElementById('report-details-placeholder')
          );
         
-        $("#"+that.state.data.compID ).toggle( "fade");
+        $("#"+that.state.data.compID ).toggle( "fade",null,100);
 
        //remove me
        setTimeout(function () {

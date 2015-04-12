@@ -21,7 +21,7 @@ server.get('/cimicop/situation/tocivilian', respond);
 //Content-Type: application/json
 server.post('/cimicop/situation/tocivilian', function create(req, res, next) {
 
- 
+
   //check content Type
   var report="";
   var valid = true;
@@ -33,21 +33,29 @@ server.post('/cimicop/situation/tocivilian', function create(req, res, next) {
 
 //check DTO
 /* Valid DTO Sample
-{
-  "id":"new",
-  "type": "event",
+{"report" :
+  {
+    "type": "event",
     "subtype": "bomb",
-  "name":"marker-02",
-    "description":"a desc",
-  "shape":{
-  "type" : "ponctual",
-  "coords":"[{\"lat\":\"48.85\",\"lon\":\"2.5\"}]"
+    "datetime": 1427494496046
+    "name":"marker-02",
+      "description":"a desc",
+    "shape":{
+    "type" : "ponctual",
+    "coords":"[{\"lat\":48.85,\"lon\":2.5}]"
+    }
   }
 }
-
 */
+var envelop = req.body
 
-var reported = req.body;
+if(typeof(envelop.report) == "undefined"){
+  valid = false;
+  report+="- report envelop is mandatory " +" || ";
+}
+
+
+var reported = envelop.report;
 
 /* Disabled, no ID to send 
 if(typeof(reported.id) == "undefined"){
@@ -70,10 +78,6 @@ if(typeof(reported.datetime) == "undefined"){
   report+="- report.datetime is mandatory " +" || ";
 }
 
-if( reported.type != "event"){
-  valid = false;
-  report+="- (report.type should be an 'event' but is " +reported.type +" || ";
-}
 
 
 if(typeof(reported.subtype) == "undefined"){
@@ -97,6 +101,28 @@ if(typeof(reported.subtype) == "undefined"){
     valid = false;
   report+="- report.subtype is unknown " +reported.subtype +" || ";
 }
+}
+
+
+//check type agains subtype
+if(reported.subtype == "bomb" ||
+  reported.subtype == "kidnap" ||
+  reported.subtype == "riot" ||
+  reported.subtype == "armed-group" ||
+  reported.subtype == "death" ||
+  reported.subtype == "injured" ||
+  reported.subtype == "other" 
+  ){
+   if (reported.type !=  "event"){
+     valid = false;
+     report+="- reported.type should be event, but is " +reported.type +" || ";
+   }
+}else{
+    if (reported.type !=  "observation"){
+     valid = false;
+     report+="- reported.type should be observation, but is " +reported.type +" || ";
+   }
+
 }
 
 
@@ -126,21 +152,21 @@ if(typeof(reported.shape) == "undefined"){
  // var coords = JSON.parse(reported.shape.coords);
  var coords = reported.shape.coords;
 
-  if(coords.length != 1){
+ if(coords.length != 1){
+  valid = false;
+  report+="- (report.shape.coords should be one and only one point "+" || ";
+}else{
+
+  if(typeof(coords[0].lat) == "undefined"){
     valid = false;
-    report+="- (report.shape.coords should be one and only one point "+" || ";
-  }else{
-
-    if(typeof(coords[0].lat) == "undefined"){
-      valid = false;
-      report+="- (report.shape.coords should have latitude "+" || ";
-    }
-
-    if(typeof(coords[0].lon) == "undefined"){
-      valid = false;
-      report+="- (report.shape.coords should have longitude "+" || ";
-    }
+    report+="- (report.shape.coords should have latitude "+" || ";
   }
+
+  if(typeof(coords[0].lon) == "undefined"){
+    valid = false;
+    report+="- (report.shape.coords should have longitude "+" || ";
+  }
+}
 }
 
 }catch(e){
@@ -149,10 +175,10 @@ if(typeof(reported.shape) == "undefined"){
 }
 
 if(valid){
-   console.log("SUCCESS");
-  res.send(200,req.body);  
+  console.log("SUCCESS : \n" +report + "for \n"+JSON.stringify(req.body));
+  res.send(200,report);  
 }else{
-  console.log("ERROR : " +report);
+  console.log("ERROR : \n" +report + "for \n"+JSON.stringify(req.body));
   res.send(500,report);  
 }
 });
