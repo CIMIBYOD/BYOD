@@ -178,7 +178,7 @@ var _toPolygon = function(bso){
 var _bindPopup = function(layer,bso){
   try{
     console.log("bso.datetime is " + typeof(bso.datetime));
-  var validity = new Date(parseInt(bso.datetime)).toDateString();
+  var validity = new Date(bso.datetime).toDateString();
   return layer.bindPopup("<h5><b>"+bso.name+"</b></h5><br>"+"<b>report date : "+validity+"</b><br>"+bso.description);
 }catch(e){/*TODO*/}
 }
