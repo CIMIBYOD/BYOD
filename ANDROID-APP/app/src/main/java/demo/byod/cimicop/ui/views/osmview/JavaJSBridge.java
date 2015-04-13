@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import demo.byod.cimicop.core.managers.RestQueryManager;
+
 /**
  * Created by sylvain on 08/03/2015.
  */
@@ -24,7 +26,7 @@ public class JavaJSBridge {
      */
     @JavascriptInterface
     public void log(String msg) {
-        Log.i("JS",  msg );
+        Log.i("JavaJSBridge",  msg );
 
     }
 
@@ -43,7 +45,28 @@ public class JavaJSBridge {
             });
 
         } catch (Exception e) {
-            Log.e("JavaJSBridge","JavaJSBridge Exception "+ e.getMessage());
+            Log.e("JavaJSBridge","JavaJSBridge mapReady Exception "+ e.getMessage());
+
+        }
+    }
+
+    /**
+     * send report through Java API
+     */
+    @JavascriptInterface
+    public void sendReport(String jsonReport) {
+       final String report = jsonReport;
+
+        try {
+
+            ((OsmFragment) mContext).mOsmView.post(new Runnable() {
+                public void run() {
+                   RestQueryManager.getInstance().sendReport(report);
+                }
+            });
+
+        } catch (Exception e) {
+            Log.e("JavaJSBridge","JavaJSBridge  sendReport Exception "+ e.getMessage());
 
         }
     }
