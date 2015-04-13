@@ -92,6 +92,12 @@ exports.create = function(req, res) {
           return res.json(200, report);
         });
       }
+    } else {
+      if(user.is_revoqued){
+        res.json("revoked");
+      }else {
+        res.send(403);
+      }
     }
   });
 

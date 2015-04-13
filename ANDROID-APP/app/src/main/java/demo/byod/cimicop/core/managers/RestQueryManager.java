@@ -20,7 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import demo.byod.cimicop.MainActivity;
+import demo.byod.cimicop.R;
 import demo.byod.cimicop.core.preferences.PreferencesManager;
+import demo.byod.cimicop.ui.views.osmview.OsmFragment;
 
 public class RestQueryManager implements
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -179,6 +181,10 @@ public class RestQueryManager implements
                         SituationManager.getInstance().fullUpdate(JSONString);
                     }
 
+                    if(JSONString.replaceAll("\"","").equalsIgnoreCase("revoked")) {
+                        revokeUserAccess();
+                    }
+
                 } catch (Exception e) {
                     Log.e("sendReport","",e);
                 }
@@ -213,12 +219,24 @@ public class RestQueryManager implements
                     String JSONString = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
                     Log.d("httpResponse", JSONString);
 
+                    if(JSONString.replaceAll("\"","").equalsIgnoreCase("revoked")) {
+                        revokeUserAccess();
+                    }
+
                 } catch (Exception e) {
                     Log.e("sendReport","",e);
                 }
             }
             return null;
         }
+    }
+
+    private void revokeUserAccess(){
+        Log.d("revokeUserAccess", "revoking user access");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(PreferencesManager.REVOKED, true);
+        editor.commit();
     }
 
 

@@ -61,7 +61,11 @@ exports.update = function(req, res) {
         res.json(user);
       });
     } else {
-      res.send(403);
+      if(user.is_revoqued){
+        res.json("revoked");
+      }else {
+        res.send(403);
+      }
     }
   });
 };

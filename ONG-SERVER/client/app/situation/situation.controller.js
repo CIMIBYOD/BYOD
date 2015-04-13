@@ -399,12 +399,12 @@ angular.module('ongServerApp').controller('ModalInstanceCtrl', function ($scope,
   $scope.send = function () {
 
     if($scope.to){
-      return "Send Message To : " + $scope.to;
       $http.post('/api/xmpp/send', {
+        to : $scope.to,
         payload : {
           type: "message",
           subject: $scope.subject,
-          msg: $scope.msg
+          message: $scope.msg
         }
       }).
         success(function(data, status, headers, config) {
@@ -422,7 +422,7 @@ angular.module('ongServerApp').controller('ModalInstanceCtrl', function ($scope,
         payload : {
           type: "message",
           subject: $scope.subject,
-          msg: $scope.msg
+          message: $scope.msg
         }
       }).
         success(function(data, status, headers, config) {

@@ -1,36 +1,26 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/background_revoked">
+    android:background="@color/background_revoked"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:padding="10dip" >
+        android:orientation="vertical">
         <!--  View Title Label -->
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/commanderarmy"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="13dp" />
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:layout_height="274dp"
+            android:textSize="28sp"
             android:padding="30dip"
-            android:text="Right have been revode" />
+            android:text="ACCESS REVOKED"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@android:color/background_light"
+            android:layout_gravity="top"
+            android:textStyle="bold" />
 
-        <!--  Login Button -->
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:text="Login" />
     </LinearLayout>
 
 </ScrollView>

@@ -54,17 +54,20 @@ public class LoginFragment extends Fragment {
         //Get init prefs values and adding listener on pref changes
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         String storedLogin = sharedPref.getString(PreferencesManager.LOGIN, "");
+        String storedPassword = sharedPref.getString(PreferencesManager.PASSWORD, "");
         uname.setText(storedLogin, TextView.BufferType.EDITABLE);
+        password.setText(storedPassword, TextView.BufferType.EDITABLE);
+        if(storedLogin.isEmpty() && storedPassword.isEmpty()){
+            new Login().execute();
+        }
 
         submit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-
                 // execute method invokes doInBackground() where we open a Http URL connection using the given Servlet URL
                 //and get output response from InputStream and return it.
                 new Login().execute();
-
             }
         });
 

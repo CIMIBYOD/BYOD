@@ -85,8 +85,7 @@ public class XmppService extends Service implements MessageListener, ChatMessage
     private void connect(){
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
                 .setUsernameAndPassword(LOG, PWD)
-                .setServiceName("android")
-                .setDebuggerEnabled(true)
+                .setServiceName(HOST)
                 .setHost(HOST)
                 .setPort(5222)
                 .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
@@ -143,48 +142,55 @@ public class XmppService extends Service implements MessageListener, ChatMessage
 
     @Override
     public void processMessage(Message message) {
-        Log.i("XMPP SERVICE", message.getBody());
-        customProcessMessage(message);
+        if(message != null && message.getBody()!= null) {
+            Log.i("XMPP SERVICE", message.getBody());
+            customProcessMessage(message);
+        }
 
     }
 
     @Override
     public void processMessage(Chat chat, Message message) {
-        Log.i("XMPP SERVICE", message.getBody());
-        customProcessMessage(message);
+        if(message != null && message.getBody()!= null) {
+            Log.i("XMPP SERVICE", message.getBody());
+            customProcessMessage(message);
+        }
     }
 
     private void customProcessMessage(Message message){
 
-        Log.i("XMPP SERVICE", message.getBody());
-        String data = message.getBody();
-        try{
-            JSONObject msg = new JSONObject(data);
-            if(msg != null){
-                String type = msg.getString("type");
-                switch (type){
-                    case "message":
-                        String msgData = msg.getString("message");
-                        displayMessageNotification(msgData);
-                        break;
-                    case "situation":
-                        String situationDelta = msg.getString("situation");
-                        SituationManager.getInstance().deltaUpdate(situationDelta);
-                        break;
-                    default:
-                        break;
+        if(message != null) {
+            Log.i("XMPP SERVICE", message.getBody());
+            String data = message.getBody();
+            try {
+                JSONObject msg = new JSONObject(data);
+                if (msg != null) {
+                    String type = msg.getString("type");
+                    switch (type) {
+                        case "message":
+                            String msgData = msg.getString("message");
+                            String subjectData = msg.getString("subject");
+                            displayMessageNotification(subjectData, msgData);
+                            break;
+                        case "situation":
+                            String situationDelta = msg.getString("situation");
+                            SituationManager.getInstance().deltaUpdate(situationDelta);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
 
-        }catch (JSONException e) {
-            e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void displayMessageNotification(String msg){
+    private void displayMessageNotification(String subject, String msg){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_action_location_2)
-                .setContentTitle("Message CIMICOP")
+                .setSmallIcon(R.drawable.commanderarmy)
+                .setContentTitle(subject)
                 .setContentText(msg);
 
         NotificationManager mNotificationManager = (NotificationManager) MainActivity.getContext().getSystemService(Context.NOTIFICATION_SERVICE);

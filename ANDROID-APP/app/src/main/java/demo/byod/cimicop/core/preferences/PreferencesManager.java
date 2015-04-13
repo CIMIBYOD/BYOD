@@ -15,4 +15,7 @@ public class PreferencesManager {
     public static String HOST = "pref_key_host";
     public static String PORT = "pref_key_port";
 
+    //Revoke preference key
+    public static String REVOKED = "pref_key_revoked";
+
 }

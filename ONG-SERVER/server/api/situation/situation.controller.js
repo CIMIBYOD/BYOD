@@ -51,7 +51,7 @@ function task() {
   }
 
   if(configuration){
-    setTimeout(task, (configuration.situation_sync * 1000 ));
+    setTimeout(task, (configuration.situation_sync * 1000));
   }else{
     setTimeout(task, 5000); //Default value
   }
@@ -77,7 +77,12 @@ exports.get = function(req, res) {
         var situation = situations[0];
         return res.json(200, situation.situation);
       });
-   // }
+    // } else {
+    //if(user.is_revoqued){
+    //  res.json("revoked");
+    //}
+    //res.send(403);
+    //}
   });
 };
 

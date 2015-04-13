@@ -4,15 +4,19 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import demo.byod.cimicop.core.preferences.PreferencesManager;
 import demo.byod.cimicop.core.services.connectivity.XmppService;
 import demo.byod.cimicop.core.services.location.LocationService;
 import demo.byod.cimicop.core.services.situation.SituationService;
 import demo.byod.cimicop.ui.views.login.LoginFragment;
+import demo.byod.cimicop.ui.views.login.RevokedFragment;
 import demo.byod.cimicop.ui.views.osmview.OsmFragment;
 import demo.byod.cimicop.ui.views.preferences.PreferencesFragment;
 
@@ -44,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intentSituationService = new Intent(this, SituationService.class);
         startService(intentSituationService);
+
 
     }
 
@@ -81,5 +86,6 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
