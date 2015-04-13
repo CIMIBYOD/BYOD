@@ -114,7 +114,7 @@ markers.push(marker);
 marker = {
 	id:"Marker."+ cpt++,
 	datetime:"1428053296573",
-	type: "event",
+	type: "observation",
 	subtype: "tank",
 	name:"tank",
 	description: "a description",
@@ -129,7 +129,7 @@ markers.push(marker);
 marker = {
 	id:"Marker."+ cpt++,
 	datetime:"1428053296573",
-	type: "event",
+	type: "observation",
 	subtype: "aircraft",
 	name:"aircraft",
 	description: "a description",
@@ -144,7 +144,7 @@ markers.push(marker);
 marker = {
 	id:"Marker."+ cpt++,
 	datetime:"1428053296573",
-	type: "event",
+	type: "observation",
 	subtype: "helico",
 	name:"helico",
 	description: "a description",

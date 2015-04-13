@@ -10,7 +10,10 @@ var app={}
  app.cache = cache;
 
  //Map
- var map = L.map('map')
+ var map = L.map('map',{
+  attributionControl:false,
+
+ })
    _log("Map source is '"+config.mapSrc+"'" );
  if (config.mapSrc == 'france'){
    map.setView(config.map.france.location,  config.map.france.zoomLevel);
@@ -32,9 +35,9 @@ var app={}
 
 //location control
 L.control.locate({
-              onLocationError: function(err) {console.log(err.message)},  // define an error callback function
+              onLocationError: function(err) {_log(err.message)},  // define an error callback function
               onLocationOutsideMapBounds:  function(context) { // called when outside map boundaries
-                console.log(context.options.strings.outsideMapBoundsMsg);
+                _log(context.options.strings.outsideMapBoundsMsg);
               },
               showPopup: false, // display a popup when the user click on the inner marker
             }).addTo(map);
