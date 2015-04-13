@@ -38,6 +38,7 @@ public class SituationManager {
 
     public void fullUpdate(String json){
 
+        CartoManager.getInstance().removeSituationEntities(this.getSituationEntities());
         entities.clear();
         try {
             JSONObject r = new JSONObject(json);
