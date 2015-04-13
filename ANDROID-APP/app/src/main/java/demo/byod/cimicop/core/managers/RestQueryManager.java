@@ -2,6 +2,7 @@ package demo.byod.cimicop.core.managers;
 
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -25,9 +26,6 @@ public class RestQueryManager implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static RestQueryManager instance = null;
-
-    public static final String POSITION_SERVICE = "http://192.168.1.100:8585/TOMSDataService.svc/bso/cimicop/position/fromcivilian/";
-    public static final String USER = "user1";
 
     public static final String SERVICE_PREFIX = "http://";
     public static final String SERVICE_LOCATION = "/api/location/";
@@ -69,10 +67,6 @@ public class RestQueryManager implements
             String srv = SERVICE_PREFIX+host+":"+port+SERVICE_LOCATION;
             Log.d("sendLocation", srv + ", " + latitude+ ", " + longitude+ ", " + accuracy);
             try {
-                // 1. create HttpClient
-                HttpClient httpclient = new DefaultHttpClient();
-                // 2. make POST request to the given URL
-                HttpPut httpPUT = new HttpPut(srv);
 
                 JSONObject body = new JSONObject();
                 body.put("email",login);
@@ -86,19 +80,8 @@ public class RestQueryManager implements
 
                 body.put("location",position);
 
-                // 4. convert JSONObject to JSON to String
-                String json = body.toString();
-                // 5. set json to StringEntity
-                StringEntity se = new StringEntity(json);
-                // 6. set httpPost Entity
-                httpPUT.setEntity(se);
-                // 7. Set some headers to inform server about the type of the content
-                httpPUT.setHeader("Accept", "application/json");
-                httpPUT.setHeader("Content-type", "application/json");
-                // 8. Execute POST request to the given URL
-                HttpResponse httpResponse = httpclient.execute(httpPUT);
-                String JSONString = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("httpResponse", JSONString);
+                RestQuery r = new RestQuery("sendLocation", srv, body);
+                new PutRequestAsync().execute(r);
 
             } catch (Exception e) {
                 Log.e("sendCurrentLocation","",e);
@@ -114,29 +97,12 @@ public class RestQueryManager implements
             String srv = SERVICE_PREFIX+host+":"+port+SERVICE_SITUATION;
             Log.d("getCurrentSituation", srv);
             try {
-                // 1. create HttpClient
-                HttpClient httpclient = new DefaultHttpClient();
-                // 2. make POST request to the given URL
-                HttpPost httpPOST = new HttpPost(srv);
-
                 JSONObject body = new JSONObject();
                 body.put("email",login);
                 body.put("password",pwd);
 
-                // 4. convert JSONObject to JSON to String
-                String json = body.toString();
-                // 5. set json to StringEntity
-                StringEntity se = new StringEntity(json);
-                // 6. set httpPost Entity
-                httpPOST.setEntity(se);
-                // 7. Set some headers to inform server about the type of the content
-                httpPOST.setHeader("Accept", "application/json");
-                httpPOST.setHeader("Content-type", "application/json");
-                // 8. Execute POST request to the given URL
-                HttpResponse httpResponse = httpclient.execute(httpPOST);
-                String JSONString = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("httpResponse", JSONString);
-                SituationManager.getInstance().fullUpdate(JSONString);
+                RestQuery r = new RestQuery("getCurrentSituation",srv, body);
+                new PostRequestAsync().execute(r);
 
             } catch (Exception e) {
                 Log.e("sendCurrentLocation","",e);
@@ -149,38 +115,109 @@ public class RestQueryManager implements
     public void sendReport(String report) {
 
         if(isConnected()){
-            String srv = SERVICE_PREFIX+host+":"+port+SERVICE_REPORT;
-            Log.d("sendReport", srv);
-            try {
-                // 1. create HttpClient
-                HttpClient httpclient = new DefaultHttpClient();
-                // 2. make POST request to the given URL
-                HttpPost httpPOST = new HttpPost(srv);
 
-                JSONObject body = new JSONObject();
+            String srv = SERVICE_PREFIX+host+":"+port+SERVICE_REPORT;
+            JSONObject body = new JSONObject();
+            try {
                 body.put("email",login);
                 body.put("password",pwd);
                 body.put("report", report);
 
-                // 4. convert JSONObject to JSON to String
-                String json = body.toString();
-                // 5. set json to StringEntity
-                StringEntity se = new StringEntity(json);
-                // 6. set httpPost Entity
-                httpPOST.setEntity(se);
-                // 7. Set some headers to inform server about the type of the content
-                httpPOST.setHeader("Accept", "application/json");
-                httpPOST.setHeader("Content-type", "application/json");
-                // 8. Execute POST request to the given URL
-                HttpResponse httpResponse = httpclient.execute(httpPOST);
-                String JSONString = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                Log.d("httpResponse", JSONString);
+                RestQuery r = new RestQuery("sendReport",srv, body);
+
+                new PostRequestAsync().execute(r);
 
             } catch (Exception e) {
                 Log.e("sendReport","",e);
             }
         }else{
             Log.d("sendReport", "not connected");
+        }
+    }
+
+
+    private class RestQuery{
+
+        public String url;
+        public JSONObject json;
+        public String query;
+
+        public RestQuery(String query, String url, JSONObject json){
+            this.query = query;
+            this.url = url;
+            this.json = json;
+        }
+    }
+
+    private class PostRequestAsync extends AsyncTask<RestQuery, Void, Void> {
+
+        protected Void doInBackground(RestQuery... rqueries) {
+
+            for(RestQuery rq: rqueries){
+
+                try {
+                    // 1. create HttpClient
+                    HttpClient httpclient = new DefaultHttpClient();
+                    // 2. make POST request to the given URL
+                    HttpPost httpPOST = new HttpPost(rq.url);
+
+                    // 4. convert JSONObject to JSON to String
+                    String json = rq.json.toString();
+                    // 5. set json to StringEntity
+                    StringEntity se = new StringEntity(json);
+                    // 6. set httpPost Entity
+                    httpPOST.setEntity(se);
+                    // 7. Set some headers to inform server about the type of the content
+                    httpPOST.setHeader("Accept", "application/json");
+                    httpPOST.setHeader("Content-type", "application/json");
+                    // 8. Execute POST request to the given URL
+                    HttpResponse httpResponse = httpclient.execute(httpPOST);
+                    String JSONString = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                    Log.d("httpResponse", JSONString);
+
+                    if(rq.query.equals("getCurrentSituation")){
+                        SituationManager.getInstance().fullUpdate(JSONString);
+                    }
+
+                } catch (Exception e) {
+                    Log.e("sendReport","",e);
+                }
+            }
+            return null;
+        }
+    }
+
+    private class PutRequestAsync extends AsyncTask<RestQuery, Void, Void> {
+
+        protected Void doInBackground(RestQuery... rqueries) {
+
+            for(RestQuery rq: rqueries){
+
+                try {
+                    // 1. create HttpClient
+                    HttpClient httpclient = new DefaultHttpClient();
+                    // 2. make POST request to the given URL
+                    HttpPut httpPUT = new HttpPut(rq.url);
+
+                    // 4. convert JSONObject to JSON to String
+                    String json = rq.json.toString();
+                    // 5. set json to StringEntity
+                    StringEntity se = new StringEntity(json);
+                    // 6. set httpPost Entity
+                    httpPUT.setEntity(se);
+                    // 7. Set some headers to inform server about the type of the content
+                    httpPUT.setHeader("Accept", "application/json");
+                    httpPUT.setHeader("Content-type", "application/json");
+                    // 8. Execute POST request to the given URL
+                    HttpResponse httpResponse = httpclient.execute(httpPUT);
+                    String JSONString = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                    Log.d("httpResponse", JSONString);
+
+                } catch (Exception e) {
+                    Log.e("sendReport","",e);
+                }
+            }
+            return null;
         }
     }
 
