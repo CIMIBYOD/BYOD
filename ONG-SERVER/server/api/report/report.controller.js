@@ -2,6 +2,7 @@
 
 var request = require("request");
 var _ = require('lodash');
+var fs = require("fs");
 
 var Report = require('./report.model');
 var User = require('../user/user.model');
@@ -54,7 +55,17 @@ exports.create = function(req, res) {
     if (user.authenticate(userPassword) && !user.is_revoqued) {
 
       if (report_data_input) {
+
         var report = new Report({timestamp: Date.now(), report_data: report_data_input});
+        //console.log(report_data_input);
+
+        var report_data_input_json = JSON.parse(report_data_input);
+        //console.log(report_data_input);
+        if(report_data_input_json.picture !== "none") {
+          console.log("export/" + report._id + ".jpg");
+          var filename = save_image( report._id, report_data_input_json.picture);
+          report_data_input_json.picture = filename;
+        }
         report.save(function (err) {
           if (err) {
             return handleError(res, err);
@@ -97,3 +108,57 @@ exports.destroy = function(req, res) {
 function handleError(res, err) {
   return res.send(500, err);
 }
+
+
+function save_image(id, base64Data){
+
+  // Regular expression for image type:
+  // This regular image extracts the "jpeg" from "image/jpeg"
+  var imageTypeRegularExpression      = /\/(.*?)$/;
+
+  var imageBuffer                      = decodeBase64Image(base64Data);
+
+  var imageTypeDetected                = imageBuffer
+    .type
+    .match(imageTypeRegularExpression);
+
+  var userUploadedImagePath            = "export/" + id +  '.' + imageTypeDetected[1];
+
+  // Save decoded binary image to disk
+  try
+  {
+    require('fs').writeFile(userUploadedImagePath, imageBuffer.data,
+      function()
+      {
+        console.log('DEBUG - feed:message: Saved to disk image attached by user:', userUploadedImagePath);
+      });
+    return userUploadedImagePath;
+  }
+  catch(error)
+  {
+    console.log('ERROR:', error);
+    return undefined;
+  }
+}
+
+// Decoding base-64 image
+// Source: http://stackoverflow.com/questions/20267939/nodejs-write-base64-image-file
+function decodeBase64Image(dataString)
+{
+  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+  var response = {};
+
+  if (matches.length !== 3)
+  {
+    return new Error('Invalid input string');
+  }
+
+  response.type = matches[1];
+  response.data = new Buffer(matches[2], 'base64');
+
+  return response;
+}
+
+
+
+

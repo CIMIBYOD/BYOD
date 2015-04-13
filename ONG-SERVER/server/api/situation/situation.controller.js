@@ -24,8 +24,6 @@ var initConfig = function(){
 }();
 
 function task() {
-  console.log("Updating situation");
-
   //GET SITUATION FROM WEBC2
   if(configuration && configuration.server_host){
     var ws_situation_c2 = "http://" + configuration.server_host + configuration.situation_ws  +"/" + configuration.situation_to;
@@ -34,7 +32,6 @@ function task() {
       method: "GET",
       timeout: 10000
     }, function(error, response, body) {
-      console.log(body);
 
       if(body) {
         body = body.replace("},]", "}]");
@@ -45,7 +42,7 @@ function task() {
           if (err) {
             console.log(err);
           }
-          console.log("Situation Saved");
+          //console.log("Situation Saved");
         });
       }
     });

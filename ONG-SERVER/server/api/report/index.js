@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var bodyParser = require('body-parser');
 var controller = require('./report.controller');
 
 var router = express.Router();
