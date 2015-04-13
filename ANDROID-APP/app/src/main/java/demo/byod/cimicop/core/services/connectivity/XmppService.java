@@ -35,9 +35,9 @@ import demo.byod.cimicop.core.managers.SituationManager;
 
 public class XmppService extends Service implements MessageListener, ChatMessageListener{
 
-    public static final String HOST = "10.0.0.80";
+    public static final String HOST = "ong.cimicop.org";
     public static final int PORT = 5222;
-    public static final String ROOM = "france@conference.cimicop";
+    public static final String ROOM = "france@conference.ong.cimicop.org";
     public static final String LOG = "asharpe";
     public static final String PWD = "asharpe";
 
@@ -85,7 +85,8 @@ public class XmppService extends Service implements MessageListener, ChatMessage
     private void connect(){
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
                 .setUsernameAndPassword(LOG, PWD)
-                .setServiceName("cimicop")
+                .setServiceName("android")
+                .setDebuggerEnabled(true)
                 .setHost(HOST)
                 .setPort(5222)
                 .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)

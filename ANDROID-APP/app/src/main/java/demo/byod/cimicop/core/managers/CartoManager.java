@@ -88,8 +88,10 @@ public class CartoManager {
         try {
             bsoInJson.put("id", se.getId());
             bsoInJson.put("type", se.getType());
+            bsoInJson.put("subtype", se.getSubType());
             bsoInJson.put("name", se.getName());
             bsoInJson.put("shape", se.getShape());
+            bsoInJson.put("datetime", se.getDatetime());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -104,8 +106,10 @@ public class CartoManager {
         try {
             bsoInJson.put("id", se.getId());
             bsoInJson.put("type", se.getType());
+            bsoInJson.put("subtype", se.getSubType());
             bsoInJson.put("name", se.getName());
             bsoInJson.put("shape", se.getShape());
+            bsoInJson.put("datetime", se.getDatetime());
 
         } catch (JSONException e) {
             e.printStackTrace();

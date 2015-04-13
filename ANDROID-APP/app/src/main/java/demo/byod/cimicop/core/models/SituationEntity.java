@@ -6,14 +6,19 @@ public class SituationEntity {
 
     public String id;
     public String type;
+    public String subtype;
     public String name;
+    public long datetime;
     public JSONObject shape;
 
-    public SituationEntity(String id, String type, String name, JSONObject shape) {
+    public SituationEntity(String id, String type,String subtype, String name, long datetime, JSONObject shape) {
         this.setId(id);
         this.setName(name);
         this.setType(type);
         this.setShape(shape);
+        this.setSubType(subtype);
+        this.setDatetime(datetime);
+
     }
 
     public String getId() {
@@ -32,6 +37,14 @@ public class SituationEntity {
         this.type = type;
     }
 
+    public String getSubType() {
+        return subtype;
+    }
+
+    public void setSubType(String subtype) {
+        this.subtype = subtype;
+    }
+
     public String getName() {
         return name;
     }
@@ -46,6 +59,14 @@ public class SituationEntity {
 
     public void setShape(JSONObject shape) {
         this.shape = shape;
+    }
+
+    public long getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(long datetime) {
+        this.datetime = datetime;
     }
 
     public String toString() {

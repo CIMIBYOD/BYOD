@@ -84,9 +84,9 @@ public class LoginFragment extends Fragment {
                 getFragmentManager().beginTransaction().add(R.id.container, new OsmFragment()).commit();
             }
 
-            String server = username.substring(username.indexOf("@"));
+            String server = username.substring(username.indexOf("@")+1);
             String login_service = "http://"+server+":9000/auth/local";
-
+            Log.d("Login", login_service);
             try {
                 //create HttpClient
                 HttpClient httpclient = new DefaultHttpClient();
