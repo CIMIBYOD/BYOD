@@ -10,7 +10,10 @@ var app={}
  app.cache = cache;
 
  //Map
- var map = L.map('map')
+ var map = L.map('map',{
+  attributionControl:false,
+
+ })
    _log("Map source is '"+config.mapSrc+"'" );
  if (config.mapSrc == 'france'){
    map.setView(config.map.france.location,  config.map.france.zoomLevel);

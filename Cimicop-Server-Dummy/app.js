@@ -35,27 +35,30 @@ server.post('/cimicop/situation/tocivilian', function create(req, res, next) {
 /* Valid DTO Sample
 {"report" :
   {
-    "type": "event",
-    "subtype": "bomb",
-    "datetime": 1427494496046
-    "name":"marker-02",
-      "description":"a desc",
-    "shape":{
-    "type" : "ponctual",
-    "coords":"[{\"lat\":48.85,\"lon\":2.5}]"
+    \"type\": \"event\",
+    \"subtype\": \"bomb\",
+    \"datetime\": 1427494496046
+    \"name\":\"marker-02\",
+    \"description\":\"a desc\",
+    \"shape\":{
+    \"type\" : \"ponctual\",
+    \"coords\":[{\"lat\":48.85,\"lon\":2.5}]
     }
   }
 }
 */
 var envelop = req.body
+envelop = JSON.parse(envelop);
 
 if(typeof(envelop.report) == "undefined"){
   valid = false;
   report+="- report envelop is mandatory " +" || ";
 }
 
-
+//extract from envelop ...
 var reported = envelop.report;
+reported = reported.replace("\\\"","\"");
+reported = JSON.parse(reported);
 
 /* Disabled, no ID to send 
 if(typeof(reported.id) == "undefined"){
