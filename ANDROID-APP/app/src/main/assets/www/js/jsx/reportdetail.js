@@ -138,10 +138,13 @@ var geoSuccess = function (position) {
   report.shape.coords=[{lat:latitude,lon:longitude}];
 
 
-  //setting report's envelop
-  report={report:report};
-
-  _log("sending report :\n"+JSON.stringify(report)+"\nto URL " +that.props.data.reportURL);
+  //setting report's envelop and format for WebC2
+  report = JSON.stringify(report).replace("\"","\\\"");
+  report = {report:report};
+  report = JSON.stringify(report);
+  report = report.replace("\\\\\\","\\");
+ 
+  _log("sending report :\n"+report);
 
 try{
  that.postReport(report);
@@ -178,7 +181,7 @@ if (navigator.geolocation) {
    if(typeof(JSBridge) === "undefined"){
       //in browser
         $.ajax({
-      url: that.props.data.reportURL,
+      url: this.props.data.reportURL,
       type: 'POST',
       data: JSON.stringify(report),
       contentType: 'application/json',
