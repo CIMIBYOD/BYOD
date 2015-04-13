@@ -1,9 +1,11 @@
-/*.c-alert-panel-width{
-  width:170px;
-  z-index: 20000 !important;
-   pointer-events: auto !important;
-}*/
-
+html, body, #map
+  {
+    height: 100%;
+  }
+  #map
+  {
+    width: 100%;
+  }
 
 /*
 
