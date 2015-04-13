@@ -62,9 +62,9 @@ exports.create = function(req, res) {
 
           //SEND LOCATION TO WEBC2
           if(configuration && configuration.server_host){
-            var ws_location_c2 = "http://" + configuration.server_host + situation_ws  +"/" + configuration.situation_from;
+            var ws_alert_c2 = "http://" + configuration.server_host + configuration.alert_ws  +"/" + configuration.situation_from;
             request({
-              uri: ws_location_c2,
+              uri: ws_alert_c2,
               method: "PUT",
               timeout: 10000,
               json: {json: {report: report.report_data}}

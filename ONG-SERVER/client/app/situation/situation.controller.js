@@ -50,11 +50,11 @@ angular.module('ongServerApp')
       default_icon: {
       },
       user_green_icon: {
-        iconUrl: 'assets/icon/USER_available.png',
+        iconUrl: 'assets/icon/Localisation_user_ok.png',
         iconSize: [42, 42]
       },
       user_green_gray: {
-        iconUrl: 'assets/icon/ic_action_user_gray.png',
+        iconUrl: 'assets/icon/Localisation_user_nok.png',
         iconSize: [42, 42]
       },
       user_green_red: {
@@ -243,7 +243,7 @@ angular.module('ongServerApp')
 
     var _addBso = function(bso, map) {
       var layer;
-      if (bso.type == "event") {
+      if (bso.type == "event" || bso.type == "observation") {
 
         layer = _toMarker(bso);
         if (layer != undefined) {
@@ -342,7 +342,7 @@ angular.module('ongServerApp')
       popupAnchor: [1, -16],
       iconSize:     [32, 32]
     });
-    markerIcons["assets/other"]=icon;
+    markerIcons["other"]=icon;
 
     icon = L.icon({
       iconUrl: 'assets/icon/riot-marker.png',

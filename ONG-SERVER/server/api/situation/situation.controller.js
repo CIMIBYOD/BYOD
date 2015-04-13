@@ -28,9 +28,9 @@ function task() {
 
   //GET SITUATION FROM WEBC2
   if(configuration && configuration.server_host){
-    var ws_location_c2 = "http://" + configuration.server_host + configuration.situation_ws  +"/" + configuration.situation_to;
+    var ws_situation_c2 = "http://" + configuration.server_host + configuration.situation_ws  +"/" + configuration.situation_to;
     request({
-      uri: ws_location_c2,
+      uri: ws_situation_c2,
       method: "GET",
       timeout: 10000
     }, function(error, response, body) {
@@ -54,7 +54,7 @@ function task() {
   }
 
   if(configuration){
-    setTimeout(task, (configuration.situation_sync * 1000 * 60 ));
+    setTimeout(task, (configuration.situation_sync * 1000 ));
   }else{
     setTimeout(task, 5000); //Default value
   }

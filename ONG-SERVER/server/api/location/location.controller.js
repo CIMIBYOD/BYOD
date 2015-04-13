@@ -44,18 +44,21 @@ exports.update = function(req, res) {
         }
 
         //SEND LOCATION TO WEBC2
-        var jsonCoords = {"coords":[{"lat":user.last_known_position.latitude, "lon":user.last_known_position.longitude}]};
+        var jsonCoords = {"coords":[{"lat":"\""+user.last_known_position.latitude+"\"", "lon":"\""+user.last_known_position.longitude+"\""}]};
         var jsonCoordsString = JSON.stringify(jsonCoords);
-
+        console.log(jsonCoordsString);
         if(configuration && configuration.server_host){
-          var ws_location_c2 = "http://" +configuration.server_host + configuration.location_ws +"/" + configuration.situation_from;
+          var ws_location_c2 = "http://" +configuration.server_host + configuration.location_ws + configuration.situation_from+"/"+user.name;
+          console.log(ws_location_c2);
           request({
             uri: ws_location_c2,
             method: "PUT",
             timeout: 10000,
             json: {location: jsonCoordsString}
           }, function(error, response, body) {
+            console.log(response);
             console.log(body);
+            console.log(error);
           });
         }else{
           console.log("No config : can't send location to C2");
