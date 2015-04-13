@@ -3,18 +3,54 @@
 angular.module('ongServerApp')
   .controller('SituationCtrl', function ($scope, $http, $modal, User, Auth, socket, leafletData) {
 
+    /*************************************/
+    /********   Configuration    ********/
+    /**************************************/
+    var config={
+      debug:true,
+      //which src to choose for map server (see below)
+      mapSrc:"afghaTiled",
+      //which report url to choose to create reports (see below)
+      reportUrl:"demo",
+      map :{
+        france:{
+          location: new L.LatLng(48.85, 2.4),
+          zoomLevel : 10
+        },
+        //untiled afghanistan map
+        afgha:{
+          location: new L.LatLng(34.59, 69.8),
+          mapUrl:'http://192.168.1.130/arcgis/rest/services/SWContest/Afghanistan/MapServer',
+          zoomLevel : 12
+        },
+        //tiled afghanistan map
+        afghaTiled:{
+          location: new L.LatLng(34.59, 69.8),
+          mapUrl:'http://192.168.1.102/arcgis/services/Contestreduit/MapServer/WMSServer',
+          layers:'0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33',
+          zoomLevel : 12
+        }
+      }
+    };
+
     $scope.current_situation = undefined;
 
     $scope.users = User.query();
     $scope.users.$promise.then(function() {
       $scope.initUsersMarkers();
+
+      $http.get('/api/situation').success(function(situation) {
+        if(situation){
+          $scope.current_situation = situation;
+        }
+      });
     });
 
     $scope.local_icons = {
       default_icon: {
       },
       user_green_icon: {
-        iconUrl: 'assets/icon/ic_action_user_green.png',
+        iconUrl: 'assets/icon/USER_available.png',
         iconSize: [42, 42]
       },
       user_green_gray: {
@@ -45,7 +81,6 @@ angular.module('ongServerApp')
           icon:  $scope.local_icons.user_green_icon
         }
       }
-
     });
 
     $scope.initUsersMarkers = function(){
@@ -62,6 +97,14 @@ angular.module('ongServerApp')
           }
         }
       }
+      leafletData.getMap().then(function(map) {
+        if (config.mapSrc == 'afghaTiled') {
+          map.setView(config.map.afghaTiled.location,  config.map.afghaTiled.zoomLevel);
+          L.tileLayer.wms(config.map.afghaTiled.mapUrl, {
+            layers: config.map.afghaTiled.layers
+          }).addTo(map);
+        }
+      });
     };
 
     socket.syncUpdates('situation', undefined, function(event, item, array){

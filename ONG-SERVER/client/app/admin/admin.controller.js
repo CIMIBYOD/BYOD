@@ -10,6 +10,7 @@ angular.module('ongServerApp')
     $scope.situation_from = "";
     $scope.situation_to = "";
     $scope.situation_ws = "";
+    $scope.location_ws = "";
     $scope.alert_ws = "";
     $scope.situation_sync = 0;
 
@@ -22,6 +23,7 @@ angular.module('ongServerApp')
         $scope.situation_from = config.situation_from;
         $scope.situation_to = config.situation_to;
         $scope.situation_ws = config.situation_ws;
+        $scope.location_ws = config.location_ws;
         $scope.alert_ws = config.alert_ws;
         $scope.situation_sync = config.situation_sync;
       }
@@ -37,6 +39,7 @@ angular.module('ongServerApp')
         situation_from: $scope.situation_from,
         situation_to : $scope.situation_to,
         situation_ws : $scope.situation_ws,
+        location_ws : $scope.location_ws,
         alert_ws :$scope.alert_ws,
         situation_sync : $scope.situation_sync
       });

@@ -3,6 +3,25 @@
 var request = require("request");
 var _ = require('lodash');
 var User = require('../user/user.model');
+var Configuration = require('../configuration/configuration.model');
+
+/* GETTING CONFIGURATION */
+var CURRENT_CONFIG_KEY = "current";
+var configuration = undefined;
+var init = function(){
+  Configuration.findOne({
+    name: CURRENT_CONFIG_KEY
+  },function (err, configurations) {
+    if(err) { return handleError(res, err); }
+    configuration = configurations;
+    console.log( configurations);
+  });
+  Configuration.schema.post('save', function (doc) {
+    configuration = doc;
+    console.log("configuration update");
+  });
+}();
+/* END CONFIG INIT */
 
 // Updates an existing location in the DB.
 exports.update = function(req, res) {
@@ -25,16 +44,22 @@ exports.update = function(req, res) {
         }
 
         //SEND LOCATION TO WEBC2
-        /*
-        request({
-          uri: "http://localhost:9000/api/location/test",
-          method: "PUT",
-          timeout: 10000,
-          json: {foo: "bar", woo: "car"}
-        }, function(error, response, body) {
-          console.log(body);
-        });
-        */
+        var jsonCoords = {"coords":[{"lat":user.last_known_position.latitude, "lon":user.last_known_position.longitude}]};
+        var jsonCoordsString = JSON.stringify(jsonCoords);
+
+        if(configuration && configuration.server_host){
+          var ws_location_c2 = "http://" +configuration.server_host + configuration.location_ws +"/" + configuration.situation_from;
+          request({
+            uri: ws_location_c2,
+            method: "PUT",
+            timeout: 10000,
+            json: {location: jsonCoordsString}
+          }, function(error, response, body) {
+            console.log(body);
+          });
+        }else{
+          console.log("No config : can't send location to C2");
+        }
 
         res.json(user);
       });
@@ -45,9 +70,6 @@ exports.update = function(req, res) {
   });
 };
 
-
-
-
 function handleError(res, err) {
-  return res.send(500, err);
+  return console.log(err);
 }

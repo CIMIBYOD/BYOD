@@ -5,12 +5,12 @@ var Xmpp = require('./xmpp.model');
 var xmppclient = require('node-xmpp');
 
 //XMPP Account Details Starts from Here
-var client_id = "server@cimicop"; //Use any XMPP Supported Account like Gmail
+var client_id = "server@ong.cimicop.org"; //Use any XMPP Supported Account like Gmail
 var client_pwd = "server";
 var client_host = "127.0.0.1";  //talk.google.com for gmail
 var client_port = "5222";   //5222 for gmail
 var status_msg = "I am Online";   //Set it as you want
-var room_jid = 'france@conference.cimicop';
+var room_jid = 'france@conference.ong.cimicop.org';
 var room_nick = 'server';
 //XMPP Account Details End Here
 

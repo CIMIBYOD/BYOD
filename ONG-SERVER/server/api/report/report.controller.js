@@ -5,6 +5,25 @@ var _ = require('lodash');
 
 var Report = require('./report.model');
 var User = require('../user/user.model');
+var Configuration = require('../configuration/configuration.model');
+
+/* GETTING CONFIGURATION */
+var CURRENT_CONFIG_KEY = "current";
+var configuration = undefined;
+var init = function(){
+  Configuration.findOne({
+    name: CURRENT_CONFIG_KEY
+  },function (err, configurations) {
+    if(err) { return handleError(res, err); }
+    configuration = configurations;
+    console.log( configurations);
+  });
+  Configuration.schema.post('save', function (doc) {
+    configuration = doc;
+    console.log("configuration update");
+  });
+}();
+/* END CONFIG INIT */
 
 // Get list of reports
 exports.index = function(req, res) {
@@ -41,16 +60,20 @@ exports.create = function(req, res) {
             return handleError(res, err);
           }
 
-          //SEND REPORT TO WEBC2
-          request({
-            uri: "http://localhost:9000/api/location/test",
-            method: "PUT",
-            timeout: 10000,
-            json: {report: report.report_data}
-          }, function (error, response, body) {
-            console.log(body);
-          });
-
+          //SEND LOCATION TO WEBC2
+          if(configuration && configuration.server_host){
+            var ws_location_c2 = "http://" + configuration.server_host + situation_ws  +"/" + configuration.situation_from;
+            request({
+              uri: ws_location_c2,
+              method: "PUT",
+              timeout: 10000,
+              json: {json: {report: report.report_data}}
+            }, function(error, response, body) {
+              console.log(body);
+            });
+          }else{
+            console.log("No config : can't send report to C2");
+          }
           return res.json(200, report);
         });
       }

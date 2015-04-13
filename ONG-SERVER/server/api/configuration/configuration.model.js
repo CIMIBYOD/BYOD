@@ -12,6 +12,7 @@ var ConfigurationSchema = new Schema({
   situation_from : String,
   situation_to : String,
   situation_ws : String,
+  location_ws : String,
   alert_ws : String,
   situation_sync: Number
 });

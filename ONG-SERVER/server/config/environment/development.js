@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/ongserver-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };
