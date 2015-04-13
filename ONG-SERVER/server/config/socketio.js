@@ -22,7 +22,6 @@ function onConnect(socket) {
   require('../api/situation/situation.socket').register(socket);
   require('../api/configuration/configuration.socket').register(socket);
   require('../api/xmpp/xmpp.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
   require('../api/user/user.socket').register(socket);
 }
 

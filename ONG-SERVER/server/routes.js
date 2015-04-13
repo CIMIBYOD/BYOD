@@ -14,7 +14,6 @@ module.exports = function(app) {
   app.use('/api/configuration', require('./api/configuration'));
   app.use('/api/location', require('./api/location'));
   app.use('/api/xmpp', require('./api/xmpp'));
-  app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));

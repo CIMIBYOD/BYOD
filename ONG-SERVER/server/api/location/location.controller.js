@@ -14,11 +14,9 @@ var init = function(){
   },function (err, configurations) {
     if(err) { return handleError(res, err); }
     configuration = configurations;
-    console.log( configurations);
   });
   Configuration.schema.post('save', function (doc) {
     configuration = doc;
-    console.log("configuration update");
   });
 }();
 /* END CONFIG INIT */
@@ -35,7 +33,6 @@ exports.update = function(req, res) {
     if (!user) return res.send(401);
     if(user.authenticate(userPassword) && !user.is_revoqued) {
 
-      console.log(newPosition);
       user.last_known_position = newPosition;
       user.last_update_timestamp = Date.now();
       user.save(function(err) {
@@ -44,32 +41,28 @@ exports.update = function(req, res) {
         }
 
         //SEND LOCATION TO WEBC2
-        var jsonCoords = {"coords":[{"lat":"\""+user.last_known_position.latitude+"\"", "lon":"\""+user.last_known_position.longitude+"\""}]};
-        var jsonCoordsString = JSON.stringify(jsonCoords);
-        console.log(jsonCoordsString);
+        var jsonCoords = {"coords":[{"lat":user.last_known_position.latitude, "lon":user.last_known_position.longitude}]};
+        var jsonCoordsString = JSON.stringify(jsonCoords).replace("\"","\\\"")
         if(configuration && configuration.server_host){
           var ws_location_c2 = "http://" +configuration.server_host + configuration.location_ws + configuration.situation_from+"/"+user.name;
-          console.log(ws_location_c2);
           request({
             uri: ws_location_c2,
             method: "PUT",
             timeout: 10000,
             json: {location: jsonCoordsString}
           }, function(error, response, body) {
-            console.log(response);
-            console.log(body);
-            console.log(error);
+            if(error){
+              console.log("Location not pushed to C2 : " + error.code +" = "+ error.hostname);
+            }
           });
         }else{
-          console.log("No config : can't send location to C2");
+          console.log("NO CONFIG : can't send location to C2");
         }
-
         res.json(user);
       });
     } else {
       res.send(403);
     }
-
   });
 };
 
