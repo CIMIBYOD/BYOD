@@ -11,7 +11,8 @@ var addBso = function(bsoJson){
 //@private
 var _addBso = function(bso){
  var layer;
- if(bso.type == "event"){
+ if(bso.type == "event" || 
+  bso.type == "observation"){
 
   layer = _toMarker(bso);
   if(layer != undefined){
@@ -178,7 +179,8 @@ var _toPolygon = function(bso){
 var _bindPopup = function(layer,bso){
   try{
     console.log("bso.datetime is " + typeof(bso.datetime));
-  var validity = new Date(bso.datetime).toDateString();
+try{
+  var validity = new Date(parseInt(bso.datetime)).toDateString();}catch(e){/*TODO*/}
   return layer.bindPopup("<h5><b>"+bso.name+"</b></h5><br>"+"<b>report date : "+validity+"</b><br>"+bso.description);
 }catch(e){/*TODO*/}
 }
