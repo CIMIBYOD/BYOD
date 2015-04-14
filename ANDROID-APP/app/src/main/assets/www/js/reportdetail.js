@@ -23,7 +23,7 @@ componentDidMount: function() {
       var reader = new FileReader();
       reader.onload = function (evt) {
         picture.src = evt.target.result;
-        $(picture).show();
+        $(picture).toggle( "fade" );
       };
 
       reader.readAsDataURL(evt.target.files[0]);
