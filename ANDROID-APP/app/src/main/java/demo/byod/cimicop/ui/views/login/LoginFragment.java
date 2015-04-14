@@ -1,6 +1,6 @@
 package demo.byod.cimicop.ui.views.login;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -123,6 +123,9 @@ public class LoginFragment extends Fragment {
 
                     JSONObject ies = new JSONObject(JSONString);
                     String token = ies.getString("token");
+                    if(token.equalsIgnoreCase("revoked")){
+                        getFragmentManager().beginTransaction().add(R.id.container, new RevokedFragment()).commit();
+                    }
                     String login = uname.getText().toString();
 
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(LoginFragment.this.getActivity());

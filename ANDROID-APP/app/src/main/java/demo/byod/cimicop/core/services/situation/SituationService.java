@@ -3,51 +3,46 @@ package demo.byod.cimicop.core.services.situation;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import de.greenrobot.event.EventBus;
+import demo.byod.cimicop.R;
+import demo.byod.cimicop.core.events.RevokedStateEvent;
 import demo.byod.cimicop.core.managers.RestQueryManager;
-import demo.byod.cimicop.core.managers.SituationManager;
+import demo.byod.cimicop.ui.views.login.RevokedFragment;
 
 
 public class SituationService extends Service {
 
-    public static final long TIME_BTW_REFRESH = 1000 * 60;
+    private static final long NOTIFY_INTERVAL = 1000 * 60;
+
+    private Timer mTimer = null;
 
     @Override
-    public void onCreate() {
+    public void onCreate(){
         super.onCreate();
-    }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+        // cancel if already existed
+        if(mTimer != null) {
+            mTimer.cancel();
+        } else {
+            // recreate new
+            mTimer = new Timer();
+        }
+        // schedule task
+        mTimer.scheduleAtFixedRate(new GetCurrentSituationTimerTask(), 0, NOTIFY_INTERVAL);
 
-        new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    Log.d("getCurrentSituation", "GET");
-                    RestQueryManager.getInstance().getCurrentSituation();
-                    try {
-                        Thread.sleep(TIME_BTW_REFRESH);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-
-        return super.onStartCommand(intent, flags, startId);
+        EventBus.getDefault().register(this);;
     }
 
     @Override
     public void onDestroy() {
+        if(mTimer != null) {
+            mTimer.cancel();
+        }
         super.onDestroy();
     }
 
@@ -67,5 +62,20 @@ public class SituationService extends Service {
     }
 
 
+    class GetCurrentSituationTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            RestQueryManager.getInstance().getCurrentSituation();
+        }
+    }
+
+    //Notification of user being revoked
+    public void onEventMainThread(RevokedStateEvent event) {
+        if (event.isRevoked()) {
+            EventBus.getDefault().unregister(this);
+            stopSelf();
+        }
+    }
 
 }

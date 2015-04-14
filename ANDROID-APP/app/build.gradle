@@ -30,5 +30,7 @@ dependencies {
     compile "org.igniterealtime.smack:smack-android-extensions:4.1.0"
     compile "org.igniterealtime.smack:smack-tcp:4.1.0"
 
+    compile 'de.greenrobot:eventbus:2.4.0'
+
 
 }

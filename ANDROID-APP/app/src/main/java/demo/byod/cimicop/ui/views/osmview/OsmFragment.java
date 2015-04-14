@@ -1,7 +1,7 @@
 package demo.byod.cimicop.ui.views.osmview;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -35,8 +35,7 @@ import demo.byod.cimicop.core.preferences.PreferencesManager;
 import demo.byod.cimicop.ui.views.login.RevokedFragment;
 
 
-public class OsmFragment extends Fragment implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+public class OsmFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
 
     OsmView mOsmView = null;
@@ -50,8 +49,6 @@ public class OsmFragment extends Fragment implements
 
     public OsmFragment() {
         // Required empty public constructor
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
-        sharedPref.registerOnSharedPreferenceChangeListener(this);
     }
 
 
@@ -260,27 +257,6 @@ public class OsmFragment extends Fragment implements
         } catch (Exception e) {
             Log.e("OsmFragment", "removeBso Exception " + e.getMessage());
 
-        }
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(PreferencesManager.REVOKED)) {
-            boolean revoked = sharedPreferences.getBoolean(PreferencesManager.REVOKED, false);
-            if(revoked){
-                RevokedFragment revokedFragment = new RevokedFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-                // Replace whatever is in the fragment_container view with this fragment,
-                // and add the transaction to the back stack
-                transaction.replace(R.id.container, revokedFragment);
-                transaction.addToBackStack(null);
-
-                // Commit the transaction
-                transaction.commit();
-                Log.e("onSharedPreferen", "revoked fragment");
-
-            }
         }
     }
 }

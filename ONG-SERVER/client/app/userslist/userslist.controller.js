@@ -31,7 +31,7 @@ angular.module('ongServerApp')
     };
 
     $scope.revoke = function(user) {
-      console.log(user);
+
       User.revoke({ id: user._id }, {},
         function(user) {
           console.log(user);

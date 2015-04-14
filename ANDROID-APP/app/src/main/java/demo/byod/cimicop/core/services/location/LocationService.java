@@ -16,6 +16,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import de.greenrobot.event.EventBus;
+import demo.byod.cimicop.core.events.RevokedStateEvent;
 import demo.byod.cimicop.core.managers.RestQueryManager;
 import demo.byod.cimicop.core.managers.RestrictedZoneManager;
 import demo.byod.cimicop.core.preferences.PreferencesManager;
@@ -39,6 +41,8 @@ public class LocationService extends Service implements
     @Override
     public void onCreate() {
         super.onCreate();
+
+        EventBus.getDefault().register(this);
 
         //Get init prefs values and adding listener on pref changes
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -162,6 +166,14 @@ public class LocationService extends Service implements
             return null;
         }
 
+    }
+
+    //Notification of user being revoked
+    public void onEventMainThread(RevokedStateEvent event) {
+        if (event.isRevoked()) {
+            EventBus.getDefault().unregister(this);
+            stopSelf();
+        }
     }
 
 }

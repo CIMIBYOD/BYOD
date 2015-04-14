@@ -19,8 +19,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import de.greenrobot.event.EventBus;
 import demo.byod.cimicop.MainActivity;
 import demo.byod.cimicop.R;
+import demo.byod.cimicop.core.events.RevokedStateEvent;
 import demo.byod.cimicop.core.preferences.PreferencesManager;
 import demo.byod.cimicop.ui.views.osmview.OsmFragment;
 
@@ -233,10 +235,7 @@ public class RestQueryManager implements
 
     private void revokeUserAccess(){
         Log.d("revokeUserAccess", "revoking user access");
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(PreferencesManager.REVOKED, true);
-        editor.commit();
+        EventBus.getDefault().post(new RevokedStateEvent(true));
     }
 
 

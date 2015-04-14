@@ -23,14 +23,19 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
+import org.jivesoftware.smackx.muc.DiscussionHistory;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.jivesoftware.smackx.muc.MultiUserChatManager;
+import org.jivesoftware.smackx.offline.OfflineMessageManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.greenrobot.event.EventBus;
 import demo.byod.cimicop.MainActivity;
 import demo.byod.cimicop.R;
+import demo.byod.cimicop.core.events.RevokedStateEvent;
 import demo.byod.cimicop.core.managers.SituationManager;
+import demo.byod.cimicop.ui.views.login.RevokedFragment;
 
 
 public class XmppService extends Service implements MessageListener, ChatMessageListener{
@@ -47,12 +52,13 @@ public class XmppService extends Service implements MessageListener, ChatMessage
     @Override
     public void onCreate() {
         super.onCreate();
+        EventBus.getDefault().register(this);
+
         new Thread(new Runnable() {
             public void run() {
                 connect();
             }
         }).start();
-
     }
 
     @Override
@@ -104,7 +110,11 @@ public class XmppService extends Service implements MessageListener, ChatMessage
             // Send the packet (assume we have an XMPPConnection instance called "con").
             this.connection.sendStanza(presence);
 
+            DiscussionHistory dh = new DiscussionHistory();
+            dh.setMaxStanzas(0);
+
             ChatManager chatManager = ChatManager.getInstanceFor(this.connection);
+
             chatManager.addChatListener(
                     new ChatManagerListener() {
                         @Override
@@ -123,7 +133,7 @@ public class XmppService extends Service implements MessageListener, ChatMessage
 
             // User2 joins the new room
             // The room service will decide the amount of history to send
-            muc2.join(LOG);
+            muc2.join(LOG,"",dh,10000);
 
         } catch (XMPPException e) {
             e.printStackTrace();
@@ -176,6 +186,14 @@ public class XmppService extends Service implements MessageListener, ChatMessage
                             String situationDelta = msg.getString("situation");
                             SituationManager.getInstance().deltaUpdate(situationDelta);
                             break;
+                        case "revoked":
+                            Log.d("revokeUserAccess", "revoking user access");
+                            String state = msg.getString("value");
+                            boolean s = Boolean.getBoolean(state);
+                            if(s){
+                                EventBus.getDefault().post(new RevokedStateEvent(true));
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -196,6 +214,14 @@ public class XmppService extends Service implements MessageListener, ChatMessage
         NotificationManager mNotificationManager = (NotificationManager) MainActivity.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
+    }
+
+    //Notification of user being revoked
+    public void onEventMainThread(RevokedStateEvent event) {
+        if (event.isRevoked()) {
+            EventBus.getDefault().unregister(this);
+            stopSelf();
+        }
     }
 
 

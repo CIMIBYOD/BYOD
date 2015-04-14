@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('./user.model');
+var request = require("request");
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
@@ -92,6 +93,23 @@ exports.revoke = function(req, res, next) {
 
       user.save(function(err) {
         if (err) return validationError(res, err);
+
+        request({
+          uri: 'http://localhost:9000/api/xmpp/send',
+          method: "POST",
+          timeout: 10000,
+          json: {
+            to : user.email,
+            payload : {
+              type: "revoked",
+              value: user.is_revoqued
+            }
+          }
+        }, function(error, response, body) {
+          if(error){
+            console.log(error);
+          }
+        });
         res.send(200);
       });
 
