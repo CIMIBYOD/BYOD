@@ -11,7 +11,7 @@ componentDidMount: function() {
 
     var loadFileBtn = document.querySelector('#take-a-picture');
     var fileInputField = document.querySelector('.c-report-detail-hiddenFileInput');
-    var picture = document.querySelector('.c-picture');
+    var picture = document.querySelector('#c-picture');
     var inspectPicture = document.querySelector('.c-inspect-picture');
 
 
@@ -52,8 +52,7 @@ componentDidMount: function() {
 
    //initialize picture thumbnail
    $(picture).hide();
-   $(picture).outerWidth($("#take-a-picture").outerWidth());
-   $(picture).outerHeight($("#take-a-picture").outerHeight());
+ 
  },
 /*
    * send Report
@@ -209,17 +208,19 @@ if (navigator.geolocation) {
     <div id="detail-panel" className="panel panel-primary detail-panel"  >
     <div className="panel-heading">Report details</div>
     <div className="panel-body">
-    <input  id="hiddenFileInput" type="file" className="c-report-detail-hiddenFileInput" />
-    <div className="report-command" >
-    <button  id="back-to-list" type="button" className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-arrow-left" ></span></button>
-    <button  id="send-report" type="button" className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-send" ></span></button>
-    <button  id="take-a-picture" type="button" className="btn btn-primary btn-sm"><span className="glyphicon glyphicon-camera" ></span></button>
-    <img src="" className="c-picture img-thumbnail"/>
+      <input  id="hiddenFileInput" type="file" className="c-report-detail-hiddenFileInput" />
+      <div className="report-command" >
+      <button  id="back-to-list" type="button" className="btn btn-primary btn-lg"><span className="glyphicon glyphicon-arrow-left" ></span></button>
+      <button  id="send-report" type="button" className="btn btn-primary btn-lg"><span className="glyphicon glyphicon-send" ></span></button>
+      <button  id="take-a-picture" type="button" className="btn btn-primary btn-lg"><span className="glyphicon glyphicon-camera" ></span></button>
     </div>
-
-    <textarea className="report-body" id="report-msg" placeholder ="add your comments here..." >
-
-    </textarea>
+    <div className="report-body">
+      <textarea  id="report-msg"  className="report-msg" placeholder ="add your comments here..." ></textarea>
+    </div>
+    <div >
+      <img src="" id="c-picture" className="c-picture"/>
+    </div>
+   
     </div>
     </div>
     );

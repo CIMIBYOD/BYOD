@@ -11,7 +11,7 @@ componentDidMount: function() {
 
     var loadFileBtn = document.querySelector('#take-a-picture');
     var fileInputField = document.querySelector('.c-report-detail-hiddenFileInput');
-    var picture = document.querySelector('.c-picture');
+    var picture = document.querySelector('#c-picture');
     var inspectPicture = document.querySelector('.c-inspect-picture');
 
 
@@ -52,8 +52,7 @@ componentDidMount: function() {
 
    //initialize picture thumbnail
    $(picture).hide();
-   $(picture).outerWidth($("#take-a-picture").outerWidth());
-   $(picture).outerHeight($("#take-a-picture").outerHeight());
+ 
  },
 /*
    * send Report
@@ -139,11 +138,10 @@ var geoSuccess = function (position) {
 
 
   //setting report's envelop and format for WebC2
+  report = JSON.stringify(report).replace("\"","\\\"");
+  report = {report:report};
   report = JSON.stringify(report);
-  //report = JSON.stringify(report).replace("\"","\\\"");
-  //report = {report:report};
-  //report = JSON.stringify(report);
-  //report = report.replace("\\\\\\","\\");
+  report = report.replace("\\\\\\","\\");
  
   _log("sending report :\n"+report);
 
@@ -210,17 +208,19 @@ if (navigator.geolocation) {
     React.createElement("div", {id: "detail-panel", className: "panel panel-primary detail-panel"}, 
     React.createElement("div", {className: "panel-heading"}, "Report details"), 
     React.createElement("div", {className: "panel-body"}, 
-    React.createElement("input", {id: "hiddenFileInput", type: "file", className: "c-report-detail-hiddenFileInput"}), 
-    React.createElement("div", {className: "report-command"}, 
-    React.createElement("button", {id: "back-to-list", type: "button", className: "btn btn-primary btn-sm"}, React.createElement("span", {className: "glyphicon glyphicon-arrow-left"})), 
-    React.createElement("button", {id: "send-report", type: "button", className: "btn btn-primary btn-sm"}, React.createElement("span", {className: "glyphicon glyphicon-send"})), 
-    React.createElement("button", {id: "take-a-picture", type: "button", className: "btn btn-primary btn-sm"}, React.createElement("span", {className: "glyphicon glyphicon-camera"})), 
-    React.createElement("img", {src: "", className: "c-picture img-thumbnail"})
+      React.createElement("input", {id: "hiddenFileInput", type: "file", className: "c-report-detail-hiddenFileInput"}), 
+      React.createElement("div", {className: "report-command"}, 
+      React.createElement("button", {id: "back-to-list", type: "button", className: "btn btn-primary btn-lg"}, React.createElement("span", {className: "glyphicon glyphicon-arrow-left"})), 
+      React.createElement("button", {id: "send-report", type: "button", className: "btn btn-primary btn-lg"}, React.createElement("span", {className: "glyphicon glyphicon-send"})), 
+      React.createElement("button", {id: "take-a-picture", type: "button", className: "btn btn-primary btn-lg"}, React.createElement("span", {className: "glyphicon glyphicon-camera"}))
     ), 
-
-    React.createElement("textarea", {className: "report-body", id: "report-msg", placeholder: "add your comments here..."}
-
+    React.createElement("div", {className: "report-body"}, 
+      React.createElement("textarea", {id: "report-msg", className: "report-msg", placeholder: "add your comments here..."})
+    ), 
+    React.createElement("div", null, 
+      React.createElement("img", {src: "", id: "c-picture", className: "c-picture"})
     )
+   
     )
     )
     );

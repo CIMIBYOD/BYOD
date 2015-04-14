@@ -1,11 +1,11 @@
 html, body, #map
-  {
-    height: 100%;
-  }
-  #map
-  {
-    width: 100%;
-  }
+{
+  height: 100%;
+}
+#map
+{
+  width: 100%;
+}
 
 /*
 
@@ -29,19 +29,19 @@ html, body, #map
   margin-left: auto;
   margin-right: auto;
   pointer-events: auto !important;
- 
-  }
+  
+}
 
- 
 
- .c-report-floating-panel{
+
+.c-report-floating-panel{
 
   width:170px;
   z-index: 20000 !important;
   background-color: rgba(200, 200, 200, 0.5);
   border-radius: 4px;
- 
- }
+  
+}
 
 
 /*
@@ -53,17 +53,26 @@ html, body, #map
 .detail-panel{
   display:none;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  top: 10%;
+  left: 15%;
+  width:80%;
+  height:80%;
 }
 
 .report-body{
   margin-top:50px;
-  height:130px;
+  height:20%;
   width:100%;
   display:block;
+  
+
+}
+
+
+.report-msg{
+  margin-top: 10px;
+  height:180px;
+  width:100%;
   resize: none;
 
 }
@@ -75,35 +84,40 @@ html, body, #map
 }
 
 .report-command  button{
-margin:2px;
+ margin:2px;
+ display:block;
 }
 .report-command  #back-to-list{
-float:left;
+  float:left;
 
 }
 .report-command  #take-a-picture{
-float:right;
+  float:right;
 
 }
 .report-command  #send-report{
-float:right;
+  float:right;
 
 }
-    
+
 .c-picture{
-    float:right;
+  margin-top: 20px;
+  margin-left:auto;
+  margin-right:auto;
+  width:100%;
+  height:100%;
 
 }
- .c-report-detail-hiddenFileInput {
-    width: 0;
-    height: 0;
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
+.c-report-detail-hiddenFileInput {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 
 
-  
+
 
