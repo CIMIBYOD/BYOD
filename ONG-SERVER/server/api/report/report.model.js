@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var ReportSchema = new Schema({
   timestamp: String,
-  report_data: String
+  report_data: Object
 });
 
 module.exports = mongoose.model('Report', ReportSchema);

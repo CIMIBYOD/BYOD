@@ -75,7 +75,11 @@ exports.get = function(req, res) {
           return handleError(res, err);
         }
         var situation = situations[0];
-        return res.json(200, situation.situation);
+        if(situation){
+          return res.json(200, situation.situation);
+        }else {
+          return res.json(404);
+        }
       });
     // } else {
     //if(user.is_revoqued){

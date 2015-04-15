@@ -40,9 +40,9 @@ import demo.byod.cimicop.ui.views.login.RevokedFragment;
 
 public class XmppService extends Service implements MessageListener, ChatMessageListener{
 
-    public static final String HOST = "ong.cimicop.org";
+    public static final String HOST = "server.cimicop.org";
     public static final int PORT = 5222;
-    public static final String ROOM = "france@conference.ong.cimicop.org";
+    public static final String ROOM = "afgha@conference.server.cimicop.org";
     public static final String LOG = "asharpe";
     public static final String PWD = "asharpe";
 

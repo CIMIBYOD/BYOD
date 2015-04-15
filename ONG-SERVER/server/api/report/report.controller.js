@@ -54,14 +54,14 @@ exports.create = function(req, res) {
 
       if (report_data_input) {
 
-        var report = new Report({timestamp: Date.now(), report_data: report_data_input});
+        var report = new Report({timestamp: Date.now()});
         var report_data_input_json = JSON.parse(report_data_input);
 
         if(report_data_input_json.picture !== "none") {
-          console.log("export/" + report._id + ".jpg");
           var filename = save_image( report._id, report_data_input_json.picture);
           report_data_input_json.picture = filename;
         }
+        report.report_data = report_data_input_json;
         report.save(function (err) {
           if (err) {
             return handleError(res, err);
@@ -127,7 +127,7 @@ function save_image(id, base64Data){
   var imageTypeRegularExpression = /\/(.*?)$/;
   var imageBuffer = decodeBase64Image(base64Data);
   var imageTypeDetected = imageBuffer.type.match(imageTypeRegularExpression);
-  var userUploadedImagePath  = "export/" + id +  '.' + imageTypeDetected[1];
+  var userUploadedImagePath  = "server/export/" + id +  '.' + imageTypeDetected[1];
 
   // Save decoded binary image to disk
   try
@@ -137,7 +137,7 @@ function save_image(id, base64Data){
       {
         console.log('DEBUG - feed:message: Saved to disk image attached by user:', userUploadedImagePath);
       });
-    return userUploadedImagePath;
+    return id +  '.' + imageTypeDetected[1];
   }
   catch(error)
   {
