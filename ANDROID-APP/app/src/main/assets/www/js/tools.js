@@ -3,6 +3,8 @@
 /**************************************/  
 var $debug = config.debug;
 
+  /**********     logging   *********/
+
 var _log = function(msg){
   if(typeof(JSBridge) === "undefined"){
         //in browser
@@ -13,15 +15,16 @@ var _log = function(msg){
       }
 
     }
-    var _debug = function(msg){
-      if($debug){
-        _log(msg);
-      }
 
-    }
+var _debug = function(msg){
+  if($debug){
+    _log(msg);
+  }
+
+}
 
 
-  /**********     Cache class    *********/
+  /**********     BSO Cache class    *********/
 
   var Cache = (function () {
     function Cache() {

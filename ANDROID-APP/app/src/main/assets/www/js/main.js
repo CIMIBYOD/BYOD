@@ -1,6 +1,6 @@
 /**************************************/
-    /**********    MAIN          *********/
-    /**************************************/
+/**********     MAIN          *********/
+/**************************************/
 
 _log("loading map view ..." );
 var app={}
@@ -9,12 +9,12 @@ var app={}
  var cache = new Cache();
  app.cache = cache;
 
- //Map
+ //Map (Leaflet)
  var map = L.map('map',{
   attributionControl:false,
 
  })
-   _log("Map source is '"+config.mapSrc+"'" );
+  _log("Map source is '"+config.mapSrc+"'" );
  if (config.mapSrc == 'france'){
    map.setView(config.map.france.location,  config.map.france.zoomLevel);
    L.esri.basemapLayer('Imagery').addTo(map);
@@ -35,12 +35,12 @@ var app={}
 
 //location control
 L.control.locate({
-              onLocationError: function(err) {_log(err.message)},  // define an error callback function
-              onLocationOutsideMapBounds:  function(context) { // called when outside map boundaries
-                _log(context.options.strings.outsideMapBoundsMsg);
-              },
-              showPopup: false, // display a popup when the user click on the inner marker
-            }).addTo(map);
+    onLocationError: function(err) {_log(err.message)},  // define an error callback function
+    onLocationOutsideMapBounds:  function(context) { // called when outside map boundaries
+      _log(context.options.strings.outsideMapBoundsMsg);
+    },
+    showPopup: false, // display a popup when the user click on the inner marker
+ }).addTo(map);
 
 
 

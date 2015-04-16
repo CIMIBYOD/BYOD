@@ -142,7 +142,7 @@ markerIcons["helico"]=icon;
 
 
 
-
+/**********   transform area Bso to leaflet marker     *********/
 //@private
 var _toMarker = function(bso){
  try{
@@ -176,6 +176,7 @@ var _toPolygon = function(bso){
 }
 }
 //add popup info to bso
+//@private
 var _bindPopup = function(layer,bso){
   try{
     console.log("bso.datetime is " + typeof(bso.datetime));

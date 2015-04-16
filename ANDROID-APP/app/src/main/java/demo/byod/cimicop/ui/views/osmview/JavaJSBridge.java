@@ -51,7 +51,7 @@ public class JavaJSBridge {
     }
 
     /**
-     * send report through Java API
+     * send new report through Java API
      */
     @JavascriptInterface
     public void sendReport(String jsonReport) {

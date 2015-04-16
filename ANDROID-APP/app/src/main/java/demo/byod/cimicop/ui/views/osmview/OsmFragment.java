@@ -1,16 +1,13 @@
 package demo.byod.cimicop.ui.views.osmview;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +25,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import demo.byod.cimicop.MainActivity;
 import demo.byod.cimicop.R;
 import demo.byod.cimicop.core.managers.CartoManager;
-import demo.byod.cimicop.core.preferences.PreferencesManager;
-import demo.byod.cimicop.ui.views.login.RevokedFragment;
 
-
-public class OsmFragment extends Fragment{
-    // TODO: Rename parameter arguments, choose names that match
+/**
+ * The actual map view.
+ * <br>Note: THIS IS A WEBVIEW (see OsmView)
+ */
+public class OsmFragment extends Fragment {
 
     OsmView mOsmView = null;
     Context mContext;
@@ -69,13 +65,15 @@ public class OsmFragment extends Fragment{
         webSettings.setAllowFileAccess(true);
 
 
-        //for Geolocation access (automatic grant access)
+        //set chrome handlers
         mOsmView.setWebChromeClient(new WebChromeClient() {
+
+            //for Geolocation access (automatic grant access)
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                 callback.invoke(origin, true, false);
             }
 
-
+            //for camera file chooser
             public boolean onShowFileChooser(
                     WebView webView, ValueCallback<Uri[]> filePathCallback,
                     WebChromeClient.FileChooserParams fileChooserParams) {
@@ -135,7 +133,7 @@ public class OsmFragment extends Fragment{
                 return true;
             }
 
-
+            //utilty for onShowFileChooser
             private File createImageFile() throws IOException {
                 // Create an image file name
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -156,13 +154,13 @@ public class OsmFragment extends Fragment{
         //for bridge toJava
         mOsmView.addJavascriptInterface(new JavaJSBridge(this), "JSBridge");
 
-        //navigate
+        //navigate to javascript map.
         mOsmView.loadUrl("file:///android_asset/www/index.html");
 
         return rootView;
     }
 
-
+    // catch the camera/file chooser data
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -204,7 +202,7 @@ public class OsmFragment extends Fragment{
         CartoManager.getInstance().setMap(this, mContext);
     }
 
-
+    // add a bso to the JS map view
     public void addBso(JSONObject bso) {
         Log.i("OsmFragment", "addBso  " + bso.toString());
         final String inBso;
@@ -224,6 +222,7 @@ public class OsmFragment extends Fragment{
         }
     }
 
+    // update a bso to the JS map view
     public void updateBso(JSONObject bso) {
         Log.i("OsmFragment", "updateBso  " + bso.toString());
         final String inBso;
@@ -243,6 +242,7 @@ public class OsmFragment extends Fragment{
         }
     }
 
+    // remove a bso to the JS map view
     public void removeBso(String id) {
         Log.i("OsmFragment", "removeBso  " + id);
         final String inId = id;

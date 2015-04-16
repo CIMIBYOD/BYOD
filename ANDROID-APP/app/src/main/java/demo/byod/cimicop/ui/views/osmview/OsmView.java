@@ -1,20 +1,12 @@
 package demo.byod.cimicop.ui.views.osmview;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.view.View;
 import android.webkit.WebView;
 
-import demo.byod.cimicop.R;
-
 /**
- * TODO: document your custom view class.
+ * Main map view of Cimicop.
+ * <br>This is only a container, the actual view is OsmFragment
  */
 public class OsmView extends WebView {
 
