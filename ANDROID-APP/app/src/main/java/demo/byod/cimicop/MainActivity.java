@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 
 import java.util.List;
@@ -59,6 +60,10 @@ public class MainActivity extends ActionBarActivity {
 
         EventBus.getDefault().register(this);
 
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
+
 
     }
 
@@ -105,5 +110,6 @@ public class MainActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new RevokedFragment()).commitAllowingStateLoss();
         }
     }
+
 
 }

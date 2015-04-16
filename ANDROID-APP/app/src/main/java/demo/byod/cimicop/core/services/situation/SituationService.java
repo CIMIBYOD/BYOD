@@ -17,7 +17,7 @@ import demo.byod.cimicop.ui.views.login.RevokedFragment;
 
 public class SituationService extends Service {
 
-    private static final long NOTIFY_INTERVAL = 1000 * 60;
+    private static final long NOTIFY_INTERVAL = 1000 * 5;
 
     private Timer mTimer = null;
 

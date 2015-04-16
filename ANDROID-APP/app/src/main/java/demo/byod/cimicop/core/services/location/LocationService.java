@@ -31,7 +31,7 @@ public class LocationService extends Service implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    public static final long TIME_BTW_REFRESH = 5000; //Todo get from prefs
+    public static final long TIME_BTW_REFRESH = 20000; //Todo get from prefs
     private static final String LOCATION_SERVICE_TAG = "LOC-SRVC";
     private boolean sendCurrentLocationToServer = false;
 

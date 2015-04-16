@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -28,6 +30,8 @@ public class RestrictedZoneManager {
 
     private static RestrictedZoneManager instance;
 
+    private String lastNotifiedZone = "";
+
     public RestrictedZoneManager(){
 
     }
@@ -46,6 +50,8 @@ public class RestrictedZoneManager {
             Collection<SituationEntity> entitiesList = entities.values();
 
             //Itération sur les objets de situation
+
+            boolean atLeastIsInOneZone = false;
             for(SituationEntity se : entitiesList) {
                 //On ne traite que les surfaciques
                 if(se.getType().equals("area")) {
@@ -76,10 +82,13 @@ public class RestrictedZoneManager {
                     if(c) {
                         //TODO : Afficher la notification
                         //locationService.generateZoneEntryNotification(se.getName());
+                        atLeastIsInOneZone = true;
                         this.generateZoneEntryNotification(se.getName());
                     }
-
                 }
+            }
+            if(!atLeastIsInOneZone){
+                this.lastNotifiedZone = "";
             }
 
         } catch (Exception e) {
@@ -90,15 +99,21 @@ public class RestrictedZoneManager {
 
     public void generateZoneEntryNotification(String zoneName) {
 
-        NotificationManager nMgr = (NotificationManager) MainActivity.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if(!this.lastNotifiedZone.equalsIgnoreCase(zoneName)){
+            this.lastNotifiedZone = zoneName;
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.getContext())
+                    .setSmallIcon(R.drawable.ic_action_location_2)
+                    .setContentTitle("RESTRICTED ZONE")
+                    .setContentText("Entering in restricted zone : " + zoneName);
+            mBuilder.setVibrate(new long[]{50,500,200,500,200,1000,200,1500});
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            mBuilder.setSound(notification);
 
-        Notification notif = new Notification();
-        notif.icon= R.drawable.ic_action_location_2;
-        notif.tickerText="ALARM, ALARM ! Entering in restricted zone : "+zoneName;
-        notif.sound=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        nMgr.notify(1, notif);
+            NotificationManager mNotificationManager = (NotificationManager) MainActivity.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(1, mBuilder.build());
+        }
     }
-
 
     /*    public void showNotification(String text){
 +
