@@ -5,10 +5,16 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
+import android.os.Looper;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -35,16 +41,23 @@ import demo.byod.cimicop.MainActivity;
 import demo.byod.cimicop.R;
 import demo.byod.cimicop.core.events.RevokedStateEvent;
 import demo.byod.cimicop.core.managers.SituationManager;
+import demo.byod.cimicop.core.preferences.PreferencesManager;
 import demo.byod.cimicop.ui.views.login.RevokedFragment;
 
 
-public class XmppService extends Service implements MessageListener, ChatMessageListener{
+public class XmppService extends Service implements MessageListener, ChatMessageListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static final String HOST = "server.cimicop.org";
-    public static final int PORT = 5222;
+    //public static final String HOST = "server.cimicop.org";
+
+    //Keep this static for now
     public static final String ROOM = "afgha@conference.server.cimicop.org";
-    public static final String LOG = "asharpe";
-    public static final String PWD = "asharpe";
+    //public static final String LOG = "asharpe";
+    //public static final String PWD = "asharpe";
+
+    public static final int PORT = 5222;
+    public String host = "";
+    public String login = "";
+    public String pwd = "";
 
 
     private XMPPTCPConnection connection = null;
@@ -54,11 +67,13 @@ public class XmppService extends Service implements MessageListener, ChatMessage
         super.onCreate();
         EventBus.getDefault().register(this);
 
-        new Thread(new Runnable() {
-            public void run() {
-                connect();
-            }
-        }).start();
+        //Get init prefs values and adding listener on pref changes
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
+        host = sharedPref.getString(PreferencesManager.HOST, "");
+        login = sharedPref.getString(PreferencesManager.LOGIN, "");
+        pwd = sharedPref.getString(PreferencesManager.PASSWORD, "");
+
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -89,10 +104,21 @@ public class XmppService extends Service implements MessageListener, ChatMessage
 
 
     private void connect(){
+        if(!this.login.isEmpty() && !this.pwd.isEmpty() && !this.host.isEmpty()){
+            new Thread(new Runnable() {
+                public void run() {
+                    connection();
+                }
+            }).start();
+        }
+    }
+
+
+    private void connection(){
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
-                .setUsernameAndPassword(LOG, PWD)
-                .setServiceName(HOST)
-                .setHost(HOST)
+                .setUsernameAndPassword(login, pwd)
+                .setServiceName(host)
+                .setHost(host)
                 .setPort(5222)
                 .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
                 .build();
@@ -100,8 +126,8 @@ public class XmppService extends Service implements MessageListener, ChatMessage
         this.connection = new XMPPTCPConnection(config);
         try {
             this.connection.connect();
-            this.connection.login(LOG,PWD);
-            Log.i("XMPP SERVICE","Connected "+ LOG);
+            this.connection.login(login,pwd);
+            Log.i("XMPP SERVICE","Connected "+ login);
 
             // Create a new presence. Pass in false to indicate we're unavailable._
             Presence presence = new Presence(Presence.Type.available);
@@ -133,7 +159,11 @@ public class XmppService extends Service implements MessageListener, ChatMessage
 
             // User2 joins the new room
             // The room service will decide the amount of history to send
-            muc2.join(LOG,"",dh,10000);
+            muc2.join(login,"",dh,10000);
+
+            Looper.prepare();
+            Toast.makeText(this, "Notification enabled", Toast.LENGTH_SHORT).show();
+            Looper.loop();
 
         } catch (XMPPException e) {
             e.printStackTrace();
@@ -144,10 +174,16 @@ public class XmppService extends Service implements MessageListener, ChatMessage
 
     private void disconnect(){
         try {
-            this.connection.disconnect();
+            if(this.connection != null){
+                this.connection.disconnect();
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }
+
+        Looper.prepare();
+        Toast.makeText(this, "Notification disabled", Toast.LENGTH_SHORT).show();
+        Looper.loop();
     }
 
     @Override
@@ -206,10 +242,26 @@ public class XmppService extends Service implements MessageListener, ChatMessage
     }
 
     private void displayMessageNotification(String subject, String msg){
+        /*
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.commanderarmy)
                 .setContentTitle(subject)
                 .setContentText(msg);
+        mBuilder.setVibrate(new long[] { 1000, 1000});
+        mBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+
+        NotificationManager mNotificationManager = (NotificationManager) MainActivity.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(1, mBuilder.build());
+        */
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.getContext())
+                .setSmallIcon(R.drawable.ic_action_location_2)
+                .setContentTitle("RESTRICTED ZONE")
+                .setContentText("Entering in restricted zone : " + "sdfsd");
+        mBuilder.setVibrate(new long[]{50,500,200,500,200,1000,200,1500});
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        mBuilder.setSound(notification);
 
         NotificationManager mNotificationManager = (NotificationManager) MainActivity.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
@@ -222,6 +274,24 @@ public class XmppService extends Service implements MessageListener, ChatMessage
             EventBus.getDefault().unregister(this);
             stopSelf();
         }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        if (key.equals(PreferencesManager.HOST)) {
+            host = sharedPreferences.getString(PreferencesManager.HOST, "");
+        }
+        else if (key.equals(PreferencesManager.LOGIN)) {
+            login = sharedPreferences.getString(PreferencesManager.LOGIN, "");
+        }
+        else if (key.equals(PreferencesManager.PASSWORD)) {
+            pwd = sharedPreferences.getString(PreferencesManager.PASSWORD, "");
+        }
+        if(this.connection != null && this.connection.isConnected()){
+            disconnect();
+        }
+        connect();
     }
 
 
