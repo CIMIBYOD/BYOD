@@ -1,5 +1,7 @@
 package demo.byod.cimicop.ui.views.login;
 
+import android.content.Context;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 
@@ -24,6 +27,9 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import java.util.logging.Handler;
+
+import demo.byod.cimicop.MainActivity;
 import demo.byod.cimicop.R;
 import demo.byod.cimicop.core.preferences.PreferencesManager;
 import demo.byod.cimicop.ui.views.osmview.OsmFragment;
@@ -142,7 +148,12 @@ public class LoginFragment extends Fragment {
                     getFragmentManager().beginTransaction().add(R.id.container, new OsmFragment()).commit();
 
                 }else{
-                    Log.d("LOGIN", "FAIL :"+ JSONString);
+
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), "Login fail !", Toast.LENGTH_LONG).show();
+                    Looper.loop();
+
+
                 }
 
             } catch (Exception e) {

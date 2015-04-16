@@ -4,7 +4,7 @@
 var config={
   debug:true,
   //which src to choose for map server (see below)
-  mapSrc:"afghaTiled",
+  mapSrc:"france",
    //which report url to choose to create reports (see below)
   reportUrl:"demo",
   map :{

@@ -138,10 +138,10 @@ var geoSuccess = function (position) {
 
 
   //setting report's envelop and format for WebC2
-  report = JSON.stringify(report).replace("\"","\\\"");
-  report = {report:report};
+  //report = JSON.stringify(report).replace("\"","\\\"");
+  //report = {report:report};
   report = JSON.stringify(report);
-  report = report.replace("\\\\\\","\\");
+  //report = report.replace("\\\\\\","\\");
  
   _log("sending report :\n"+report);
 
