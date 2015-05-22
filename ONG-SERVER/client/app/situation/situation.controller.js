@@ -111,10 +111,21 @@ angular.module('ongServerApp')
 
       var user = item;
       if (event === "updated") {
+		    var html = "<div class=\"panel panel-primary\">";
+			html +="<div class=\"panel-heading\"><h4>"+user.name.toUpperCase()+"</h4></div>";
+			html +="<div class=\"panel-body\">";
+			html +="<label>Login : "+ user.email + "</label><br/>";
+			html +="<label>Last Update: "+ $scope.convertTimeStamp(user.last_update_timestamp) + "</label><br/>";
+			html +="<label>Latitude : "+ user.last_known_position.latitude + "</label><br/>";
+			html +="<label>Longitude : "+ user.last_known_position.longitude + "</label><br/>";
+			html +="<button id=\"" + user.email + "\" class=\"btn btn-default trigger\"><span class=\"glyphicon glyphicon-comment\"></span> Send Message</button>";
+			html +="</div>";
+			html += "</div>";
+			
         $scope.usersMarkers[user._id] = {
           lat: user.last_known_position.latitude,
           lng: user.last_known_position.longitude,
-          message: user.email + "<button id=\"" + user.email + "\" class=\"btn btn-default trigger\"><span class=\"glyphicon glyphicon-comment\"></span> Send Message</button>",
+          message: html,
           icon: $scope.local_icons.user_green_icon
         }
       }
@@ -126,10 +137,29 @@ angular.module('ongServerApp')
         var user = $scope.users[i];
         if (user.last_known_position !== undefined) {
           console.log(user.last_known_position);
+		  
+		  var iconUserSate = undefined;
+		  if(Date.now() - user.last_known_position > (1000*60*60)){
+			  iconUserSate = $scope.local_icons.user_green_icon;
+		  }else{
+			  iconUserSate = $scope.local_icons.user_green_gray;
+		  }
+		  
+		   var html = "<div class=\"panel panel-primary\">";
+			html +="<div class=\"panel-heading\"><h4>"+user.name.toUpperCase()+"</h4></div>";
+			html +="<div class=\"panel-body\">";
+			html +="<label>Login : "+ user.email + "</label><br/>";
+			html +="<label>Last Update: "+ $scope.convertTimeStamp(user.last_update_timestamp) + "</label><br/>";
+			html +="<label>Latitude : "+ user.last_known_position.latitude + "</label><br/>";
+			html +="<label>Longitude : "+ user.last_known_position.longitude + "</label><br/>";
+			html +="<button id=\"" + user.email + "\" class=\"btn btn-default trigger\"><span class=\"glyphicon glyphicon-comment\"></span> Send Message</button>";
+			html +="</div>";
+			html += "</div>";
+		
           $scope.usersMarkers[user._id] = {
             lat: user.last_known_position.latitude,
             lng: user.last_known_position.longitude,
-            message: user.email + "<button id=\"" + user.email + "\" class=\"btn btn-default trigger\"><span class=\"glyphicon glyphicon-comment\"></span> Send Message</button>",
+            message: html,
             icon: $scope.local_icons.user_green_icon
           }
         }
@@ -183,6 +213,15 @@ angular.module('ongServerApp')
         });
     };
     $scope.refresh();
+	
+	$scope.convertTimeStamp = function(timestamp){
+		if(timestamp === undefined || timestamp === "now"){
+			return "";
+		}
+		  var newDate = new Date();
+		  newDate.setTime(timestamp);
+		  return newDate.toUTCString();
+    }
 
 
     /**********     Cache class    *********/
@@ -330,13 +369,19 @@ angular.module('ongServerApp')
       try {
         console.log("bso.datetime is " + typeof(bso.datetime));
         var validity = new Date(parseInt(bso.datetime)).toDateString();
-
-        var html = "<h5><b>" + bso.name + "</b></h5><br>";
-        html += "<b>report date : " + validity + "</b><br>";
-        if(bso.picture){
+		
+		var html = "<div class=\"panel panel-primary\">";
+		html +="<div class=\"panel-heading\"><h4>"+bso.name+":</h4></div>";
+		html +="<div class=\"panel-body\">";
+		if(bso.description || bso.description !== "none"){
+          html += "<b>"+ bso.description +"</b>";
+        }
+		if(bso.picture){
           html += "<img width=\"200px\" src=\"export/"+ bso.picture + "\"></img>";
         }
-
+		
+		html +="</div>";
+		html += "</div>";
         return layer.bindPopup(html); // "<h5><b>" + bso.name + "</b></h5><br>" + "<b>report date : " + validity + "</b><br>" + bso.description);
       } catch (e) {
         console.log(e);

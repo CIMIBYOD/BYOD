@@ -1,11 +1,14 @@
 'use strict';
-
+//TOOLS IMPORT
+var http = require('http');
 var request = require("request");
 var _ = require('lodash');
+
+//MODEL IMPORT
 var User = require('../user/user.model');
 var Configuration = require('../configuration/configuration.model');
 
-/* GETTING CONFIGURATION */
+/* GETTING INT CONFIGURATION */
 var CURRENT_CONFIG_KEY = "current";
 var configuration = undefined;
 var init = function(){
@@ -35,26 +38,71 @@ exports.update = function(req, res) {
 
       user.last_known_position = newPosition;
       user.last_update_timestamp = Date.now();
+
       user.save(function(err) {
         if (err){
           console.log(err);
         }
 
+		var latC2 = user.last_known_position.latitude+"";
+		var latC2Safe = latC2.replace(".",",");
+		var lonC2 = user.last_known_position.longitude+"";
+		var lonC2Safe = lonC2.replace(".",",");
         //SEND LOCATION TO WEBC2
-        var jsonCoords = {"coords":[{"lat":user.last_known_position.latitude, "lon":user.last_known_position.longitude}]};
-        var jsonCoordsString = JSON.stringify(jsonCoords).replace("\"","\\\"")
+        var jsonCoords = {"coords":[{"lat":latC2Safe+"", "lon":lonC2Safe+""}]};
+        var jsonCoordsString = JSON.stringify(jsonCoords).replace("\"","\\\"");
+		
+		jsonCoordsString = {location:jsonCoordsString};
+        jsonCoordsString = JSON.stringify(jsonCoordsString);
+        jsonCoordsString = jsonCoordsString.replace("\\\\\\","\\");
+				
+		console.log(jsonCoordsString);
         if(configuration && configuration.server_host){
-          var ws_location_c2 = "http://" +configuration.server_host + configuration.location_ws + configuration.situation_from+"/"+user.name;
-          request({
-            uri: ws_location_c2,
-            method: "PUT",
-            timeout: 10000,
-            json: {location: jsonCoordsString}
-          }, function(error, response, body) {
-            if(error){
-              console.log("Location not pushed to C2 : " + error.code +" = "+ error.hostname);
-            }
-          });
+			try{
+			  var ws_location_c2 = "http://" +configuration.server_host + configuration.location_ws + configuration.situation_from+"/"+user.name.replace(/ /g, '');
+			  console.log(ws_location_c2);
+			  var headers = {
+				  'Content-Type': 'application/json',
+				  'Content-Length': jsonCoordsString.length
+				};
+
+				var options = {
+				  host: 'webc2.defense.gouv.fr',
+				  port: 8585,
+				  path: configuration.location_ws + configuration.situation_from+"/"+user.name.replace(/ /g, ''),
+				  method: 'PUT',
+				  headers: headers
+				};
+
+				// Setup the request.  The options parameter is
+				// the object we defined above.
+				var req = http.request(options, function(res) {
+				  res.setEncoding('utf-8');
+
+				  var responseString = '';
+
+				  res.on('data', function(data) {
+					responseString += data;
+				  });
+
+				  res.on('end', function() {
+					var resultObject = JSON.parse(responseString);
+					console.log(resultObject);
+				  });
+				});
+
+				req.on('error', function(e) {
+				  // TODO: handle error.
+				  console.log(e);
+				});
+
+				req.write(jsonCoordsString);
+				req.end();
+			}catch(err){
+				console.log("An error occurred while sending to the C2");
+				console.log(err);
+			}
+			
         }else{
           console.log("NO CONFIG : can't send location to C2");
         }

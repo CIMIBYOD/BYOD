@@ -71,9 +71,12 @@ angular.module('ongServerApp')
     };
 
     $scope.convertTimeStamp = function(timestamp){
-      var newDate = new Date();
-      newDate.setTime(timestamp*1000);
-      return newDate.toUTCString();
+		if(timestamp === undefined || timestamp === "now"){
+			return "";
+		}
+		  var newDate = new Date();
+		  newDate.setTime(timestamp);
+		  return newDate.toUTCString();
     }
 
   });

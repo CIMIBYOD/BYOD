@@ -5,12 +5,12 @@ var Xmpp = require('./xmpp.model');
 var xmppclient = require('node-xmpp');
 
 //XMPP Account Details Starts from Here
-var client_id = "server@ong.cimicop.org"; //Use any XMPP Supported Account like Gmail
+var client_id = "server@server.cimicop.org"; //Use any XMPP Supported Account like Gmail
 var client_pwd = "server";
 var client_host = "127.0.0.1";  //talk.google.com for gmail
 var client_port = "5222";   //5222 for gmail
 var status_msg = "I am Online";   //Set it as you want
-var room_jid = 'france@conference.ong.cimicop.org';
+var room_jid = 'afgha@conference.server.cimicop.org';
 var room_nick = 'server';
 //XMPP Account Details End Here
 
@@ -33,14 +33,6 @@ client.on('online', function() {
     client.send(new xmppclient.Element('presence', { to: room_jid +'/' + room_nick })
       .c('x', { xmlns: 'http://jabber.org/protocol/muc' })
     );
-
-  /*
-    client.send(new xmppclient.Element('message', { to: room_jid, type: 'groupchat' })
-      .c('body').t('test')
-    );
-    */
-
-
 });
 
 client.on('offline', function () {

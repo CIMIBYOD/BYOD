@@ -1,5 +1,6 @@
 'use strict';
 
+var http = require('http');
 var request = require("request");
 var _ = require('lodash');
 var fs = require("fs");
@@ -54,14 +55,25 @@ exports.create = function(req, res) {
 
       if (report_data_input) {
 
-        var report = new Report({timestamp: Date.now()});
-        var report_data_input_json = JSON.parse(report_data_input);
-
-        if(report_data_input_json.picture !== "none") {
+		var report_json = JSON.parse(report_data_input);
+		console.log(report_json.type);
+		var report_data_input_json;
+		try{
+			report_data_input_json = JSON.parse(report_data_input);
+		}catch(err){
+			console.log(err);
+		}
+		if (!report_data_input_json) return res.send(500);
+		
+		var report = new Report({timestamp: Date.now()});
+		
+        if(report_data_input_json !== undefined && report_data_input_json.picture!== undefined && report_data_input_json.picture !== "none") {
           var filename = save_image( report._id, report_data_input_json.picture);
           report_data_input_json.picture = filename;
+		  
         }
         report.report_data = report_data_input_json;
+		console.log(report.report_data);
         report.save(function (err) {
           if (err) {
             return handleError(res, err);
@@ -69,24 +81,60 @@ exports.create = function(req, res) {
 
           //SEND LOCATION TO WEBC2
           if(configuration && configuration.server_host){
-            var ws_alert_c2 = "http://" + configuration.server_host + configuration.alert_ws  +"/" + configuration.situation_from;
+			  try{
+				var ws_alert_c2 = "http://" + configuration.server_host + configuration.alert_ws + configuration.situation_from;
 
-            var reportC2 = JSON.stringify(report.report_data).replace("\"","\\\"");
-            reportC2 = {report:reportC2};
-            reportC2 = JSON.stringify(reportC2);
-            reportC2 = reportC2.replace("\\\\\\","\\");
+				var reportC2 = JSON.stringify(report.report_data).replace("\"","\\\"");
+				reportC2 = {report:reportC2};
+				reportC2 = JSON.stringify(reportC2);
+				reportC2 = reportC2.replace("\\\\\\","\\");
 
-            request({
-              uri: ws_alert_c2,
-              method: "PUT",
-              timeout: 10000,
-              json: reportC2
-            }, function(error, response, body) {
-              if(error){
-                console.log("Location not pushed to C2 : " + error.code +" = "+ error.hostname);
-              }
-            });
+				console.log(ws_alert_c2);
+				console.log(reportC2);
+		
+				var headers = {
+				  'Content-Type': 'application/json',
+				  'Content-Length': reportC2.length
+				};
+
+				var options = {
+				  host: 'webc2.server',
+				  port: 8585,
+				  path: '/TOMSDataService.svc/bso/cimicop/report/FromCivilian',
+				  method: 'POST',
+				  headers: headers
+				};
+
+				// Setup the request.  The options parameter is
+				// the object we defined above.
+				var req = http.request(options, function(res) {
+				  res.setEncoding('utf-8');
+
+				  var responseString = '';
+
+				  res.on('data', function(data) {
+					responseString += data;
+					console.log(data);
+				  });
+
+				  res.on('end', function() {
+					var resultObject = JSON.parse(responseString);
+					console.log(resultObject);
+				  });
+				});
+
+				req.on('error', function(e) {
+				  // TODO: handle error.
+				  console.log(e);
+				});
+
+				req.write(reportC2);
+				req.end();
+			  }catch(err){
+				  console.log(err);
+			  }
           }else{
+			console.log("An error occurred while sending to the C2");
             console.log("No config : can't send report to C2");
           }
           return res.json(200, report);
